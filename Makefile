@@ -1,8 +1,13 @@
 
 all: pipeline-template-json pipeline-datastore-view-rules
 
+test: pipeline-template-json pipeline-datastore-view-rules jsontest test-sanity
+
 clean:
 	rm -f *.pyc
+	find resolved-pipeline-templates -name "*.json" | grep -v "dev_diagnostic" | xargs rm -f
+	find pipeline-datastore-view-rules -name "*.json" | grep -v "dev_01" | grep -v "\-4.0.json" | grep -v "\-5.0.json" | xargs rm -f
+	find report-view-rules -name "*.json" | grep -v "ccs_processing" | grep -v "simple_dataset" | xargs rm -f
 
 test-sanity:
 	$(eval PB_TOOL_CONTRACT_DIR := `readlink -f registered-tool-contracts`)
