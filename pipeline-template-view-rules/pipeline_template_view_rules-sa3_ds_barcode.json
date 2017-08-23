@@ -1,8 +1,8 @@
 {
-  "id": "pbsmrtpipe.pipelines.sa3_ds_barcode",
+  "id": "pbsmrtpipe.pipelines.sa3_ds_barcode2",
   "name": "Barcoding",
   "description": "Barcoding",
   "taskOptions": [
-    {"id": "pbcoretools.task_options.score_mode", "hidden": false, "advanced": false}
+    {"id": "lima.task_options.library_type", "hidden": false, "advanced": false}
   ]
 }
