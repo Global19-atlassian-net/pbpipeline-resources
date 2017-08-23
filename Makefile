@@ -24,7 +24,7 @@ test-sanity:
 	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
     PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
     PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
-		nosetests --verbose pbsmrtpipe.tests.test_pb_pipelines_sanity
+		python -m nose.core --verbose pbsmrtpipe.tests.test_pb_pipelines_sanity
 
 jsontest:
 	$(eval JSON := `find . -type f -name '*.json' -not -path '*/\.*' | grep -v './repos/' | grep -v './jobs-root/' | grep -v './tmp/' | grep -v 'target/scala'`)
@@ -42,3 +42,6 @@ pipeline-datastore-view-rules:
 	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
 		PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
 		python pb_pipeline_view_rules.py --output-dir pipeline-datastore-view-rules
+
+tool-contracts:
+	python regenerate_tool_contracts.py
