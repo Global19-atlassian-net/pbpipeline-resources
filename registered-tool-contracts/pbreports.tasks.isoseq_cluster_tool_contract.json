@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0.132615",
+    "version": "0.2.0",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbreports.report.isoseq_cluster --resolved-tool-contract",
@@ -20,13 +20,13 @@
                 "file_type_id": "PacBio.FileTypes.JsonReport"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Iso-Seq Cluster Report",
         "input_types": [
             {
                 "description": "Reads in FASTA format, usually are consensus, isoforms produced by Iso-Seq Cluster.",
                 "title": "Fasta reads",
-                "id": "inReadsFN",
+                "id": "reads_fasta",
                 "file_type_id": "PacBio.DataSet.ContigSet"
             },
             {
@@ -44,7 +44,7 @@
             {
                 "description": "A summary produced by Iso-Seq Cluster, e.g. cluster_summary.txt",
                 "title": "Summary text",
-                "id": "inSummaryFN",
+                "id": "summary_txt",
                 "file_type_id": "PacBio.FileTypes.json"
             }
         ],

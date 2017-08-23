@@ -1,11 +1,11 @@
 {
-    "version": "1.0.0.177900",
+    "version": "1.0.1.TAG-1470",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbtranscript.tasks.map_isoforms_to_genome --resolved-tool-contract ",
         "env": {}
     },
-    "tool_contract_id": "pbtranscript.tasks.map_isoforms_to_genome",
+    "schema_version": "2.0.0",
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [
@@ -14,27 +14,11 @@
         "description": "Constants used in tool contract.",
         "schema_options": [
             {
-                "pb_option": {
-                    "default": 24,
-                    "type": "integer",
-                    "option_id": "pbtranscript.task_options.gmap_nproc",
-                    "name": "GMAP nproc",
-                    "description": "GMAP nproc"
-                },
-                "title": "JSON Schema for pbtranscript.task_options.gmap_nproc",
-                "required": [
-                    "pbtranscript.task_options.gmap_nproc"
-                ],
-                "$schema": "http://json-schema.org/draft-04/schema#",
-                "type": "object",
-                "properties": {
-                    "pbtranscript.task_options.gmap_nproc": {
-                        "default": 24,
-                        "type": "integer",
-                        "description": "GMAP nproc",
-                        "title": "GMAP nproc"
-                    }
-                }
+                "optionTypeId": "integer",
+                "default": 24,
+                "id": "pbtranscript.task_options.gmap_nproc",
+                "name": "GMAP nproc",
+                "description": "GMAP nproc"
             }
         ],
         "output_types": [
@@ -46,7 +30,7 @@
                 "file_type_id": "PacBio.FileTypes.sam"
             }
         ],
-        "_comment": "Created by v0.4.14",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "pbtranscript.tasks.map_isoforms_to_genome",
         "input_types": [
             {
@@ -65,5 +49,6 @@
         "nproc": "$max_nproc",
         "is_distributed": true,
         "tool_contract_id": "pbtranscript.tasks.map_isoforms_to_genome"
-    }
+    },
+    "tool_contract_id": "pbtranscript.tasks.map_isoforms_to_genome"
 }

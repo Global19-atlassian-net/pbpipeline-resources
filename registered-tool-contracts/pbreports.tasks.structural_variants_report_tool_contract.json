@@ -1,5 +1,5 @@
 {
-    "version": "0.1",
+    "version": "0.1.0",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbreports.report.structural_variants --resolved-tool-contract ",
@@ -9,19 +9,19 @@
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [],
-        "description": "\nSummarizes the Structural Variants pipeline results.\n",
+        "description": null,
         "schema_options": [],
         "output_types": [
             {
-                "title": "Structural Variants Report",
-                "description": "Filename of JSON output report",
+                "title": "Report",
+                "description": "Filename of JSON output report. Should be name only, and will be written to output dir",
                 "default_name": "report",
                 "id": "report",
                 "file_type_id": "PacBio.FileTypes.JsonReport"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
-        "name": "Structural Variants Report",
+        "_comment": "Created by pbcommand 0.6.5",
+        "name": "Report",
         "input_types": [
             {
                 "description": "JSON of table data",
@@ -30,16 +30,15 @@
                 "file_type_id": "PacBio.FileTypes.json"
             },
             {
-                "description": "JSON of histogram data",
+                "description": "JSON of plot data",
                 "title": "JSON Plot Data",
                 "id": "json_plot",
                 "file_type_id": "PacBio.FileTypes.json"
             }
         ],
         "nproc": 1,
-        "is_distributed": true,
+        "is_distributed": false,
         "tool_contract_id": "pbreports.tasks.structural_variants_report"
     },
     "tool_contract_id": "pbreports.tasks.structural_variants_report"
 }
-

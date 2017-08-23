@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.json"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.0",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Juliet JSON gather",
         "input_types": [
             {

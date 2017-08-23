@@ -20,8 +20,8 @@
                 "file_type_id": "PacBio.FileTypes.JsonReport"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
-        "name": "Raw Dataset Statistics XML Report",
+        "_comment": "Created by pbcommand 0.6.5",
+        "name": "Raw Data Report",
         "input_types": [
             {
                 "description": "SubreadSet",

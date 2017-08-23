@@ -5,7 +5,7 @@
         "exe": "python -m pbfalcon.tasks.scatter0_run_daligner_jobs --resolved-tool-contract ",
         "env": {}
     },
-    "tool_contract_id": "pbfalcon.tasks.scatter0_run_daligner_jobs",
+    "schema_version": "2.0.0",
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.scattered",
         "resource_types": [],
@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.CHUNK"
             }
         ],
-        "_comment": "Created by v0.4.14",
+        "_comment": "Created by pbcommand 0.6.5",
         "nchunks": "$max_nchunks",
         "name": "Scatter Daligner",
         "input_types": [
@@ -44,5 +44,6 @@
         "nproc": 1,
         "is_distributed": false,
         "tool_contract_id": "pbfalcon.tasks.scatter0_run_daligner_jobs"
-    }
+    },
+    "tool_contract_id": "pbfalcon.tasks.scatter0_run_daligner_jobs"
 }

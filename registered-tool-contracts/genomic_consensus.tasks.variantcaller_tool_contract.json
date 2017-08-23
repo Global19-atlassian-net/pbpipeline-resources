@@ -70,7 +70,7 @@
                 "file_type_id": "PacBio.FileTypes.Fastq"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.2",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "variantCaller",
         "input_types": [
             {

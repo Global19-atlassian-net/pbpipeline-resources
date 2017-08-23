@@ -1,11 +1,11 @@
 {
-    "version": "1.0.0.177900",
+    "version": "1.0.1.TAG-1470",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbtranscript.tasks.cluster --resolved-tool-contract",
         "env": {}
     },
-    "tool_contract_id": "pbtranscript.tasks.cluster",
+    "schema_version": "2.0.0",
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [
@@ -22,7 +22,7 @@
                 "file_type_id": "PacBio.DataSet.ContigSet"
             },
             {
-                "title": "Transcript clustering report",
+                "title": "Transcript Clustering Report",
                 "description": "JSON summary",
                 "default_name": "summary",
                 "id": "json_summary",
@@ -43,7 +43,7 @@
                 "file_type_id": "PacBio.FileTypes.pickle"
             }
         ],
-        "_comment": "Created by v0.4.13",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "pbtranscript.tasks.cluster",
         "input_types": [
             {
@@ -74,5 +74,6 @@
         "nproc": "$max_nproc",
         "is_distributed": true,
         "tool_contract_id": "pbtranscript.tasks.cluster"
-    }
+    },
+    "tool_contract_id": "pbtranscript.tasks.cluster"
 }
