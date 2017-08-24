@@ -1,33 +1,39 @@
 {
     "bindings": [], 
-    "comment": "Created pipeline pbsmrtpipe.pipelines.dev_diagnostic with pbsmrtpipe v0.53.0", 
-    "description": "Generate a simple report and plot from Reference DataSet", 
+    "comment": "Created pipeline pbsmrtpipe.pipelines.dev_diagnostic_subreads with pbsmrtpipe v0.53.0", 
+    "description": "Pipeline Id:pbsmrtpipe.pipelines.dev_diagnostic_subreads Name:SubreadSet Reports and validation", 
     "entryPoints": [
         {
-            "entryId": "eid_ref_dataset", 
-            "fileTypeId": "PacBio.DataSet.ReferenceSet", 
-            "name": "Entry Name: PacBio.DataSet.ReferenceSet", 
+            "entryId": "eid_subread", 
+            "fileTypeId": "PacBio.DataSet.SubreadSet", 
+            "name": "Entry Name: PacBio.DataSet.SubreadSet", 
             "tasks": [
                 {
                     "index": 0, 
                     "instanceId": 0, 
-                    "taskTypeId": "pbsmrtpipe.tasks.dev_reference_ds_report"
+                    "taskTypeId": "pbsmrtpipe.tasks.dev_subread_report"
                 }, 
                 {
                     "index": 0, 
                     "instanceId": 0, 
-                    "taskTypeId": "pbsmrtpipe.tasks.dev_optional_failure"
+                    "taskTypeId": "pbcoretools.tasks.pbvalidate"
+                }, 
+                {
+                    "index": 0, 
+                    "instanceId": 0, 
+                    "taskTypeId": "pbsmrtpipe.tasks.dev_optional_failure_subreads"
                 }
             ]
         }
     ], 
-    "id": "pbsmrtpipe.pipelines.dev_diagnostic", 
-    "name": "Reference Set Report", 
+    "id": "pbsmrtpipe.pipelines.dev_diagnostic_subreads", 
+    "name": "SubreadSet Reports and validation", 
     "options": [], 
     "schemaVersion": "2.0.0", 
     "tags": [
+        "subreads", 
+        "pbvalidate", 
         "reports", 
-        "reference", 
         "dev"
     ], 
     "taskOptions": [

@@ -1,5 +1,6 @@
+.PHONY: clean report-view-rules pipeline-datastore-view-rules
 
-all: pipeline-template-json pipeline-datastore-view-rules
+all: bundle
 
 test: pipeline-template-json pipeline-datastore-view-rules jsontest test-sanity
 
@@ -8,6 +9,7 @@ clean:
 	find resolved-pipeline-templates -name "*.json" | grep -v "dev_diagnostic" | xargs rm -f
 	find pipeline-datastore-view-rules -name "*.json" | grep -v "dev_01" | grep -v "\-4.0.json" | grep -v "\-5.0.json" | xargs rm -f
 	find report-view-rules -name "*.json" | grep -v "ccs_processing" | grep -v "simple_dataset" | xargs rm -f
+	rm -rf pbpipeline-resources-*
 
 test-sanity:
 	$(eval PB_TOOL_CONTRACT_DIR := `readlink -f registered-tool-contracts`)
@@ -43,5 +45,32 @@ pipeline-datastore-view-rules:
 		PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
 		python pb_pipeline_view_rules.py --output-dir pipeline-datastore-view-rules
 
+report-view-rules:
+	$(eval BASEDIR = $(shell python -c 'import pbreports.report; import os.path ; print os.path.dirname(pbreports.report.__file__)'))
+	$(eval JSON = $(shell find $(BASEDIR) -type f -name '*.json'))
+	@for j in $(JSON); do \
+		cp $$j report-view-rules/ ;\
+	done
+
 tool-contracts:
 	python regenerate_tool_contracts.py
+
+manifests:
+	python bin/generate-manifests.py version.txt
+
+bundle: pipeline-template-json pipeline-datastore-view-rules report-view-rules manifests
+	$(eval VERSION := `grep Version manifest.xml | sed "s/<[\/]*Version>//g; s/\ *//;"`)
+	$(eval BASENAME := "pbpipeline-resources-$(VERSION)")
+	rm -rf $(BASENAME)
+	mkdir -p $(BASENAME)
+	cp -r chunk_operators $(BASENAME)/
+	cp -r pipeline-datastore-view-rules $(BASENAME)/
+	cp -r pipeline-template-view-rules $(BASENAME)/
+	cp -r registered-tool-contracts $(BASENAME)/
+	cp -r report-view-rules $(BASENAME)/
+	cp -r resolved-pipeline-templates $(BASENAME)
+	cp -r resolved-pipeline-template-presets $(BASENAME)/
+	cp manifest.xml $(BASENAME)/
+	cp pacbio-manifest.json $(BASENAME)/
+	tar -czf $(BASENAME).tar.gz $(BASENAME)
+	@echo Bundle written to $(BASENAME).tar.gz
