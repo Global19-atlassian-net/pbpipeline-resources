@@ -35,6 +35,9 @@ jsontest:
 		python -m json.tool $$j >/dev/null || exit 1 ;\
 	done
 
+show-workflow-options:
+	python -c 'import pbsmrtpipe.cli; pbsmrtpipe.cli.main(["pbsmrtpipe", "show-workflow-options"])' | grep "^Option" | sed 's/.*:\ *//; s/.*\.//;' > workflow_options.txt
+
 pipeline-template-json:
 	python make_pipeline_json.py
 
@@ -58,7 +61,7 @@ tool-contracts:
 manifests:
 	python bin/generate-manifests.py version.txt
 
-bundle: pipeline-template-json pipeline-datastore-view-rules report-view-rules manifests
+bundle: pipeline-template-json pipeline-datastore-view-rules report-view-rules manifests show-workflow-options
 	$(eval VERSION := `grep Version manifest.xml | sed "s/<[\/]*Version>//g; s/\ *//;"`)
 	$(eval BASENAME := "pbpipeline-resources-$(VERSION)")
 	rm -rf $(BASENAME)
@@ -70,6 +73,7 @@ bundle: pipeline-template-json pipeline-datastore-view-rules report-view-rules m
 	cp -r report-view-rules $(BASENAME)/
 	cp -r resolved-pipeline-templates $(BASENAME)
 	cp -r resolved-pipeline-template-presets $(BASENAME)/
+	cp workflow_options.txt $(BASENAME)/
 	cp manifest.xml $(BASENAME)/
 	cp pacbio-manifest.json $(BASENAME)/
 	tar -czf $(BASENAME).tar.gz $(BASENAME)
