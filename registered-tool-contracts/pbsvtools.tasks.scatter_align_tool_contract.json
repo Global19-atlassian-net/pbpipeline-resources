@@ -28,7 +28,7 @@
                 "file_type_id": "PacBio.FileTypes.CHUNK"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.0",
+        "_comment": "Created by pbcommand 0.6.5",
         "nchunks": "$max_nchunks",
         "name": "pbsvtools.tasks.scatter_align",
         "input_types": [

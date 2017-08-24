@@ -1,11 +1,11 @@
 {
-    "version": "1.0.0.177900",
+    "version": "1.0.1.TAG-1470",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbtranscript.tasks.ice_quiver_postprocess --resolved-tool-contract",
         "env": {}
     },
-    "tool_contract_id": "pbtranscript.tasks.ice_quiver_postprocess",
+    "schema_version": "2.0.0",
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [
@@ -14,73 +14,25 @@
         "description": "\nCalls the ICE algorithm, which stands for 'Iteratively Clustering and Error\ncorrection', to identify de novo consensus isoforms.\n",
         "schema_options": [
             {
-                "pb_option": {
-                    "default": 0.99,
-                    "type": "number",
-                    "option_id": "pbtranscript.task_options.hq_quiver_min_accuracy",
-                    "name": "Minimum Quiver Accuracy",
-                    "description": "Minimum allowed quiver accuracy to classify an isoform as hiqh-quality (default: 0.99)"
-                },
-                "title": "JSON Schema for pbtranscript.task_options.hq_quiver_min_accuracy",
-                "required": [
-                    "pbtranscript.task_options.hq_quiver_min_accuracy"
-                ],
-                "$schema": "http://json-schema.org/draft-04/schema#",
-                "type": "object",
-                "properties": {
-                    "pbtranscript.task_options.hq_quiver_min_accuracy": {
-                        "default": 0.99,
-                        "type": "number",
-                        "description": "Minimum allowed quiver accuracy to classify an isoform as hiqh-quality (default: 0.99)",
-                        "title": "Minimum Quiver Accuracy"
-                    }
-                }
+                "optionTypeId": "float",
+                "default": 0.99,
+                "id": "pbtranscript.task_options.hq_quiver_min_accuracy",
+                "name": "Minimum Quiver|Arrow Accuracy",
+                "description": "Minimum allowed Quiver|Arrow accuracy to classify an isoform as hiqh-quality (default: 0.99)"
             },
             {
-                "pb_option": {
-                    "default": 100,
-                    "type": "integer",
-                    "option_id": "pbtranscript.task_options.qv_trim_5p",
-                    "name": "Trim QVs 5'",
-                    "description": "Ignore QV of n bases in the 5' end (default 100)."
-                },
-                "title": "JSON Schema for pbtranscript.task_options.qv_trim_5p",
-                "required": [
-                    "pbtranscript.task_options.qv_trim_5p"
-                ],
-                "$schema": "http://json-schema.org/draft-04/schema#",
-                "type": "object",
-                "properties": {
-                    "pbtranscript.task_options.qv_trim_5p": {
-                        "default": 100,
-                        "type": "integer",
-                        "description": "Ignore QV of n bases in the 5' end (default 100).",
-                        "title": "Trim QVs 5'"
-                    }
-                }
+                "optionTypeId": "integer",
+                "default": 100,
+                "id": "pbtranscript.task_options.qv_trim_5p",
+                "name": "Trim QVs 5'",
+                "description": "Ignore QV of n bases in the 5' end (default 100)."
             },
             {
-                "pb_option": {
-                    "default": 30,
-                    "type": "integer",
-                    "option_id": "pbtranscript.task_options.qv_trim_3p",
-                    "name": "Trim QVs 3'",
-                    "description": "Ignore QV of n bases in the 3' end (default 30)."
-                },
-                "title": "JSON Schema for pbtranscript.task_options.qv_trim_3p",
-                "required": [
-                    "pbtranscript.task_options.qv_trim_3p"
-                ],
-                "$schema": "http://json-schema.org/draft-04/schema#",
-                "type": "object",
-                "properties": {
-                    "pbtranscript.task_options.qv_trim_3p": {
-                        "default": 30,
-                        "type": "integer",
-                        "description": "Ignore QV of n bases in the 3' end (default 30).",
-                        "title": "Trim QVs 3'"
-                    }
-                }
+                "optionTypeId": "integer",
+                "default": 30,
+                "id": "pbtranscript.task_options.qv_trim_3p",
+                "name": "Trim QVs 3'",
+                "description": "Ignore QV of n bases in the 3' end (default 30)."
             }
         ],
         "output_types": [
@@ -127,7 +79,7 @@
                 "file_type_id": "PacBio.FileTypes.Fastq"
             }
         ],
-        "_comment": "Created by v0.4.13",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "pbtranscript.tasks.ice_quiver_postprocess",
         "input_types": [
             {
@@ -164,5 +116,6 @@
         "nproc": "$max_nproc",
         "is_distributed": true,
         "tool_contract_id": "pbtranscript.tasks.ice_quiver_postprocess"
-    }
+    },
+    "tool_contract_id": "pbtranscript.tasks.ice_quiver_postprocess"
 }

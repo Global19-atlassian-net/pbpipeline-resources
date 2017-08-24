@@ -22,7 +22,7 @@
                 "file_type_id": "PacBio.DataSet.ConsensusAlignmentSet"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.0",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Minor Variants Mapping",
         "input_types": [
             {

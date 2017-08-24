@@ -20,11 +20,11 @@
                 "file_type_id": "PacBio.FileTypes.JsonReport"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
-        "name": "Adapter XML Report",
+        "_comment": "Created by pbcommand 0.6.5",
+        "name": "Adapter Report",
         "input_types": [
             {
-                "description": "PacBio SubreadSet XML File",
+                "description": "SubreadSet",
                 "title": "SubreadSet",
                 "id": "subread_set",
                 "file_type_id": "PacBio.DataSet.SubreadSet"

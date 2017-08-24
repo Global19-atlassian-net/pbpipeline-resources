@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.tgz"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.2",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Dev TGZ Gather",
         "input_types": [
             {

@@ -1,11 +1,11 @@
 {
-    "version": "1.0.0.177900",
+    "version": "1.0.1.TAG-1470",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbtranscript.tasks.gather_gmap_sam --resolved-tool-contract ",
         "env": {}
     },
-    "tool_contract_id": "pbtranscript.tasks.gather_gmap_sam",
+    "schema_version": "2.0.0",
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.gathered",
         "resource_types": [],
@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.sam"
             }
         ],
-        "_comment": "Created by v0.3.30",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Gather GMAP SAM",
         "input_types": [
             {
@@ -33,5 +33,6 @@
         "nproc": 1,
         "is_distributed": true,
         "tool_contract_id": "pbtranscript.tasks.gather_gmap_sam"
-    }
+    },
+    "tool_contract_id": "pbtranscript.tasks.gather_gmap_sam"
 }

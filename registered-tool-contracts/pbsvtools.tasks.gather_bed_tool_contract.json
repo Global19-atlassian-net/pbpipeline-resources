@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.bed"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.3",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "pbsvtools.tasks.gather_bed",
         "input_types": [
             {

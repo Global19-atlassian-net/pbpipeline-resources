@@ -20,8 +20,8 @@
                 "file_type_id": "PacBio.FileTypes.JsonReport"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
-        "name": "Loading XML Report",
+        "_comment": "Created by pbcommand 0.6.5",
+        "name": "Loading Report",
         "input_types": [
             {
                 "description": "SubreadSet",

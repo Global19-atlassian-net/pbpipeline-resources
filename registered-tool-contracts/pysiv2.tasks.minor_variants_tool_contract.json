@@ -97,7 +97,7 @@
                 "file_type_id": "PacBio.FileTypes.zip"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.3",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Minor Variants analysis",
         "input_types": [
             {

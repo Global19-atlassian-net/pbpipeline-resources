@@ -1,1 +1,4 @@
 *.pyc
+manifest.xml
+pacbio-manifest.json
+pbpipeline-resources-*

@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.5.4",
+        "_comment": "Created by pbcommand 0.6.5",
         "description": "Quick tool filterdataset pbcoretools.tasks.filterdataset",
         "input_types": [
             {
@@ -39,7 +39,7 @@
             },
             {
                 "default": "",
-                "description": "A comma separated list of other filters to add to the DataSet",
+                "description": "A semicolon or comma separated list of other filters to add to the DataSet",
                 "id": "pbcoretools.task_options.other_filters",
                 "name": "Filters to add to the DataSet",
                 "optionTypeId": "string"

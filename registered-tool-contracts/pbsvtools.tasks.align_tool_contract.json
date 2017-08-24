@@ -15,14 +15,14 @@
         "schema_options": [],
         "output_types": [
             {
-                "title": "Aligned reads",
+                "title": "PBSV aligned, chained, sorted bam",
                 "description": "sorted chained Bam alignments of `pbsv align`",
                 "default_name": "sorted_chained",
                 "id": "sorted_chained",
                 "file_type_id": "PacBio.FileTypes.bam"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.0",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "pbsvtools.tasks.align",
         "input_types": [
             {
