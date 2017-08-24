@@ -9,7 +9,7 @@
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [],
-        "description": null,
+        "description": "Minor Variants Report",
         "schema_options": [],
         "output_types": [
             {
