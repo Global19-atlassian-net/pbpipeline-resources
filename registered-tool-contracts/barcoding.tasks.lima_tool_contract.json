@@ -37,41 +37,30 @@
         "resource_types": [],
         "schema_options": [
             {
-                "default": 0,
-                "description": "Try to guess the used barcodes, using the provided mean score threshold; 0 means guessing deactivated.",
-                "id": "lima.task_options.guess",
-                "name": "Guess",
-                "optionTypeId": "integer"
-            },
-            {
-                "choices": [
-                    "DIFFERENT",
-                    "SAME"
-                ],
-                "default": "DIFFERENT",
-                "description": "Select barcode library type: (1) SAME for Symmetric, Tailed, and Barcode Universal Primers and (2) DIFFERENT for Asymmetric",
-                "id": "lima.task_options.library_type",
-                "name": "Library Type",
-                "optionTypeId": "choice_string"
+                "default": false,
+                "description": "Activate to filter for same barcodes in a pair, i.e., symmetric and tailed designs.",
+                "id": "lima.task_options.library_same_tc",
+                "name": "Same",
+                "optionTypeId": "boolean"
             },
             {
                 "default": 0,
-                "description": "Minimum barcode score.",
+                "description": "Reads below the minimum mean barcode score are removed.",
                 "id": "lima.task_options.minscore",
-                "name": "MinScore",
+                "name": "Minimum Barcode Score",
                 "optionTypeId": "integer"
             },
             {
-                "default": 0,
-                "description": "Demux the first N ZMWs and return the mean score; 0 means peeking deactivated.",
-                "id": "lima.task_options.peek",
-                "name": "Peek",
-                "optionTypeId": "integer"
+                "default": false,
+                "description": "Try to guess the used barcodes, by peeking at the first 10,000 ZMWs, whitelisting barcodes with more than 10 counts and mean score ≥ 45.",
+                "id": "lima.task_options.peek_guess_tc",
+                "name": "Peek and Guess",
+                "optionTypeId": "boolean"
             }
         ],
         "task_type": "pbsmrtpipe.task_types.standard",
         "tool_contract_id": "barcoding.tasks.lima"
     },
     "tool_contract_id": "barcoding.tasks.lima",
-    "version": "0.34.0 (commit 212a9c0)"
+    "version": "0.35.0 (commit baed002-dirty)"
 }
