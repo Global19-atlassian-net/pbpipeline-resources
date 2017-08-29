@@ -18,15 +18,18 @@ test-sanity:
 	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
 		PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
 		PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
-		python -c "import pbsmrtpipe.loader as L; L.load_all()"
+		SMRT_IGNORE_PIPELINE_BUNDLE=true \
+		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR'); import pbsmrtpipe.loader as L; L.load_all()"
 	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
     PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
 		PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
-		python -c "import pbsmrtpipe.loader as L; L.load_and_validate_chunk_operators()"
+		SMRT_IGNORE_PIPELINE_BUNDLE=true \
+		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR'); import pbsmrtpipe.loader as L; L.load_and_validate_chunk_operators()"
 	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
     PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
     PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
-		python -m nose.core --verbose pbsmrtpipe.tests.test_pb_pipelines_sanity
+		SMRT_IGNORE_PIPELINE_BUNDLE=true \
+		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR'); import nose.core ; nose.core.main(argv=['nosetests', '--verbose', 'pbsmrtpipe.tests.test_pb_pipelines_sanity'])"
 
 jsontest:
 	$(eval JSON := `find . -type f -name '*.json' -not -path '*/\.*' | grep -v './repos/' | grep -v './jobs-root/' | grep -v './tmp/' | grep -v 'target/scala'`)
