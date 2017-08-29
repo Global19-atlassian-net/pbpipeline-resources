@@ -9,12 +9,12 @@
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.gathered",
         "resource_types": [],
-        "description": "Gather pbsv align BAM",
+        "description": "Chunk Gather for pbsv align BAM",
         "schema_options": [],
         "output_types": [
             {
-                "title": "Gathered Sorted BAM",
-                "description": "Gathered sorted pbsv align BAM",
+                "title": "BAM",
+                "description": "Gathered sorted BAM",
                 "default_name": "gathered_sorted",
                 "id": "bam_out",
                 "file_type_id": "PacBio.FileTypes.bam"
