@@ -1,4 +1,3 @@
-===============================
 README for pbpipeline-resources
 ===============================
 
@@ -31,16 +30,20 @@ in this repository; this is required for a successful build (and pull request).
 Tool Contracts
 --------------
 
-To add or replace a tool contract, simply run the appropriate tool command::
+To add or replace a tool contract, simply run the appropriate tool command:
 
+```
   $ mytool --emit-tool-contract > registered-tool-contracts/mymodule.tasks.mytool_tool_contract.json
+```
 
 This still needs to be done manually (otherwise it is impossible to validate
 pipeline changes).  However existing tool contracts can now be updated in bulk
-by running the following::
+by running the following:
 
+```
   $ module load smrttools
   $ make tool-contracts
+```
 
 Please note that this means that any tool contract may be re-generated at
 any time without notice, and manual edits are discouraged and liable to be
@@ -78,8 +81,9 @@ Pipeline Template View Rules
 ----------------------------
 
 These JSON files control the visibility of pipeline options in the SMRT LINK
-UI.  The structure is very simple::
+UI.  The structure is very simple:
 
+```
   {
     "id": "pbsmrtpipe.pipelines.sa3_ds_laa",
     "name": "Override Pipeline Display Name",
@@ -89,6 +93,7 @@ UI.  The structure is very simple::
       {"id": "pblaa.task_options.min_length",               "hidden": false, "advanced": false}
     ]
   }
+```
 
 The default visibility is ``hidden=false advanced=true``, which means an
 option appears in the advanced settings window.  Set ``hidden=true`` to remove
@@ -108,8 +113,9 @@ They control the visibility of pipeline outputs in the downloads section of
 the analysis results, and are now explicitly required for any file that should
 be visible to users.  By default, all outputs (except pbsmrtpipe log files) are
 invisible if not otherwise specified.  An example of how visibility is control
-looks like::
+looks like:
 
+```
   @register_pipeline_rules("sa3_ds_ccs")
   def ccs_view_rules():
       whitelist = _to_whitelist([
@@ -121,6 +127,7 @@ looks like::
           ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT)
       ])
       return whitelist + blacklist + _log_view_rules()
+```
 
 The rules are keyed by output file ``sourceId``, which for any pbsmrtpipe task
 output takes the form ``$taskId-out-$idx``, and the file type.  In this
@@ -131,14 +138,16 @@ view rules).  (We do not actually need to define a blacklist any more - this is
 mostly a holdover from previous behavior.)
 
 It is also possible to override the file label, for example when the same task
-is used in different pipelines::
+is used in different pipelines:
 
+```
   hgap_overrides = [
         ("pbcoretools.tasks.contigset2fasta-out-0", FileTypes.FASTA, False, "Polished Assembly"),
         ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Polished Assembly"),
         ("genomic_consensus.tasks.variantcaller-out-3", FileTypes.FASTQ, False, "Polished Assembly"),
         ("pbcoretools.tasks.fasta2referenceset-out-0", FileTypes.DS_REF, False, "Draft Assembly")
   ]
+```
 
 
 Report View Rules
