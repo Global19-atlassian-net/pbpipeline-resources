@@ -352,7 +352,7 @@ def _core_laa_plus(subread_ds):
     return laa + split_fastq + consensus_report + inputs_report
 
 
-@sa3_register("sa3_ds_laa", "Long Amplicon Analysis (LAA 2)", "0.1.0", tags=(Tags.LAA, ))
+@sa3_register("sa3_ds_laa", "Long Amplicon Analysis (LAA)", "0.1.0", tags=(Tags.LAA, ))
 def ds_laa():
     """
     Basic Long Amplicon Analysis (LAA) pipeline, starting from subreads.
@@ -417,7 +417,7 @@ def _core_ccs(subread_ds):
     return b3 + b4 + b5
 
 
-@sa3_register("sa3_ds_ccs", "Circular Consensus Sequences (CCS 2)", "0.2.0", tags=(Tags.CCS, ), task_options=CCS_TASK_OPTIONS)
+@sa3_register("sa3_ds_ccs", "Circular Consensus Sequences (CCS)", "0.2.0", tags=(Tags.CCS, ), task_options=CCS_TASK_OPTIONS)
 def ds_ccs():
     """
     Basic ConsensusRead (CCS) pipeline, starting from subreads.
@@ -643,7 +643,7 @@ def pb_isoseq_classify():
     """
     Partial Iso-Seq pipeline (classify step only), starting from ccs.
     This pipeline was added to test isoseq-classify with customer primers on
-    the only data that we currently have (which could not ccs-ed by ccs2).
+    the only data that we currently have (which could not ccs-ed by ccs).
     """
     return _core_isoseq_classify(ccs_ds=Constants.ENTRY_DS_CCS)
 

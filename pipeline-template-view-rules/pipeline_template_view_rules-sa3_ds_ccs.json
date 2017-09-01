@@ -1,6 +1,6 @@
 {
   "id": "pbsmrtpipe.pipelines.sa3_ds_ccs",
-  "name": "Circular Consensus Sequences (CCS 2)",
+  "name": "Circular Consensus Sequences (CCS)",
   "description": "Override Description",
   "taskOptions": [
     {"id": "pbccs.task_options.min_passes", "hidden": false, "advanced": false},
