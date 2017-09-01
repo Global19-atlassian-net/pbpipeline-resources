@@ -380,7 +380,7 @@ def ds_barcode():
 
 
 BARCODING_OPTIONS = {
-    "lima.task_options.keepsame": True
+    "lima.task_options.library_same_tc": True
 }
 @sa3_register("sa3_ds_barcode2", "Barcoding", "0.1.0",
               tags=(Tags.BARCODE,), task_options=BARCODING_OPTIONS)
