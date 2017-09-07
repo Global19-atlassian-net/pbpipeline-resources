@@ -838,12 +838,16 @@ def ds_sv():
     return _core_sv(Constants.ENTRY_DS_SUBREAD, Constants.ENTRY_DS_REF)
 
 
-@sa3_register("pb_mapping_stats", "Mapping Stats Reports", "0.1.0", tags=(Tags.MAP, Tags.RPT, Tags.INTERNAL))
+@sa3_register("pb_mapping_stats", "Generate Mapping Stat Report", "0.1.0", tags=(Tags.MAP, Tags.RPT, Tags.INTERNAL))
 def mapping_stats():
-    return [
+    return [(Constants.ENTRY_DS_ALIGN, "pbreports.tasks.mapping_stats:0")]
+
+
+@sa3_register("pb_mapping_reports", "Generate All Mapping Reports", "0.1.0", tags=(Tags.MAP, Tags.RPT, Tags.INTERNAL))
+def mapping_reports():
+    return mapping_stats() + [
         (Constants.ENTRY_DS_ALIGN, "pbreports.tasks.summarize_coverage:0"),
         (Constants.ENTRY_DS_REF, "pbreports.tasks.summarize_coverage:1"),
-        (Constants.ENTRY_DS_ALIGN, "pbreports.tasks.mapping_stats:0"),
         (Constants.ENTRY_DS_REF, "pbreports.tasks.coverage_report:0"),
         ("pbreports.tasks.summarize_coverage:0", "pbreports.tasks.coverage_report:1")
     ]
