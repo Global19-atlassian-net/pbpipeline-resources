@@ -38,29 +38,22 @@
         "schema_options": [
             {
                 "default": false,
-                "description": "Activate to filter for same barcodes in a pair, i.e., symmetric and tailed designs.",
+                "description": "Use \"On\" to retain only reads with the same barcodes on both ends of the insert sequence, i.e. symmetric and tailed designs. Use \"Off\" for different barcodes on each end of the insert, i.e. asymmetric design.",
                 "id": "lima.task_options.library_same_tc",
-                "name": "Same",
+                "name": "Same Barcodes on Both Ends of Sequence",
                 "optionTypeId": "boolean"
             },
             {
                 "default": 0,
-                "description": "Reads below the minimum mean barcode score are removed.",
+                "description": "Reads below the minimum barcode score are removed from downstream analysis.",
                 "id": "lima.task_options.minscore",
                 "name": "Minimum Barcode Score",
                 "optionTypeId": "integer"
-            },
-            {
-                "default": false,
-                "description": "Try to guess the used barcodes, by peeking at the first 10,000 ZMWs, whitelisting barcodes with more than 10 counts and mean score ≥ 45.",
-                "id": "lima.task_options.peek_guess_tc",
-                "name": "Peek and Guess",
-                "optionTypeId": "boolean"
             }
         ],
         "task_type": "pbsmrtpipe.task_types.standard",
         "tool_contract_id": "barcoding.tasks.lima"
     },
     "tool_contract_id": "barcoding.tasks.lima",
-    "version": "0.35.0 (commit baed002-dirty)"
+    "version": "0.39.0 (commit 08d7335)"
 }
