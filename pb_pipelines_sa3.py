@@ -391,18 +391,6 @@ def ds_barcode2():
     return _core_barcode()
 
 
-@sa3_register("sa3_ds_barcode2_laa", "LAA with Barcoding", "0.1.0", tags=(Tags.BARCODE, Tags.LAA,), task_options=BARCODING_OPTIONS)
-def ds_barcode2_laa():
-    """
-    Combined barcoding and long amplicon analysis pipeline
-    """
-    b1  = _core_barcode(bc_task="barcoding.tasks.lima")
-    subreadset = "barcoding.tasks.lima:0"
-    b2 = _core_laa_plus(subreadset)
-    return b1 + b2
-
-
-
 # global defaults for CCS jobs
 CCS_TASK_OPTIONS = {
   "pbccs.task_options.min_read_score": 0.65,
@@ -424,20 +412,6 @@ def ds_ccs():
     """
     b1 = [(Constants.ENTRY_DS_SUBREAD, "pbcoretools.tasks.filterdataset:0")]
     return b1 + _core_ccs("pbcoretools.tasks.filterdataset:0")
-
-
-# TODO deprecated, will become internal pipeline
-CCS_BARCODE_OPTIONS = dict(CCS_TASK_OPTIONS)
-CCS_BARCODE_OPTIONS.update(BARCODING_OPTIONS)
-@sa3_register("sa3_ds_barcode2_ccs", "CCS with Barcoding", "0.1.0", tags=(Tags.BARCODE, Tags.CCS,), task_options=CCS_BARCODE_OPTIONS)
-def ds_barcode2_ccs():
-    """
-    Combined barcoding and CCS pipeline
-    """
-    b1 = _core_barcode(bc_task="barcoding.tasks.lima")
-    b2 = [("barcoding.tasks.lima:0", "pbcoretools.tasks.filterdataset:0")]
-    b3 = _core_ccs("pbcoretools.tasks.filterdataset:0")
-    return b1 + b2 + b3
 
 
 def _core_ccs_align(ccs_ds):
@@ -794,17 +768,6 @@ MV_OPTS = {
 @sa3_register("sa3_ds_minorseq", "Minor Variants Analysis [Beta]", "0.2.0", tags=(Tags.MINORVAR,Tags.BETA), task_options=MV_OPTS)
 def ds_minorseq():
     return _core_minorseq_multiplexed("pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0", Constants.ENTRY_DS_REF)
-
-
-MV_BC_OPTS = dict(MV_OPTS)
-MV_BC_OPTS.update({
-    "pbcoretools.task_options.other_filters": "bq>45"
-})
-MV_BC_OPTS.update(BARCODING_OPTIONS)
-# TODO deprecated, will become internal pipeline
-@sa3_register("sa3_ds_barcode2_minorseq", "Minor Variants Analysis with Barcoding [Beta]", "0.1.0", tags=(Tags.MINORVAR,Tags.BARCODE,Tags.BETA), task_options=MV_BC_OPTS)
-def ds_barcode2_minorseq():
-    return _core_minorseq_multiplexed("pbsmrtpipe.pipelines.sa3_ds_barcode2_ccs:pbccs.tasks.ccs:0", Constants.ENTRY_DS_REF)
 
 
 def _core_sv(ds_subread, ds_ref):
