@@ -805,7 +805,7 @@ MV_BC_OPTS.update({
 MV_BC_OPTS.update(BARCODING_OPTIONS)
 @sa3_register("pb_barcode2_minorseq", "Minor Variants Analysis with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.MINORVAR,Tags.BARCODE,Tags.INTERNAL), task_options=MV_BC_OPTS)
 def pb_barcode2_minorseq():
-    return _core_minorseq_multiplexed("pbsmrtpipe.pipelines.sa3_ds_barcode2_ccs:pbccs.tasks.ccs:0", Constants.ENTRY_DS_REF)
+    return _core_minorseq_multiplexed("pbsmrtpipe.pipelines.pb_barcode2_ccs:pbccs.tasks.ccs:0", Constants.ENTRY_DS_REF)
 
 
 def _core_sv(ds_subread, ds_ref):
