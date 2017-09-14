@@ -340,6 +340,15 @@ def barcode_view_rules():
     return whitelist + blacklist + _log_view_rules()
 
 
+@register_pipeline_rules("sa3_ds_barcode2")
+def barcode_view_rules():
+    whitelist = _to_whitelist([
+        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
+        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
+    ])
+    return whitelist + _log_view_rules()
+
+
 #Base Modification Detection
 @register_pipeline_rules("ds_modification_detection")
 def basemod_view_rules():
@@ -403,25 +412,6 @@ def ccs_mapping_view_rules():
     return whitelist + blacklist + _log_view_rules()
 
 
-#CCS with Barcoding
-@register_pipeline_rules("sa3_ds_barcode2_ccs")
-def ccs_barcoding_view_rules():
-    whitelist = _to_whitelist([
-        ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.TGZ),
-        ("pbcoretools.tasks.bam2fasta_ccs-out-0", FileTypes.TGZ),
-        ("pbccs.tasks.ccs-out-0", FileTypes.DS_CCS),
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.filterdataset-out-0", FileTypes.DS_SUBREADS),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
-    ])
-    blacklist = _to_blacklist([
-        ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT),
-        ("pbreports.tasks.barcode_report-out-0", FileTypes.REPORT)
-    ])
-    return whitelist + blacklist + _log_view_rules()
-
-
 #Circular Consensus Sequences (CCS 2)
 @register_pipeline_rules("sa3_ds_ccs")
 def ccs_view_rules():
@@ -466,12 +456,6 @@ def isoseq_with_genome_view_rules():
     return _isoseq_mapping_view_rules()
 
 
-#LAA with Barcoding
-@register_pipeline_rules("sa3_ds_barcode2_laa")
-def laa_barcode_view_rules():
-    return _laa_barcode_view_rules()
-
-
 #Long Amplicon Analysis (LAA 2)
 @register_pipeline_rules("sa3_ds_laa")
 def laa_view_rules():
@@ -482,12 +466,6 @@ def laa_view_rules():
 @register_pipeline_rules("sa3_ds_minorseq")
 def mv_view_rules():
     return _mv_view_rules()
-
-
-#Minor Variants Analysis with Barcoding [Beta]
-@register_pipeline_rules("sa3_ds_barcode2_minorseq")
-def mv_barcode_view_rules():
-    return _mv_barcode_view_rules()
 
 
 #Resequencing

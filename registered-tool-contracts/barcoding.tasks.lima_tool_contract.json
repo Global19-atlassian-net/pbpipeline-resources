@@ -28,10 +28,10 @@
         "output_types": [
             {
                 "default_name": "lima_output",
-                "description": "Demultiplexed Reads by lima",
-                "file_type_id": "PacBio.DataSet.SubreadSet",
-                "id": "bam_output",
-                "title": "Demultiplexed Reads"
+                "description": "Datastore containing datasets",
+                "file_type_id": "PacBio.FileTypes.Datastore",
+                "id": "datastore_output",
+                "title": "Datastore"
             }
         ],
         "resource_types": [],
@@ -55,5 +55,5 @@
         "tool_contract_id": "barcoding.tasks.lima"
     },
     "tool_contract_id": "barcoding.tasks.lima",
-    "version": "0.39.0 (commit 08d7335)"
+    "version": "0.42.0 (commit b434106-dirty)"
 }

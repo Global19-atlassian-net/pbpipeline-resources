@@ -7,6 +7,7 @@ test: pipeline-template-json pipeline-datastore-view-rules jsontest test-sanity
 clean:
 	rm -f *.pyc
 	find resolved-pipeline-templates -name "*.json" | grep -v "dev_diagnostic" | xargs rm -f
+	git checkout resolved-pipeline-templates/pbsmrtpipe.pipelines.dev_diagnostic*
 	find pipeline-datastore-view-rules -name "*.json" | grep -v "dev_01" | grep -v "\-4.0.json" | grep -v "\-5.0.json" | xargs rm -f
 	find report-view-rules -name "*.json" | grep -v "ccs_processing" | grep -v "simple_dataset" | xargs rm -f
 	rm -rf pbpipeline-resources-*
@@ -19,17 +20,17 @@ test-sanity:
 		PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
 		PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
 		SMRT_IGNORE_PIPELINE_BUNDLE=true \
-		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR'); import pbsmrtpipe.loader as L; L.load_all()"
+		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR', None); import pbsmrtpipe.loader as L; L.load_all()"
 	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
     PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
 		PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
 		SMRT_IGNORE_PIPELINE_BUNDLE=true \
-		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR'); import pbsmrtpipe.loader as L; L.load_and_validate_chunk_operators()"
+		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR', None); import pbsmrtpipe.loader as L; L.load_and_validate_chunk_operators()"
 	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
     PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
     PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
 		SMRT_IGNORE_PIPELINE_BUNDLE=true \
-		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR'); import nose.core ; nose.core.main(argv=['nosetests', '--verbose', 'pbsmrtpipe.tests.test_pb_pipelines_sanity'])"
+		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR', None); import nose.core ; nose.core.main(argv=['nosetests', '--verbose', 'pbsmrtpipe.tests.test_pb_pipelines_sanity'])"
 
 jsontest:
 	$(eval JSON := `find . -type f -name '*.json' -not -path '*/\.*' | grep -v './repos/' | grep -v './jobs-root/' | grep -v './tmp/' | grep -v 'target/scala'`)
