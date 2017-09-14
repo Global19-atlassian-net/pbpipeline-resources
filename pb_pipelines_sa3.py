@@ -391,7 +391,7 @@ def ds_barcode2():
     return _core_barcode()
 
 
-@sa3_register("sa3_ds_barcode2_laa", "LAA with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.LAA, Tags.INTERNAL), task_options=BARCODING_OPTIONS)
+@sa3_register("pb_barcode2_laa", "LAA with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.LAA, Tags.INTERNAL), task_options=BARCODING_OPTIONS)
 def ds_barcode2_laa():
     """
     Combined barcoding and long amplicon analysis pipeline
@@ -428,8 +428,8 @@ def ds_ccs():
 
 CCS_BARCODE_OPTIONS = dict(CCS_TASK_OPTIONS)
 CCS_BARCODE_OPTIONS.update(BARCODING_OPTIONS)
-@sa3_register("sa3_ds_barcode2_ccs", "CCS with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.CCS, Tags.INTERNAL), task_options=CCS_BARCODE_OPTIONS)
-def ds_barcode2_ccs():
+@sa3_register("pb_barcode2_ccs", "CCS with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.CCS, Tags.INTERNAL), task_options=CCS_BARCODE_OPTIONS)
+def pb_barcode2_ccs():
     """
     Combined barcoding and CCS pipeline
     """
@@ -803,8 +803,8 @@ MV_BC_OPTS.update({
     "pbcoretools.task_options.other_filters": "bq>45"
 })
 MV_BC_OPTS.update(BARCODING_OPTIONS)
-@sa3_register("sa3_ds_barcode2_minorseq", "Minor Variants Analysis with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.MINORVAR,Tags.BARCODE,Tags.INTERNAL), task_options=MV_BC_OPTS)
-def ds_barcode2_minorseq():
+@sa3_register("pb_barcode2_minorseq", "Minor Variants Analysis with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.MINORVAR,Tags.BARCODE,Tags.INTERNAL), task_options=MV_BC_OPTS)
+def pb_barcode2_minorseq():
     return _core_minorseq_multiplexed("pbsmrtpipe.pipelines.sa3_ds_barcode2_ccs:pbccs.tasks.ccs:0", Constants.ENTRY_DS_REF)
 
 
