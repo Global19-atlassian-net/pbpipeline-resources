@@ -1,0 +1,58 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbtranscript2tools.tasks.create_workspace --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "Create IsoSeq2 work space directory",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "JSON file of the work space",
+                "description": "JSON file of IsoSeq2 work space",
+                "default_name": "isoseq2_workspace",
+                "id": "workspace_json",
+                "file_type_id": "PacBio.FileTypes.json"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.7",
+        "name": "pbtranscript2tools.tasks.create_workspace",
+        "input_types": [
+            {
+                "description": "PacBio SubreadSet",
+                "title": "SubreadSet In",
+                "id": "subreads_in",
+                "file_type_id": "PacBio.DataSet.SubreadSet"
+            },
+            {
+                "description": "PacBio ContigSet",
+                "title": "Full-Length None-Chimeric ContigSet In",
+                "id": "flnc_in",
+                "file_type_id": "PacBio.DataSet.ContigSet"
+            },
+            {
+                "description": "PacBio ContigSet",
+                "title": "None-Full-Length ContigSet In",
+                "id": "nfl_in",
+                "file_type_id": "PacBio.DataSet.ContigSet"
+            },
+            {
+                "description": "PacBio ConsensusReadSet",
+                "title": "Consensus ReadSet In",
+                "id": "ccs_in",
+                "file_type_id": "PacBio.DataSet.ConsensusReadSet"
+            }
+        ],
+        "nproc": "$max_nproc",
+        "is_distributed": true,
+        "tool_contract_id": "pbtranscript2tools.tasks.create_workspace"
+    },
+    "tool_contract_id": "pbtranscript2tools.tasks.create_workspace"
+}
