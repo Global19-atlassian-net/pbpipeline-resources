@@ -2,7 +2,7 @@
     "version": "0.1.0",
     "driver": {
         "serialization": "json",
-        "exe": "python -m pbtranscript2tools.tasks.polish --resolved-tool-contract ",
+        "exe": "python -m pbtranscript2tools.tasks.clean_up --resolved-tool-contract ",
         "env": {}
     },
     "schema_version": "2.0.0",
@@ -11,19 +11,19 @@
         "resource_types": [
             "$tmpdir"
         ],
-        "description": "Polish isoforms chunks in txt",
+        "description": "Clean up intermediate files and directories in workspace",
         "schema_options": [],
         "output_types": [
             {
-                "title": "Polish Done Sentinel file",
-                "description": "Polish Done Sentinel file",
-                "default_name": "polish_done",
-                "id": "polish_done",
+                "title": "Clean Up Done Sentinel",
+                "description": "Clean Up Done Sentinel",
+                "default_name": "clean_up_done",
+                "id": "clean_up_done",
                 "file_type_id": "PacBio.FileTypes.txt"
             }
         ],
         "_comment": "Created by pbcommand 0.6.7",
-        "name": "pbtranscript2tools.tasks.polish",
+        "name": "pbtranscript2tools.tasks.clean_up",
         "input_types": [
             {
                 "description": "IsoSeq2 WorkSpace JSON",
@@ -32,15 +32,15 @@
                 "file_type_id": "PacBio.FileTypes.json"
             },
             {
-                "description": "Collect Cluster Chunk Prefixes TXT",
-                "title": "Collect Cluster Chunk Prefixes TXT In",
-                "id": "collect_cluster_chunk_prefixes",
-                "file_type_id": "PacBio.FileTypes.txt"
+                "description": "Report CSV as Sentinel",
+                "title": "Report CSV",
+                "id": "report",
+                "file_type_id": "PacBio.FileTypes.csv"
             }
         ],
         "nproc": "$max_nproc",
         "is_distributed": true,
-        "tool_contract_id": "pbtranscript2tools.tasks.polish"
+        "tool_contract_id": "pbtranscript2tools.tasks.clean_up"
     },
-    "tool_contract_id": "pbtranscript2tools.tasks.polish"
+    "tool_contract_id": "pbtranscript2tools.tasks.clean_up"
 }

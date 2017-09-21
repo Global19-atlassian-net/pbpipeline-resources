@@ -39,9 +39,9 @@
                 "file_type_id": "PacBio.FileTypes.json"
             },
             {
-                "description": "Chunked Cluster Prefixes TXT",
-                "title": "Chunked Cluster Prefixes",
-                "id": "chunked_cluster_prefixes",
+                "description": "Cluster Chunk Prefixes TXT",
+                "title": "Cluster Chunk Prefixes",
+                "id": "collect_cluster_chunk_prefixes",
                 "file_type_id": "PacBio.FileTypes.txt"
             }
         ],

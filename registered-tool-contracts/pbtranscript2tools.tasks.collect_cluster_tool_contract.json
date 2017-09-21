@@ -11,14 +11,14 @@
         "resource_types": [
             "$tmpdir"
         ],
-        "description": "Collect ICE cluster results in workspace",
+        "description": "Collect ICE cluster results in workspace to prepare for polish",
         "schema_options": [],
         "output_types": [
             {
-                "title": "Chunked cluster prefixes in file",
-                "description": "Chunked cluster prefixes",
-                "default_name": "chunked_cluster_prefixes",
-                "id": "chunked_cluster_prefixes",
+                "title": "Collect cluster chunk prefixes in file",
+                "description": "Collect cluster chunk prefixes",
+                "default_name": "collect_cluster_chunk_prefixes",
+                "id": "collect_cluster_chunk_prefixes",
                 "file_type_id": "PacBio.FileTypes.txt"
             }
         ],

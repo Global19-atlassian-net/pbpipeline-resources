@@ -583,6 +583,33 @@ def _core_isoseq_collapse(hq_isoforms_hq, gmap_ref_ds, sample_prefix_pickle):
           (sample_prefix_pickle, "pbtranscript.tasks.post_mapping_to_genome:2")]
     return b1 + b2
 
+def _core_isoseq2_cluster(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
+    """Core IsoSeq2 Cluster"""
+    def f(s):
+        return 'pbtranscript2tools.tasks.' + s
+    b1 = [(subreads_ds, f('create_workspace:0')),
+          (flnc_ds, f('create_workspace:1')),
+          (nfl_ds, f('create_workspace:2')),
+          (ccs_ds, f('create_workspace:3'))]
+    b2 = [(f('create_workspace:0'), f('precluster:0'))] # ws.json
+    b3 = [(f('create_workspace:0'), f('cluster:0')), # ws.json
+          (f('precluster:0'), f('cluster:1'))] # precluster_bins.txt
+    b4 = [(f('create_workspace:0'), f('collect_cluster:0')), # ws.json
+          (f('cluster:0'), f('collect_cluster:1'))] # cluster out sentinel file
+    b5 = [(f('create_workspace:0'), f('polish:0')), # ws.json
+          (f('collect_cluster:0'), f('polish:1'))] # collect_cluster_chunk_prefixes.txt
+    b6 = [(f('create_workspace:0'), f('collect_polish:0')), # ws.json
+          (f('polish:0'), f('collect_polish:1'))] # polish_done.txt
+    # b7: pbreports isoseq_cluster
+    b7 = [(f('collect_polish:2'), "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms fasta
+          (f('collect_polish:1'), "pbreports.tasks.isoseq_cluster:1"), # json report
+          (f('collect_polish:5'), "pbreports.tasks.isoseq_cluster:2"), # HQ isoforms fastq
+          (f('collect_polish:8'), "pbreports.tasks.isoseq_cluster:3")] # LQ isoforms fastq
+    # b8: clean up temporary files and dirs.
+    b8 = [(f('create_workspace:0'), f('clean_up:0')), # ws.json
+          (f('collect_polish:0'), f('clean_up:1'))] # report.csv, used to trigger clean up after collect_polish
+    return b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8
+
 
 ISOSEQ_TASK_OPTIONS = dict(CCS_TASK_OPTIONS)
 ISOSEQ_TASK_OPTIONS.update({
@@ -637,6 +664,21 @@ def ds_isoseq_with_genome():
                                gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                sample_prefix_pickle="pbtranscript.tasks.combine_cluster_bins:7")
     return b1 + b2 + b3
+
+
+@sa3_register("sa3_ds_isoseq2", "Iso-Seq2", "0.1.0",
+              tags=(Tags.CCS, Tags.ISOSEQ, Tags.ISOSEQ2),
+              task_options=ISOSEQ_TASK_OPTIONS)
+def ds_isoseq2():
+    """
+    Main Iso-Seq2 pipeline, starting from subreads.
+    """
+    b1 = _core_isoseq_classify("pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0")
+    b2 = _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
+                               ccs_ds="pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0",
+                               flnc_ds="pbtranscript.tasks.classify:1",
+                               nfl_ds="pbtranscript.tasks.classify:2")
+    return b1 + b2
 
 
 @sa3_register("pb_isoseq_classify", "Internal Iso-Seq Classify Only for tests", "0.2.0",
@@ -697,6 +739,13 @@ def pb_isoseq_collapse():
     return _core_isoseq_collapse(hq_isoforms_hq=to_entry("hq_isoforms_hq"),
                                  gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                  sample_prefix_pickle=to_entry("sample_prefix_pickle"))
+
+@sa3_register("pb_isoseq2_cluster", "Internal Iso-Seq2 clustering pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.ISOSEQ2, Tags.INTERNAL,))
+def pb_isoseq2_cluster():
+    return _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
+                                 ccs_ds=Constants.ENTRY_DS_CCS,
+                                 flnc_ds=to_entry("e_flnc_fa"),
+                                 nfl_ds=to_entry("e_nfl_fa"))
 
 
 @sa3_register("sa3_ds_subreads_to_fastx", "Convert BAM to FASTX", "0.1.0", tags=(Tags.CONVERTER,))

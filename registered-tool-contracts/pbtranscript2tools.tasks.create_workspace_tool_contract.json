@@ -12,7 +12,36 @@
             "$tmpdir"
         ],
         "description": "Create IsoSeq2 work space directory",
-        "schema_options": [],
+        "schema_options": [
+            {
+                "optionTypeId": "integer",
+                "default": 100,
+                "id": "pbtranscript2tools.task_options.qv_trim_5p",
+                "name": "Trim QVs 5'",
+                "description": "Ignore QV of n bases in the 5' end"
+            },
+            {
+                "optionTypeId": "integer",
+                "default": 30,
+                "id": "pbtranscript2tools.task_options.qv_trim_3p",
+                "name": "Trim QVs 3'",
+                "description": "Ignore QV of n bases in the 3' end"
+            },
+            {
+                "optionTypeId": "float",
+                "default": 0.99,
+                "id": "pbtranscript2tools.task_options.hq_min_accuracy",
+                "name": "Minimum Quiver|Arrow Accuracy",
+                "description": "Minimum Allowed Arrow|Quiver Accuracy to call an isoform as high-quality"
+            },
+            {
+                "optionTypeId": "string",
+                "default": "",
+                "id": "pbtranscript2tools.task_options.sample_name",
+                "name": "Sample Name",
+                "description": "Sample Name, Only Allow Digits and Letters"
+            }
+        ],
         "output_types": [
             {
                 "title": "JSON file of the work space",
@@ -50,7 +79,7 @@
                 "file_type_id": "PacBio.DataSet.ConsensusReadSet"
             }
         ],
-        "nproc": "$max_nproc",
+        "nproc": 1,
         "is_distributed": true,
         "tool_contract_id": "pbtranscript2tools.tasks.create_workspace"
     },

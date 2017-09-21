@@ -29,17 +29,17 @@
                 "file_type_id": "PacBio.FileTypes.json"
             },
             {
-                "title": "Unpolished Consensus Isoforms",
-                "description": "Unpolished consensus isoforms in FASTA",
-                "default_name": "unpolished_consensus_isoforms",
-                "id": "all_unpolished",
+                "title": "Consensus Isoforms",
+                "description": "Consensus isoforms in FASTA",
+                "default_name": "consensus_isoforms",
+                "id": "consensus_isoforms",
                 "file_type_id": "PacBio.FileTypes.Fasta"
             },
             {
-                "title": "Unpolished Consensus Isoforms",
-                "description": "Unpolished consensus isoforms in ContigSet",
-                "default_name": "unpolished_consensus_isoforms",
-                "id": "all_unpolished",
+                "title": "Consensus Isoforms",
+                "description": "consensus isoforms in ContigSet",
+                "default_name": "consensus_isoforms",
+                "id": "consensus_isoforms",
                 "file_type_id": "PacBio.DataSet.ContigSet"
             },
             {
