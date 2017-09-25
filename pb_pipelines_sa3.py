@@ -587,6 +587,7 @@ def _core_isoseq2_cluster(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
     """Core IsoSeq2 Cluster"""
     def f(s):
         return 'pbtranscript2tools.tasks.' + s
+    b0 = [(subreads_ds, f('sanity_check_params:0'))]
     b1 = [(subreads_ds, f('create_workspace:0')),
           (flnc_ds, f('create_workspace:1')),
           (nfl_ds, f('create_workspace:2')),
@@ -608,7 +609,7 @@ def _core_isoseq2_cluster(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
     # b8: clean up temporary files and dirs.
     b8 = [(f('create_workspace:0'), f('clean_up:0')), # ws.json
           (f('collect_polish:0'), f('clean_up:1'))] # report.csv, used to trigger clean up after collect_polish
-    return b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8
+    return b0 + b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8
 
 
 ISOSEQ_TASK_OPTIONS = dict(CCS_TASK_OPTIONS)
