@@ -17,8 +17,8 @@
             {
                 "title": "Collect cluster chunk prefixes in file",
                 "description": "Collect cluster chunk prefixes",
-                "default_name": "collect_cluster_chunk_prefixes",
-                "id": "collect_cluster_chunk_prefixes",
+                "default_name": "collected_cluster_chunk_prefixes",
+                "id": "collected_cluster_chunk_prefixes",
                 "file_type_id": "PacBio.FileTypes.txt"
             }
         ],
