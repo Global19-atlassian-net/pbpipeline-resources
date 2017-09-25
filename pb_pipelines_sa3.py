@@ -667,7 +667,7 @@ def ds_isoseq_with_genome():
 
 
 @sa3_register("sa3_ds_isoseq2", "Iso-Seq2", "0.1.0",
-              tags=(Tags.CCS, Tags.ISOSEQ, Tags.ISOSEQ2),
+              tags=(Tags.CCS, Tags.ISOSEQ),
               task_options=ISOSEQ_TASK_OPTIONS)
 def ds_isoseq2():
     """
@@ -740,7 +740,7 @@ def pb_isoseq_collapse():
                                  gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                  sample_prefix_pickle=to_entry("sample_prefix_pickle"))
 
-@sa3_register("pb_isoseq2_cluster", "Internal Iso-Seq2 clustering pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.ISOSEQ2, Tags.INTERNAL,))
+@sa3_register("pb_isoseq2_cluster", "Internal Iso-Seq2 clustering pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.INTERNAL,))
 def pb_isoseq2_cluster():
     return _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
                                  ccs_ds=Constants.ENTRY_DS_CCS,
