@@ -326,20 +326,6 @@ def hgap4_view_rules():
     return blacklist + whitelist + customlist + _log_view_rules()
 
 
-#Barcoding
-@register_pipeline_rules("sa3_ds_barcode")
-def barcode_view_rules():
-    whitelist = _to_whitelist([
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
-    ])
-    blacklist = _to_blacklist([
-        ("pbreports.tasks.barcode_report-out-0", FileTypes.REPORT)
-    ])
-    return whitelist + blacklist + _log_view_rules()
-
-
 @register_pipeline_rules("sa3_ds_barcode2")
 def barcode_view_rules():
     whitelist = _to_whitelist([

@@ -361,22 +361,15 @@ def ds_laa():
     return _core_laa_plus(Constants.ENTRY_DS_SUBREAD)
 
 
-def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD, bc_task="barcoding.tasks.lima"):
+def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
     return [
-        (subreads, "{t}:0".format(t=bc_task)),
-        (Constants.ENTRY_DS_BARCODE, "{t}:1".format(t=bc_task)),
-        ("{t}:0".format(t=bc_task), "pbreports.tasks.barcode_report:0"),
+        (subreads, "barcoding.tasks.lima:0"),
+        (Constants.ENTRY_DS_BARCODE, "barcoding.tasks.lima:1"),
+        ("barcoding.tasks.lima:0", "pbcoretools.tasks.update_barcoded_sample_metadata:0"),
+        (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
+        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbreports.tasks.barcode_report:0"),
         (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:1")
     ]
-
-
-@sa3_register("sa3_ds_barcode", "Barcoding (deprecated bam2bam version)", "0.1.0",
-              tags=(Tags.BARCODE,Tags.INTERNAL))
-def ds_barcode():
-    """
-    SubreadSet barcoding pipeline
-    """
-    return _core_barcode(bc_task="pbcoretools.tasks.bam2bam_barcode")
 
 
 BARCODING_OPTIONS = {
@@ -396,8 +389,8 @@ def ds_barcode2_laa():
     """
     Combined barcoding and long amplicon analysis pipeline
     """
-    b1  = _core_barcode(bc_task="barcoding.tasks.lima")
-    b2 = [("barcoding.tasks.lima:0", "pbcoretools.tasks.datastore_to_subreads:0")]
+    b1  = _core_barcode()
+    b2 = [("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0")]
     subreadset = "pbcoretools.tasks.datastore_to_subreads:0"
     b3 = _core_laa_plus(subreadset)
     return b1 + b2 + b3
@@ -433,9 +426,9 @@ def pb_barcode2_ccs():
     """
     Combined barcoding and CCS pipeline
     """
-    b1 = _core_barcode(bc_task="barcoding.tasks.lima")
+    b1 = _core_barcode()
     b2 = [
-        ("barcoding.tasks.lima:0", "pbcoretools.tasks.datastore_to_subreads:0"),
+        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0"),
         ("pbcoretools.tasks.datastore_to_subreads:0", "pbcoretools.tasks.filterdataset:0")
     ]
     b3 = _core_ccs("pbcoretools.tasks.filterdataset:0")
