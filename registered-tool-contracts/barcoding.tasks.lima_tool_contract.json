@@ -29,7 +29,7 @@
             {
                 "default_name": "lima_output",
                 "description": "Datastore containing datasets",
-                "file_type_id": "PacBio.FileTypes.Datastore",
+                "file_type_id": "PacBio.FileTypes.json",
                 "id": "datastore_output",
                 "title": "Datastore"
             }
