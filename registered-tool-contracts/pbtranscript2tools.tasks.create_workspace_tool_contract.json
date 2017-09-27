@@ -1,0 +1,87 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbtranscript2tools.tasks.create_workspace --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "Create IsoSeq2 work space directory",
+        "schema_options": [
+            {
+                "optionTypeId": "integer",
+                "default": 100,
+                "id": "pbtranscript2tools.task_options.qv_trim_5p",
+                "name": "Trim QVs 5'",
+                "description": "Ignore QV of n bases in the 5' end"
+            },
+            {
+                "optionTypeId": "integer",
+                "default": 30,
+                "id": "pbtranscript2tools.task_options.qv_trim_3p",
+                "name": "Trim QVs 3'",
+                "description": "Ignore QV of n bases in the 3' end"
+            },
+            {
+                "optionTypeId": "float",
+                "default": 0.99,
+                "id": "pbtranscript2tools.task_options.hq_min_accuracy",
+                "name": "Minimum Quiver|Arrow Accuracy",
+                "description": "Minimum Allowed Arrow|Quiver Accuracy to call an isoform as high-quality"
+            },
+            {
+                "optionTypeId": "string",
+                "default": "",
+                "id": "pbtranscript2tools.task_options.sample_name",
+                "name": "Sample Name",
+                "description": "Sample Name, Only Allow Digits and Letters"
+            }
+        ],
+        "output_types": [
+            {
+                "title": "JSON file of the work space",
+                "description": "JSON file of IsoSeq2 work space",
+                "default_name": "isoseq2_workspace",
+                "id": "workspace_json",
+                "file_type_id": "PacBio.FileTypes.json"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.7",
+        "name": "pbtranscript2tools.tasks.create_workspace",
+        "input_types": [
+            {
+                "description": "PacBio SubreadSet",
+                "title": "SubreadSet In",
+                "id": "subreads_in",
+                "file_type_id": "PacBio.DataSet.SubreadSet"
+            },
+            {
+                "description": "PacBio ContigSet",
+                "title": "Full-Length None-Chimeric ContigSet In",
+                "id": "flnc_in",
+                "file_type_id": "PacBio.DataSet.ContigSet"
+            },
+            {
+                "description": "PacBio ContigSet",
+                "title": "None-Full-Length ContigSet In",
+                "id": "nfl_in",
+                "file_type_id": "PacBio.DataSet.ContigSet"
+            },
+            {
+                "description": "PacBio ConsensusReadSet",
+                "title": "Consensus ReadSet In",
+                "id": "ccs_in",
+                "file_type_id": "PacBio.DataSet.ConsensusReadSet"
+            }
+        ],
+        "nproc": 1,
+        "is_distributed": true,
+        "tool_contract_id": "pbtranscript2tools.tasks.create_workspace"
+    },
+    "tool_contract_id": "pbtranscript2tools.tasks.create_workspace"
+}

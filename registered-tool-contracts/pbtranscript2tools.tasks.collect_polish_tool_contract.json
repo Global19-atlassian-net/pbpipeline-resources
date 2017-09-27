@@ -1,0 +1,109 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbtranscript2tools.tasks.collect_polish --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "Collect polish results in workspace",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "Report",
+                "description": "Report in CSV",
+                "default_name": "report",
+                "id": "report",
+                "file_type_id": "PacBio.FileTypes.csv"
+            },
+            {
+                "title": "Summary",
+                "description": "Summary in JSON",
+                "default_name": "summary",
+                "id": "summary",
+                "file_type_id": "PacBio.FileTypes.json"
+            },
+            {
+                "title": "Consensus Isoforms",
+                "description": "Consensus isoforms in FASTA",
+                "default_name": "consensus_isoforms",
+                "id": "consensus_isoforms",
+                "file_type_id": "PacBio.FileTypes.Fasta"
+            },
+            {
+                "title": "Consensus Isoforms",
+                "description": "consensus isoforms in ContigSet",
+                "default_name": "consensus_isoforms",
+                "id": "consensus_isoforms",
+                "file_type_id": "PacBio.DataSet.ContigSet"
+            },
+            {
+                "title": "Polished HQ Isoforms",
+                "description": "Polished HQ isoforms in FASTA",
+                "default_name": "all_arrowed_hq",
+                "id": "all_arrowed_hq",
+                "file_type_id": "PacBio.FileTypes.Fasta"
+            },
+            {
+                "title": "Polished HQ Isoforms",
+                "description": "Polished HQ isoforms in FASTQ",
+                "default_name": "all_arrowed_hq",
+                "id": "all_arrowed_hq",
+                "file_type_id": "PacBio.FileTypes.Fastq"
+            },
+            {
+                "title": "Polished HQ Isoforms",
+                "description": "Polished HQ isoforms in ContigSet",
+                "default_name": "all_arrowed_hq",
+                "id": "all_arrowed_hq",
+                "file_type_id": "PacBio.DataSet.ContigSet"
+            },
+            {
+                "title": "Polished LQ Isoforms",
+                "description": "Polished LQ isoforms in FASTA",
+                "default_name": "all_arrowed_lq",
+                "id": "all_arrowed_lq",
+                "file_type_id": "PacBio.FileTypes.Fasta"
+            },
+            {
+                "title": "Polished LQ Isoforms",
+                "description": "Polished LQ isoforms in FASTQ",
+                "default_name": "all_arrowed_lq",
+                "id": "all_arrowed_lq",
+                "file_type_id": "PacBio.FileTypes.Fastq"
+            },
+            {
+                "title": "Polished LQ Isoforms",
+                "description": "Polished LQ isoforms in ContigSet",
+                "default_name": "all_arrowed_lq",
+                "id": "all_arrowed_lq",
+                "file_type_id": "PacBio.DataSet.ContigSet"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.7",
+        "name": "pbtranscript2tools.tasks.collect_polish",
+        "input_types": [
+            {
+                "description": "IsoSeq2 WorkSpace JSON",
+                "title": "Workspace JSON In",
+                "id": "workspace_json",
+                "file_type_id": "PacBio.FileTypes.json"
+            },
+            {
+                "description": "polish Done Sentinel TXT",
+                "title": "polish Done Sentinel",
+                "id": "polish_done",
+                "file_type_id": "PacBio.FileTypes.txt"
+            }
+        ],
+        "nproc": "$max_nproc",
+        "is_distributed": true,
+        "tool_contract_id": "pbtranscript2tools.tasks.collect_polish"
+    },
+    "tool_contract_id": "pbtranscript2tools.tasks.collect_polish"
+}
