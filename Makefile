@@ -43,7 +43,9 @@ show-workflow-options:
 	python -c 'import pbsmrtpipe.cli; pbsmrtpipe.cli.main(["pbsmrtpipe", "show-workflow-options"])' | grep "^Option" | sed 's/.*:\ *//; s/.*\.//;' > workflow_options.txt
 
 pipeline-template-json:
-	python make_pipeline_json.py
+	PB_TOOL_CONTRACT_DIR=$(PB_TOOL_CONTRACT_DIR) \
+		SMRT_IGNORE_PIPELINE_BUNDLE=true \
+		python make_pipeline_json.py
 
 pipeline-datastore-view-rules:
 	$(eval PB_TOOL_CONTRACT_DIR := `readlink -f registered-tool-contracts`)

@@ -216,15 +216,6 @@ def _laa_view_rules():
     return whitelist + blacklist + customlist + _log_view_rules()
 
 
-def _laa_barcode_view_rules():
-    whitelist = _to_whitelist([
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
-    ])
-    return whitelist + _laa_view_rules()
-
-
 def _mv_view_rules():
     whitelist = _to_whitelist([
         ("pysiv2.tasks.minor_variants-out-1", FileTypes.ZIP),
@@ -241,15 +232,6 @@ def _mv_view_rules():
         ("pbreports.tasks.minor_variants_report-out-0", FileTypes.REPORT)
     ])
     return whitelist + blacklist + _log_view_rules()
-
-
-def _mv_barcode_view_rules():
-    whitelist = _to_whitelist([
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS),
-    ])
-    return whitelist + _mv_view_rules()
 
 
 def _resequencing_view_rules():
@@ -330,9 +312,12 @@ def hgap4_view_rules():
 def barcode_view_rules():
     whitelist = _to_whitelist([
         ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
     ])
-    return whitelist + _log_view_rules()
+    blacklist = _to_blacklist([
+        ("barcoding.tasks.lima-out-0", FileTypes.JSON),
+        ("pbcoretools.tasks.update_barcoded_sample_metadata-out-0", FileTypes.DATASTORE)
+    ])
+    return blacklist + whitelist + _log_view_rules()
 
 
 #Base Modification Detection
