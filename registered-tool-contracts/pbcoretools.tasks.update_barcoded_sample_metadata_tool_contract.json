@@ -16,9 +16,15 @@
                 "title": "<FileType id=PacBio.FileTypes.json name=file >"
             },
             {
-                "description": "description for PacBio.DataSet.BarcodeSet_1",
+                "description": "description for PacBio.DataSet.SubreadSet_1",
+                "file_type_id": "PacBio.DataSet.SubreadSet",
+                "id": "Label PacBio.DataSet.SubreadSet_1",
+                "title": "<DataSetFileType id=PacBio.DataSet.SubreadSet name=file >"
+            },
+            {
+                "description": "description for PacBio.DataSet.BarcodeSet_2",
                 "file_type_id": "PacBio.DataSet.BarcodeSet",
-                "id": "Label PacBio.DataSet.BarcodeSet_1",
+                "id": "Label PacBio.DataSet.BarcodeSet_2",
                 "title": "<DataSetFileType id=PacBio.DataSet.BarcodeSet name=file >"
             }
         ],
