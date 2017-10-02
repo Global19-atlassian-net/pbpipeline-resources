@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.7",
         "description": "Quick tool fasta2referenceset pbcoretools.tasks.fasta2referenceset",
         "input_types": [
             {
@@ -18,7 +18,7 @@
         ],
         "is_distributed": true,
         "name": "Tool fasta2referenceset",
-        "nproc": 1,
+        "nproc": 4,
         "output_types": [
             {
                 "default_name": "reference",
