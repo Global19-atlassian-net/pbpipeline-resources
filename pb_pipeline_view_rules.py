@@ -109,6 +109,7 @@ def register_pipeline_rules(pipeline_id):
 
         def wrapper(*args, **kwds):
             return func(*args, **kwds)
+        return wrapper
     return deco_wrapper
 
 
