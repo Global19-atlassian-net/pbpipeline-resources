@@ -320,6 +320,11 @@ def barcode_view_rules():
     return blacklist + whitelist + _log_view_rules()
 
 
+@register_pipeline_rules("sa3_ds_barcode2_manual")
+def barcode_view_rules_2():
+    return barcode_view_rules()
+
+
 #Base Modification Detection
 @register_pipeline_rules("ds_modification_detection")
 def basemod_view_rules():
