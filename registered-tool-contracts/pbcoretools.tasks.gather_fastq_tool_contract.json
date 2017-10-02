@@ -38,7 +38,7 @@
                 "file_type_id": "PacBio.FileTypes.CHUNK"
             }
         ],
-        "nproc": 1,
+        "nproc": 4,
         "is_distributed": true,
         "tool_contract_id": "pbcoretools.tasks.gather_fastq"
     },
