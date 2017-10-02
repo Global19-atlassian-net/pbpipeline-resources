@@ -376,13 +376,25 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
 BARCODING_OPTIONS = {
     "lima.task_options.library_same_tc": True
 }
-@sa3_register("sa3_ds_barcode2", "Barcoding", "0.1.0",
-              tags=(Tags.BARCODE,), task_options=BARCODING_OPTIONS)
+@sa3_register("sa3_ds_barcode2", "Demultiplex Barcodes (Auto)", "0.1.0",
+              tags=(Tags.BARCODE,Tags.INTERNAL), task_options=BARCODING_OPTIONS)
 def ds_barcode2():
     """
     SubreadSet barcoding pipeline
     """
     return _core_barcode()
+
+
+@sa3_register("sa3_ds_barcode2_manual", "Demultiplex Barcodes", "0.1.0",
+              tags=(Tags.BARCODE,), task_options=BARCODING_OPTIONS)
+def ds_barcode2():
+    """
+    SubreadSet barcoding pipeline
+    """
+    b1 = [
+        (Constants.ENTRY_DS_SUBREAD, "pbcoretools.tasks.reparent_subreads:0")
+    ]
+    return b1 + _core_barcode("pbcoretools.tasks.reparent_subreads:0")
 
 
 @sa3_register("pb_barcode2_laa", "LAA with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.LAA, Tags.INTERNAL), task_options=BARCODING_OPTIONS)

@@ -109,6 +109,7 @@ def register_pipeline_rules(pipeline_id):
 
         def wrapper(*args, **kwds):
             return func(*args, **kwds)
+        return wrapper
     return deco_wrapper
 
 
@@ -318,6 +319,11 @@ def barcode_view_rules():
         ("pbcoretools.tasks.update_barcoded_sample_metadata-out-0", FileTypes.DATASTORE)
     ])
     return blacklist + whitelist + _log_view_rules()
+
+
+@register_pipeline_rules("sa3_ds_barcode2_manual")
+def barcode_view_rules_2():
+    return barcode_view_rules()
 
 
 #Base Modification Detection
