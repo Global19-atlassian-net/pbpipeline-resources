@@ -2,7 +2,9 @@
   "id": "pbsmrtpipe.pipelines.sa3_ds_sv",
   "name": "Structural Variant Calling",
   "description": "Structural Variant Calling",
-  "inputFilters": "[{\"field\":\"bioSampleName\", \"operator\": \"!=\", \"value\": \"[multiple]\"}]",
+  "inputFilters": [
+    {"field": "bioSampleName", "operator": "!=", "value": "[multiple]"}
+  ],
   "taskOptions": [
     {"id": "pbsvtools.task_options.svlength", "hidden": false, "advanced": false},
     {"id": "pbsvtools.task_options.min_readcount", "hidden": false, "advanced": false},
