@@ -579,15 +579,27 @@ def _core_isoseq_cluster_chunk_by_bins(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
            ("pbtranscript.tasks.gather_polished_isoforms_in_each_bin:0", "pbtranscript.tasks.ice_cleanup:1")]
     return b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10
 
-def _core_isoseq_collapse(hq_isoforms_hq, gmap_ref_ds, sample_prefix_pickle):
+def _core_isoseq_collapse(hq_isoforms_fq, gmap_ref_ds, sample_prefix_pickle):
     """Core isoseq collapse mapped isoforms pipeline.
     """
-    b1 = [(hq_isoforms_hq, "pbtranscript.tasks.map_isoforms_to_genome:0"),
+    b1 = [(hq_isoforms_fq, "pbtranscript.tasks.map_isoforms_to_genome:0"),
           (gmap_ref_ds, "pbtranscript.tasks.map_isoforms_to_genome:1")]
-    b2 = [(hq_isoforms_hq, "pbtranscript.tasks.post_mapping_to_genome:0"),
+    b2 = [(hq_isoforms_fq, "pbtranscript.tasks.post_mapping_to_genome:0"),
           ("pbtranscript.tasks.map_isoforms_to_genome:0", "pbtranscript.tasks.post_mapping_to_genome:1"),
           (sample_prefix_pickle, "pbtranscript.tasks.post_mapping_to_genome:2")]
     return b1 + b2
+
+def _core_isoseq2_collapse(ws_json, hq_isoforms_fq, gmap_ref_ds, sample_to_uc_pickle_json):
+    """Core isoseq2 collapse mapped isoforms pipeline.
+    """
+    b1 = [(hq_isoforms_fq, "pbtranscript.tasks.map_isoforms_to_genome:0"),
+          (gmap_ref_ds, "pbtranscript.tasks.map_isoforms_to_genome:1")]
+    b2 = [(ws_json, "pbtranscript2tools.tasks.post_mapping_to_genome:0"),
+          (hq_isoforms_fq, "pbtranscript2tools.tasks.post_mapping_to_genome:1"),
+          ("pbtranscript.tasks.map_isoforms_to_genome:0", "pbtranscript2tools.tasks.post_mapping_to_genome:2"),
+          (sample_to_uc_pickle_json, "pbtranscript2tools.tasks.post_mapping_to_genome:3")]
+    return b1 + b2
+
 
 def _core_isoseq2_cluster(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
     """Core IsoSeq2 Cluster"""
@@ -667,7 +679,7 @@ def ds_isoseq_with_genome():
                                             ccs_ds="pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0",
                                             flnc_ds="pbtranscript.tasks.classify:1",
                                             nfl_ds="pbtranscript.tasks.classify:2")
-    b3 = _core_isoseq_collapse(hq_isoforms_hq="pbtranscript.tasks.combine_cluster_bins:4",
+    b3 = _core_isoseq_collapse(hq_isoforms_fq="pbtranscript.tasks.combine_cluster_bins:4",
                                gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                sample_prefix_pickle="pbtranscript.tasks.combine_cluster_bins:7")
     return b1 + b2 + b3
@@ -685,6 +697,21 @@ def ds_isoseq2():
                                ccs_ds="pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0",
                                flnc_ds="pbtranscript.tasks.classify:1",
                                nfl_ds="pbtranscript.tasks.classify:2")
+    return b1 + b2
+
+
+@sa3_register("sa3_ds_isoseq2_with_genome", "Iso-Seq2 with Mapping", "0.1.0",
+              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ),
+              task_options=ISOSEQ_TASK_OPTIONS)
+def ds_isoseq2_with_genome():
+    """
+    Main Iso-Seq2 with genome pipeline, starting from subreads, end at collapsed isoform families.
+    """
+    b1 = ds_isoseq2()
+    b2 = _core_isoseq2_collapse(ws_json="pbtranscript2tools.tasks.create_workspace:0", # ws.json
+                                hq_isoforms_fq="pbtranscript2tools.tasks.collect_polish:5", # all_arrowed_hq.fq
+                                gmap_ref_ds=Constants.ENTRY_DS_GMAPREF, # gmap reference ds
+                                sample_to_uc_pickle_json="pbtranscript2tools.tasks.collect_polish:10") # sample_to_uc_pickle.json
     return b1 + b2
 
 
@@ -731,7 +758,7 @@ def pb_isoseq_cluster_with_genome():
                                             ccs_ds=Constants.ENTRY_DS_CCS,
                                             flnc_ds=to_entry("e_flnc_fa"),
                                             nfl_ds=to_entry("e_nfl_fa"))
-    b2 = _core_isoseq_collapse(hq_isoforms_hq="pbtranscript.tasks.combine_cluster_bins:4",
+    b2 = _core_isoseq_collapse(hq_isoforms_fq="pbtranscript.tasks.combine_cluster_bins:4",
                                gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                sample_prefix_pickle="pbtranscript.tasks.combine_cluster_bins:7")
     return b1 + b2
@@ -743,9 +770,10 @@ def pb_isoseq_collapse():
     Internal Iso-Seq pipeline, starting from an existing Iso-Seq job, continuing to collapse,
     continue to collapse, count and filter isoforms, requiring a reference genome GMAP dataset.
     """
-    return _core_isoseq_collapse(hq_isoforms_hq=to_entry("hq_isoforms_hq"),
+    return _core_isoseq_collapse(hq_isoforms_fq=to_entry("hq_isoforms_fq"),
                                  gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                  sample_prefix_pickle=to_entry("sample_prefix_pickle"))
+
 
 @sa3_register("pb_isoseq2_cluster", "Internal Iso-Seq2 clustering pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.INTERNAL,))
 def pb_isoseq2_cluster():

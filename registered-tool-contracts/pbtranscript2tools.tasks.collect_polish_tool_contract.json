@@ -83,6 +83,13 @@
                 "default_name": "all_arrowed_lq",
                 "id": "all_arrowed_lq",
                 "file_type_id": "PacBio.DataSet.ContigSet"
+            },
+            {
+                "title": "Dict of HQ/LQ Sample Prefix in JSON",
+                "description": "Dict of HQ/LQ Sample Prefix in JSON",
+                "default_name": "sample_to_uc_pickle",
+                "id": "sample_to_uc_pickle",
+                "file_type_id": "PacBio.FileTypes.json"
             }
         ],
         "_comment": "Created by pbcommand 0.6.7",
