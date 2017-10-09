@@ -136,7 +136,7 @@ def _log_view_rules():
     return whitelist
 
 
-def _isoseq_cluster_view_rules():
+def _isoseq_classify_view_rules():
     whitelist = _to_whitelist([
         ("pbtranscript.tasks.classify-out-2", FileTypes.DS_CONTIG),
         ("pbtranscript.tasks.classify-out-1", FileTypes.DS_CONTIG),
@@ -181,7 +181,34 @@ def _isoseq_view_rules():
         ("pbtranscript.tasks.ice_cleanup-out-0", FileTypes.TXT),
         ("pbreports.tasks.isoseq_cluster-out-0", FileTypes.REPORT)
     ])
-    return whitelist + blacklist + _isoseq_cluster_view_rules()
+    return whitelist + blacklist + _isoseq_classify_view_rules()
+
+
+def _isoseq2_view_rules():
+    def f(i):
+        return f('pbtranscript2tools.tasks.collect_polish-out-{i}'.format(i=i))
+    whitelist = _to_whitelist([
+        (f(0), FileTypes.CSV), # report.csv
+        (f(2), FileTypes.FASTA), # consensus_isoforms.fasta
+        (f(4), FileTypes.FASTA), # all_arrowed_hq.fasta
+        (f(5), FileTypes.FASTQ), # all_arrowed_hq.fastq
+        (f(7), FileTypes.FASTA), # all_arrowed_lq.fasta
+        (f(8), FileTypes.FASTQ) # all_arrowed_lq.fastq
+    ])
+    return whitelist + _isoseq_classify_view_rules()
+
+def _isoseq2_mapping_view_rules():
+    def f(i):
+        return 'pbtranscript2tools.tasks.post_mapping_to_genome-out-{i}'.format(i=i)
+    whitelist = _to_whitelist([
+        ("pbtranscript.tasks.map_isoforms_to_genome-out-0", FileTypes.SAM), # GMAP mapping HQ isoforms to ref in SAM
+        (f(0), FileTypes.FASTQ), # collapsed filtered isoforms in fastq
+        (f(1), FileTypes.GFF), # collapsed filtered isoforms to reference in GFF
+        (f(2), FileTypes.TXT), # abundance info of collapsed filtered isoforms in TXT
+        (f(3), FileTypes.TXT), # collapsed filtered isoforms groups and their associated HQ isoforms
+        (f(4), FileTypes.TXT) # Read status of FLNC/NFL reads, associated with collapsed isoform groups
+    ])
+    return whitelist + _isoseq2_view_rules()
 
 
 def _isoseq_mapping_view_rules():
@@ -423,7 +450,7 @@ def isoseq_view_rules():
 #Iso-Seq Classify Only
 @register_pipeline_rules("sa3_ds_isoseq_classify")
 def isoseq_classify_view_rules():
-    return _isoseq_cluster_view_rules()
+    return _isoseq_classify_view_rules()
 
 
 #Iso-Seq with Mapping
