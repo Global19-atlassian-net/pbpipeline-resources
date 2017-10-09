@@ -1,0 +1,122 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbtranscript2tools.tasks.post_mapping_to_genome --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "Based on alignments mapping HQ isoforms to reference genome, collapse HQ isoforms into gene families and filter by count.",
+        "schema_options": [
+            {
+                "optionTypeId": "float",
+                "default": 0.99,
+                "id": "pbtranscript2tools.task_options.min_aln_coverage",
+                "name": "Min GMAP Alignment Query Coverage",
+                "description": "Minimum Query Coverage to Analyze a GMAP Alignment"
+            },
+            {
+                "optionTypeId": "float",
+                "default": 0.95,
+                "id": "pbtranscript2tools.task_options.min_aln_identity",
+                "name": "Min GMAP Alignment Identity",
+                "description": "Minimum Identity to analyze a GMAP Alignment"
+            },
+            {
+                "optionTypeId": "integer",
+                "default": 5,
+                "id": "pbtranscript2tools.task_options.max_fuzzy_junction",
+                "name": "Max Edit Distance",
+                "description": "Maximum Edit Distance between Merge-able Fuzzy Junctions"
+            },
+            {
+                "optionTypeId": "boolean",
+                "default": false,
+                "id": "pbtranscript2tools.task_options.allow_extra_5exon",
+                "name": "Allow 5' shorter transcripts",
+                "description": "True: Collapse shorter 5' transcripts. False: Don't collapse shorter 5' transcripts"
+            },
+            {
+                "optionTypeId": "integer",
+                "default": 2,
+                "id": "pbtranscript2tools.task_options.min_fl_count",
+                "name": "Min FLNC count to not filter collpased isoform",
+                "description": "Minimum number of FLNC reads to not filter a collapsed isoform"
+            }
+        ],
+        "output_types": [
+            {
+                "title": "Collapsed Filtered Isoforms",
+                "description": "Representative sequences of collapsed filtered isoforms",
+                "default_name": "output_mapped",
+                "id": "collapsed_filtered_isoforms_fq",
+                "file_type_id": "PacBio.FileTypes.Fastq"
+            },
+            {
+                "title": "Collapsed Filtered Isoforms",
+                "description": "Collapsed filtered isoforms gff",
+                "default_name": "output_mapped",
+                "id": "collapsed_filtered_isoforms_gff",
+                "file_type_id": "PacBio.FileTypes.gff"
+            },
+            {
+                "title": "Isoform Abundance",
+                "description": "Abundance file",
+                "default_name": "output_mapped_abundance",
+                "id": "abundance_txt",
+                "file_type_id": "PacBio.FileTypes.txt"
+            },
+            {
+                "title": "Collapsed Isoform Groups",
+                "description": "Collapsed isoform groups",
+                "default_name": "output_mapped_groups",
+                "id": "groups_txt",
+                "file_type_id": "PacBio.FileTypes.txt"
+            },
+            {
+                "title": "FL nFL Reads Status",
+                "description": "Read status of FL and nFL reads",
+                "default_name": "output_mapped_read_stat",
+                "id": "read_stat_txt",
+                "file_type_id": "PacBio.FileTypes.txt"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.7",
+        "name": "pbtranscript2tools.tasks.post_mapping_to_genome",
+        "input_types": [
+            {
+                "description": "IsoSeq2 WorkSpace JSON",
+                "title": "Workspace JSON In",
+                "id": "workspace_json",
+                "file_type_id": "PacBio.FileTypes.json"
+            },
+            {
+                "description": "HQ polished isoforms in FASTQ file",
+                "title": "FASTQ In",
+                "id": "hq_isoforms_fq",
+                "file_type_id": "PacBio.FileTypes.Fastq"
+            },
+            {
+                "description": "Sorted GMAP SAM file",
+                "title": "SAM In",
+                "id": "sorted_gmap_sam",
+                "file_type_id": "PacBio.FileTypes.sam"
+            },
+            {
+                "description": "Sample Prefix to Pickle JSON",
+                "title": "Sample Prefix to Pickle JSON In",
+                "id": "sample_to_uc_pickle_json",
+                "file_type_id": "PacBio.FileTypes.json"
+            }
+        ],
+        "nproc": 1,
+        "is_distributed": true,
+        "tool_contract_id": "pbtranscript2tools.tasks.post_mapping_to_genome"
+    },
+    "tool_contract_id": "pbtranscript2tools.tasks.post_mapping_to_genome"
+}
