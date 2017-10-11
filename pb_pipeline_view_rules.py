@@ -460,17 +460,13 @@ def isoseq_with_genome_view_rules():
     return _isoseq_mapping_view_rules()
 
 
-#Iso-Seq2
 @register_pipeline_rules("sa3_ds_isoseq2")
 def isoseq2_view_rules():
-    """View rules for isoseq2."""
     return _isoseq2_view_rules()
 
 
-#Iso-Seq2 with genome
 @register_pipeline_rules("sa3_ds_isoseq2_with_genome")
 def isoseq2_with_genome_view_rules():
-    """View rules for isoseq2 with genome."""
     return _isoseq2_mapping_view_rules()
 
 
