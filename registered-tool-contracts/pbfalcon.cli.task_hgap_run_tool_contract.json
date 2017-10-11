@@ -5,7 +5,7 @@
         "exe": "python -m pbfalcon.cli.task_hgap_run --resolved-tool-contract ",
         "env": {}
     },
-    "tool_contract_id": "falcon_ns.tasks.task_hgap_run",
+    "schema_version": "2.0.0",
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [
@@ -92,7 +92,7 @@
                 "file_type_id": "PacBio.FileTypes.log"
             }
         ],
-        "_comment": "Created by v0.4.14",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Tool task_hgap_run",
         "input_types": [
             {
@@ -117,5 +117,6 @@
         "nproc": "$max_nproc",
         "is_distributed": false,
         "tool_contract_id": "falcon_ns.tasks.task_hgap_run"
-    }
+    },
+    "tool_contract_id": "falcon_ns.tasks.task_hgap_run"
 }

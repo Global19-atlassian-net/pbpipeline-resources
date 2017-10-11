@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.DataSet.ContigSet"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Dev ContigSet Gather",
         "input_types": [
             {
@@ -30,7 +30,7 @@
                 "file_type_id": "PacBio.FileTypes.CHUNK"
             }
         ],
-        "nproc": 1,
+        "nproc": 2,
         "is_distributed": true,
         "tool_contract_id": "pbcoretools.tasks.gather_contigset"
     },

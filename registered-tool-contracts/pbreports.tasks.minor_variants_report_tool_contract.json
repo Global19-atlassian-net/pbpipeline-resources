@@ -1,5 +1,5 @@
 {
-    "version": "0.1",
+    "version": "0.1.0",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbreports.report.minor_variants --resolved-tool-contract ",
@@ -9,31 +9,31 @@
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [],
-        "description": "\nSummarizes the Juliet Minor Variants Summary\n",
+        "description": "Minor Variants Report",
         "schema_options": [],
         "output_types": [
             {
-                "title": "Minor Variants Report",
-                "description": "Filename of JSON output report",
+                "title": "Minor Variants",
+                "description": "Filename of JSON output report. Should be name only, and will be written to output dir",
                 "default_name": "report",
                 "id": "report",
                 "file_type_id": "PacBio.FileTypes.JsonReport"
             },
             {
-                "title": "Minor Variants Table",
-                "description": "Supplementary table for JSON output report",
-                "default_name": "variant_summary",
-                "id": "table",
+                "title": "Per-Variant Table",
+                "description": "Filename of CSV output table. Should be name only, and will be written to output dir",
+                "default_name": "report",
+                "id": "csv",
                 "file_type_id": "PacBio.FileTypes.csv"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Minor Variants Report",
         "input_types": [
             {
                 "description": "Juliet Summary JSON",
-                "title": "JSON Report",
-                "id": "json_report",
+                "title": "JSON",
+                "id": "json",
                 "file_type_id": "PacBio.FileTypes.json"
             }
         ],
@@ -43,4 +43,3 @@
     },
     "tool_contract_id": "pbreports.tasks.minor_variants_report"
 }
-

@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<Manifest>
-  <Package>pbpipeline-resources</Package>
-  <Version>5.1.0</Version>
-  <Created>08/21/17 10:56:00 AM</Created>
-  <Author>build</Author>
-  <Name>SMRT Link pipeline resources</Name>
-  <Description>Pipelines and view rules for SMRT Link and pbsmrtpipe</Description>
-</Manifest>

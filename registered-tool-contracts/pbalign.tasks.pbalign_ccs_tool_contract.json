@@ -1,5 +1,5 @@
 {
-    "version": "0.3.0",
+    "version": "0.3.1",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbalign.ccs --resolved-tool-contract",
@@ -51,7 +51,7 @@
                 "file_type_id": "PacBio.DataSet.ConsensusAlignmentSet"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "pbalign.tasks.pbalign_ccs",
         "input_types": [
             {

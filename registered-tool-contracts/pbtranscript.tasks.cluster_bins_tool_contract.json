@@ -1,45 +1,46 @@
 {
-    "version": "1.0.0.177015", 
+    "version": "1.0.1.TAG-1470",
     "driver": {
-        "serialization": "json", 
-        "exe": "python -m pbtranscript.tasks.cluster_bins --resolved-tool-contract ", 
+        "serialization": "json",
+        "exe": "python -m pbtranscript.tasks.cluster_bins --resolved-tool-contract ",
         "env": {}
-    }, 
-    "tool_contract_id": "pbtranscript.tasks.cluster_bins", 
+    },
+    "schema_version": "2.0.0",
     "tool_contract": {
-        "task_type": "pbsmrtpipe.task_types.standard", 
+        "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [
             "$tmpdir"
-        ], 
-        "description": "Constants used in pbtranscript.tasks.cluster_bins", 
-        "schema_options": [], 
+        ],
+        "description": "Constants used in pbtranscript.tasks.cluster_bins",
+        "schema_options": [],
         "output_types": [
             {
-                "title": "Cluster Done Txt file", 
-                "description": "Cluster Done Txt file.", 
-                "default_name": "cluster_chunks_done", 
-                "id": "cluster done txt", 
+                "title": "Cluster Done Txt file",
+                "description": "Cluster Done Txt file.",
+                "default_name": "cluster_chunks_done",
+                "id": "cluster done txt",
                 "file_type_id": "PacBio.FileTypes.txt"
             }
-        ], 
-        "_comment": "Created by v0.3.25", 
-        "name": "pbtranscript.tasks.cluster_bins", 
+        ],
+        "_comment": "Created by pbcommand 0.6.5",
+        "name": "pbtranscript.tasks.cluster_bins",
         "input_types": [
             {
-                "description": "Cluster chunks pickle file", 
-                "title": "Pickle In", 
-                "id": "cluster_chunks_pickle", 
+                "description": "Cluster chunks pickle file",
+                "title": "Pickle In",
+                "id": "cluster_chunks_pickle",
                 "file_type_id": "PacBio.FileTypes.pickle"
-            }, 
+            },
             {
-                "description": "PacBio ConsensusReadSet", 
-                "title": "ConsensusReadSet In", 
-                "id": "ccs_in", 
+                "description": "PacBio ConsensusReadSet",
+                "title": "ConsensusReadSet In",
+                "id": "ccs_in",
                 "file_type_id": "PacBio.DataSet.ConsensusReadSet"
             }
-        ], 
-        "nproc": "$max_nproc", 
-        "is_distributed": true, 
+        ],
+        "nproc": "$max_nproc",
+        "is_distributed": true,
         "tool_contract_id": "pbtranscript.tasks.cluster_bins"
-    }
+    },
+    "tool_contract_id": "pbtranscript.tasks.cluster_bins"
 }

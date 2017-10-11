@@ -28,7 +28,7 @@
                 "file_type_id": "PacBio.FileTypes.gff"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "motif_maker.tasks.reprocess",
         "input_types": [
             {

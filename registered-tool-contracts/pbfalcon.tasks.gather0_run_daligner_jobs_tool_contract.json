@@ -5,7 +5,7 @@
         "exe": "python -m pbfalcon.tasks.gather0_run_daligner_jobs --resolved-tool-contract ",
         "env": {}
     },
-    "tool_contract_id": "pbfalcon.tasks.gather0_run_daligner_jobs",
+    "schema_version": "2.0.0",
     "tool_contract": {
         "task_type": "pbsmrtpipe.task_types.gathered",
         "resource_types": [],
@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.generic_fofn"
             }
         ],
-        "_comment": "Created by v0.4.14",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Gather Daligner",
         "input_types": [
             {
@@ -33,5 +33,6 @@
         "nproc": 1,
         "is_distributed": false,
         "tool_contract_id": "pbfalcon.tasks.gather0_run_daligner_jobs"
-    }
+    },
+    "tool_contract_id": "pbfalcon.tasks.gather0_run_daligner_jobs"
 }

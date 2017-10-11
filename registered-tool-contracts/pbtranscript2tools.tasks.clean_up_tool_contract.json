@@ -1,0 +1,46 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbtranscript2tools.tasks.clean_up --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "Clean up intermediate files and directories in workspace",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "Clean Up Done Sentinel",
+                "description": "Clean Up Done Sentinel",
+                "default_name": "clean_up_done",
+                "id": "clean_up_done",
+                "file_type_id": "PacBio.FileTypes.txt"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.7",
+        "name": "pbtranscript2tools.tasks.clean_up",
+        "input_types": [
+            {
+                "description": "IsoSeq2 WorkSpace JSON",
+                "title": "Workspace JSON In",
+                "id": "workspace_json",
+                "file_type_id": "PacBio.FileTypes.json"
+            },
+            {
+                "description": "Report CSV as Sentinel",
+                "title": "Report CSV",
+                "id": "report",
+                "file_type_id": "PacBio.FileTypes.csv"
+            }
+        ],
+        "nproc": "$max_nproc",
+        "is_distributed": true,
+        "tool_contract_id": "pbtranscript2tools.tasks.clean_up"
+    },
+    "tool_contract_id": "pbtranscript2tools.tasks.clean_up"
+}

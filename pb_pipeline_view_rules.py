@@ -109,6 +109,7 @@ def register_pipeline_rules(pipeline_id):
 
         def wrapper(*args, **kwds):
             return func(*args, **kwds)
+        return wrapper
     return deco_wrapper
 
 
@@ -135,7 +136,7 @@ def _log_view_rules():
     return whitelist
 
 
-def _isoseq_cluster_view_rules():
+def _isoseq_classify_view_rules():
     whitelist = _to_whitelist([
         ("pbtranscript.tasks.classify-out-2", FileTypes.DS_CONTIG),
         ("pbtranscript.tasks.classify-out-1", FileTypes.DS_CONTIG),
@@ -180,7 +181,34 @@ def _isoseq_view_rules():
         ("pbtranscript.tasks.ice_cleanup-out-0", FileTypes.TXT),
         ("pbreports.tasks.isoseq_cluster-out-0", FileTypes.REPORT)
     ])
-    return whitelist + blacklist + _isoseq_cluster_view_rules()
+    return whitelist + blacklist + _isoseq_classify_view_rules()
+
+
+def _isoseq2_view_rules():
+    def f(i):
+        return f('pbtranscript2tools.tasks.collect_polish-out-{i}'.format(i=i))
+    whitelist = _to_whitelist([
+        (f(0), FileTypes.CSV), # report.csv
+        (f(2), FileTypes.FASTA), # consensus_isoforms.fasta
+        (f(4), FileTypes.FASTA), # all_arrowed_hq.fasta
+        (f(5), FileTypes.FASTQ), # all_arrowed_hq.fastq
+        (f(7), FileTypes.FASTA), # all_arrowed_lq.fasta
+        (f(8), FileTypes.FASTQ) # all_arrowed_lq.fastq
+    ])
+    return whitelist + _isoseq_classify_view_rules()
+
+def _isoseq2_mapping_view_rules():
+    def f(i):
+        return 'pbtranscript2tools.tasks.post_mapping_to_genome-out-{i}'.format(i=i)
+    whitelist = _to_whitelist([
+        ("pbtranscript.tasks.map_isoforms_to_genome-out-0", FileTypes.SAM), # GMAP mapping HQ isoforms to ref in SAM
+        (f(0), FileTypes.FASTQ), # collapsed filtered isoforms in fastq
+        (f(1), FileTypes.GFF), # collapsed filtered isoforms to reference in GFF
+        (f(2), FileTypes.TXT), # abundance info of collapsed filtered isoforms in TXT
+        (f(3), FileTypes.TXT), # collapsed filtered isoforms groups and their associated HQ isoforms
+        (f(4), FileTypes.TXT) # Read status of FLNC/NFL reads, associated with collapsed isoform groups
+    ])
+    return whitelist + _isoseq2_view_rules()
 
 
 def _isoseq_mapping_view_rules():
@@ -216,15 +244,6 @@ def _laa_view_rules():
     return whitelist + blacklist + customlist + _log_view_rules()
 
 
-def _laa_barcode_view_rules():
-    whitelist = _to_whitelist([
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
-    ])
-    return whitelist + _laa_view_rules()
-
-
 def _mv_view_rules():
     whitelist = _to_whitelist([
         ("pysiv2.tasks.minor_variants-out-1", FileTypes.ZIP),
@@ -241,15 +260,6 @@ def _mv_view_rules():
         ("pbreports.tasks.minor_variants_report-out-0", FileTypes.REPORT)
     ])
     return whitelist + blacklist + _log_view_rules()
-
-
-def _mv_barcode_view_rules():
-    whitelist = _to_whitelist([
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS),
-    ])
-    return whitelist + _mv_view_rules()
 
 
 def _resequencing_view_rules():
@@ -326,18 +336,21 @@ def hgap4_view_rules():
     return blacklist + whitelist + customlist + _log_view_rules()
 
 
-#Barcoding
-@register_pipeline_rules("sa3_ds_barcode")
+@register_pipeline_rules("sa3_ds_barcode2")
 def barcode_view_rules():
     whitelist = _to_whitelist([
         ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
     ])
     blacklist = _to_blacklist([
-        ("pbreports.tasks.barcode_report-out-0", FileTypes.REPORT)
+        ("barcoding.tasks.lima-out-0", FileTypes.JSON),
+        ("pbcoretools.tasks.update_barcoded_sample_metadata-out-0", FileTypes.DATASTORE)
     ])
-    return whitelist + blacklist + _log_view_rules()
+    return blacklist + whitelist + _log_view_rules()
+
+
+@register_pipeline_rules("sa3_ds_barcode2_manual")
+def barcode_view_rules_2():
+    return barcode_view_rules()
 
 
 #Base Modification Detection
@@ -403,25 +416,6 @@ def ccs_mapping_view_rules():
     return whitelist + blacklist + _log_view_rules()
 
 
-#CCS with Barcoding
-@register_pipeline_rules("sa3_ds_barcode_ccs")
-def ccs_barcoding_view_rules():
-    whitelist = _to_whitelist([
-        ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.TGZ),
-        ("pbcoretools.tasks.bam2fasta_ccs-out-0", FileTypes.TGZ),
-        ("pbccs.tasks.ccs-out-0", FileTypes.DS_CCS),
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-        ("pbcoretools.tasks.filterdataset-out-0", FileTypes.DS_SUBREADS),
-        ("pbcoretools.tasks.bam2bam_barcode-out-0", FileTypes.DS_SUBREADS),
-        ("barcoding.tasks.lima-out-0", FileTypes.DS_SUBREADS)
-    ])
-    blacklist = _to_blacklist([
-        ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT),
-        ("pbreports.tasks.barcode_report-out-0", FileTypes.REPORT)
-    ])
-    return whitelist + blacklist + _log_view_rules()
-
-
 #Circular Consensus Sequences (CCS 2)
 @register_pipeline_rules("sa3_ds_ccs")
 def ccs_view_rules():
@@ -456,7 +450,7 @@ def isoseq_view_rules():
 #Iso-Seq Classify Only
 @register_pipeline_rules("sa3_ds_isoseq_classify")
 def isoseq_classify_view_rules():
-    return _isoseq_cluster_view_rules()
+    return _isoseq_classify_view_rules()
 
 
 #Iso-Seq with Mapping
@@ -464,12 +458,6 @@ def isoseq_classify_view_rules():
 def isoseq_with_genome_view_rules():
     """View rules for isoseq with genome."""
     return _isoseq_mapping_view_rules()
-
-
-#LAA with Barcoding
-@register_pipeline_rules("sa3_ds_barcode_laa")
-def laa_barcode_view_rules():
-    return _laa_barcode_view_rules()
 
 
 #Long Amplicon Analysis (LAA 2)
@@ -482,12 +470,6 @@ def laa_view_rules():
 @register_pipeline_rules("sa3_ds_minorseq")
 def mv_view_rules():
     return _mv_view_rules()
-
-
-#Minor Variants Analysis with Barcoding [Beta]
-@register_pipeline_rules("sa3_ds_barcode_minorseq")
-def mv_barcode_view_rules():
-    return _mv_barcode_view_rules()
 
 
 #Resequencing

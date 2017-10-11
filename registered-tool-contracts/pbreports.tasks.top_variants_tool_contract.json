@@ -35,7 +35,7 @@
                 "file_type_id": "PacBio.FileTypes.JsonReport"
             }
         ],
-        "_comment": "Created by pbcommand 0.5.4",
+        "_comment": "Created by pbcommand 0.6.5",
         "name": "Top Variants",
         "input_types": [
             {

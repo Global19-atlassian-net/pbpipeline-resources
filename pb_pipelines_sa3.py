@@ -352,7 +352,7 @@ def _core_laa_plus(subread_ds):
     return laa + split_fastq + consensus_report + inputs_report
 
 
-@sa3_register("sa3_ds_laa", "Long Amplicon Analysis (LAA 2)", "0.1.0", tags=(Tags.LAA, ))
+@sa3_register("sa3_ds_laa", "Long Amplicon Analysis (LAA)", "0.1.0", tags=(Tags.LAA, ))
 def ds_laa():
     """
     Basic Long Amplicon Analysis (LAA) pipeline, starting from subreads.
@@ -361,29 +361,23 @@ def ds_laa():
     return _core_laa_plus(Constants.ENTRY_DS_SUBREAD)
 
 
-def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD, bc_task="barcoding.tasks.lima"):
+def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
     return [
-        (subreads, "{t}:0".format(t=bc_task)),
-        (Constants.ENTRY_DS_BARCODE, "{t}:1".format(t=bc_task)),
-        ("{t}:0".format(t=bc_task), "pbreports.tasks.barcode_report:0"),
+        (subreads, "barcoding.tasks.lima:0"),
+        (Constants.ENTRY_DS_BARCODE, "barcoding.tasks.lima:1"),
+        ("barcoding.tasks.lima:0", "pbcoretools.tasks.update_barcoded_sample_metadata:0"),
+        (subreads, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
+        (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.update_barcoded_sample_metadata:2"),
+        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbreports.tasks.barcode_report:0"),
         (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:1")
     ]
 
 
-@sa3_register("sa3_ds_barcode", "Barcoding (deprecated bam2bam version)", "0.1.0",
-              tags=(Tags.BARCODE,Tags.INTERNAL))
-def ds_barcode():
-    """
-    SubreadSet barcoding pipeline
-    """
-    return _core_barcode(bc_task="pbcoretools.tasks.bam2bam_barcode")
-
-
 BARCODING_OPTIONS = {
-    "lima.task_options.keepsame": True
+    "lima.task_options.library_same_tc": True
 }
-@sa3_register("sa3_ds_barcode2", "Barcoding", "0.1.0",
-              tags=(Tags.BARCODE,), task_options=BARCODING_OPTIONS)
+@sa3_register("sa3_ds_barcode2", "Demultiplex Barcodes (Auto)", "0.1.0",
+              tags=(Tags.BARCODE,Tags.INTERNAL), task_options=BARCODING_OPTIONS)
 def ds_barcode2():
     """
     SubreadSet barcoding pipeline
@@ -391,16 +385,28 @@ def ds_barcode2():
     return _core_barcode()
 
 
-@sa3_register("sa3_ds_barcode2_laa", "LAA with Barcoding", "0.1.0", tags=(Tags.BARCODE, Tags.LAA,), task_options=BARCODING_OPTIONS)
+@sa3_register("sa3_ds_barcode2_manual", "Demultiplex Barcodes", "0.1.0",
+              tags=(Tags.BARCODE,), task_options=BARCODING_OPTIONS)
+def ds_barcode2():
+    """
+    SubreadSet barcoding pipeline
+    """
+    b1 = [
+        (Constants.ENTRY_DS_SUBREAD, "pbcoretools.tasks.reparent_subreads:0")
+    ]
+    return b1 + _core_barcode("pbcoretools.tasks.reparent_subreads:0")
+
+
+@sa3_register("pb_barcode2_laa", "LAA with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.LAA, Tags.INTERNAL), task_options=BARCODING_OPTIONS)
 def ds_barcode2_laa():
     """
     Combined barcoding and long amplicon analysis pipeline
     """
-    b1  = _core_barcode(bc_task="barcoding.tasks.lima")
-    subreadset = "barcoding.tasks.lima:0"
-    b2 = _core_laa_plus(subreadset)
-    return b1 + b2
-
+    b1  = _core_barcode()
+    b2 = [("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0")]
+    subreadset = "pbcoretools.tasks.datastore_to_subreads:0"
+    b3 = _core_laa_plus(subreadset)
+    return b1 + b2 + b3
 
 
 # global defaults for CCS jobs
@@ -417,7 +423,7 @@ def _core_ccs(subread_ds):
     return b3 + b4 + b5
 
 
-@sa3_register("sa3_ds_ccs", "Circular Consensus Sequences (CCS 2)", "0.2.0", tags=(Tags.CCS, ), task_options=CCS_TASK_OPTIONS)
+@sa3_register("sa3_ds_ccs", "Circular Consensus Sequences (CCS)", "0.2.0", tags=(Tags.CCS, ), task_options=CCS_TASK_OPTIONS)
 def ds_ccs():
     """
     Basic ConsensusRead (CCS) pipeline, starting from subreads.
@@ -426,16 +432,18 @@ def ds_ccs():
     return b1 + _core_ccs("pbcoretools.tasks.filterdataset:0")
 
 
-# TODO deprecated, will become internal pipeline
 CCS_BARCODE_OPTIONS = dict(CCS_TASK_OPTIONS)
 CCS_BARCODE_OPTIONS.update(BARCODING_OPTIONS)
-@sa3_register("sa3_ds_barcode2_ccs", "CCS with Barcoding", "0.1.0", tags=(Tags.BARCODE, Tags.CCS,), task_options=CCS_BARCODE_OPTIONS)
-def ds_barcode2_ccs():
+@sa3_register("pb_barcode2_ccs", "CCS with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.CCS, Tags.INTERNAL), task_options=CCS_BARCODE_OPTIONS)
+def pb_barcode2_ccs():
     """
     Combined barcoding and CCS pipeline
     """
-    b1 = _core_barcode(bc_task="barcoding.tasks.lima")
-    b2 = [("barcoding.tasks.lima:0", "pbcoretools.tasks.filterdataset:0")]
+    b1 = _core_barcode()
+    b2 = [
+        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0"),
+        ("pbcoretools.tasks.datastore_to_subreads:0", "pbcoretools.tasks.filterdataset:0")
+    ]
     b3 = _core_ccs("pbcoretools.tasks.filterdataset:0")
     return b1 + b2 + b3
 
@@ -571,15 +579,55 @@ def _core_isoseq_cluster_chunk_by_bins(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
            ("pbtranscript.tasks.gather_polished_isoforms_in_each_bin:0", "pbtranscript.tasks.ice_cleanup:1")]
     return b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10
 
-def _core_isoseq_collapse(hq_isoforms_hq, gmap_ref_ds, sample_prefix_pickle):
+def _core_isoseq_collapse(hq_isoforms_fq, gmap_ref_ds, sample_prefix_pickle):
     """Core isoseq collapse mapped isoforms pipeline.
     """
-    b1 = [(hq_isoforms_hq, "pbtranscript.tasks.map_isoforms_to_genome:0"),
+    b1 = [(hq_isoforms_fq, "pbtranscript.tasks.map_isoforms_to_genome:0"),
           (gmap_ref_ds, "pbtranscript.tasks.map_isoforms_to_genome:1")]
-    b2 = [(hq_isoforms_hq, "pbtranscript.tasks.post_mapping_to_genome:0"),
+    b2 = [(hq_isoforms_fq, "pbtranscript.tasks.post_mapping_to_genome:0"),
           ("pbtranscript.tasks.map_isoforms_to_genome:0", "pbtranscript.tasks.post_mapping_to_genome:1"),
           (sample_prefix_pickle, "pbtranscript.tasks.post_mapping_to_genome:2")]
     return b1 + b2
+
+def _core_isoseq2_collapse(ws_json, hq_isoforms_fq, gmap_ref_ds, sample_to_uc_pickle_json):
+    """Core isoseq2 collapse mapped isoforms pipeline.
+    """
+    b1 = [(hq_isoforms_fq, "pbtranscript.tasks.map_isoforms_to_genome:0"),
+          (gmap_ref_ds, "pbtranscript.tasks.map_isoforms_to_genome:1")]
+    b2 = [(ws_json, "pbtranscript2tools.tasks.post_mapping_to_genome:0"),
+          (hq_isoforms_fq, "pbtranscript2tools.tasks.post_mapping_to_genome:1"),
+          ("pbtranscript.tasks.map_isoforms_to_genome:0", "pbtranscript2tools.tasks.post_mapping_to_genome:2"),
+          (sample_to_uc_pickle_json, "pbtranscript2tools.tasks.post_mapping_to_genome:3")]
+    return b1 + b2
+
+
+def _core_isoseq2_cluster(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
+    """Core IsoSeq2 Cluster"""
+    def f(s):
+        return 'pbtranscript2tools.tasks.' + s
+    b0 = [(subreads_ds, f('sanity_check_params:0'))]
+    b1 = [(subreads_ds, f('create_workspace:0')),
+          (flnc_ds, f('create_workspace:1')),
+          (nfl_ds, f('create_workspace:2')),
+          (ccs_ds, f('create_workspace:3'))]
+    b2 = [(f('create_workspace:0'), f('precluster:0'))] # ws.json
+    b3 = [(f('create_workspace:0'), f('cluster:0')), # ws.json
+          (f('precluster:0'), f('cluster:1'))] # precluster_bins.txt
+    b4 = [(f('create_workspace:0'), f('collect_cluster:0')), # ws.json
+          (f('cluster:0'), f('collect_cluster:1'))] # cluster out sentinel file
+    b5 = [(f('create_workspace:0'), f('polish:0')), # ws.json
+          (f('collect_cluster:0'), f('polish:1'))] # collect_cluster_chunk_prefixes.txt
+    b6 = [(f('create_workspace:0'), f('collect_polish:0')), # ws.json
+          (f('polish:0'), f('collect_polish:1'))] # polish_done.txt
+    # b7: pbreports isoseq_cluster
+    b7 = [(f('collect_polish:2'), "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms fasta
+          (f('collect_polish:1'), "pbreports.tasks.isoseq_cluster:1"), # json report
+          (f('collect_polish:5'), "pbreports.tasks.isoseq_cluster:2"), # HQ isoforms fastq
+          (f('collect_polish:8'), "pbreports.tasks.isoseq_cluster:3")] # LQ isoforms fastq
+    # b8: clean up temporary files and dirs.
+    b8 = [(f('create_workspace:0'), f('clean_up:0')), # ws.json
+          (f('collect_polish:0'), f('clean_up:1'))] # report.csv, used to trigger clean up after collect_polish
+    return b0 + b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8
 
 
 ISOSEQ_TASK_OPTIONS = dict(CCS_TASK_OPTIONS)
@@ -631,10 +679,40 @@ def ds_isoseq_with_genome():
                                             ccs_ds="pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0",
                                             flnc_ds="pbtranscript.tasks.classify:1",
                                             nfl_ds="pbtranscript.tasks.classify:2")
-    b3 = _core_isoseq_collapse(hq_isoforms_hq="pbtranscript.tasks.combine_cluster_bins:4",
+    b3 = _core_isoseq_collapse(hq_isoforms_fq="pbtranscript.tasks.combine_cluster_bins:4",
                                gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                sample_prefix_pickle="pbtranscript.tasks.combine_cluster_bins:7")
     return b1 + b2 + b3
+
+
+@sa3_register("sa3_ds_isoseq2", "Iso-Seq2", "0.1.0",
+              tags=(Tags.CCS, Tags.ISOSEQ),
+              task_options=ISOSEQ_TASK_OPTIONS)
+def ds_isoseq2():
+    """
+    Main Iso-Seq2 pipeline, starting from subreads.
+    """
+    b1 = _core_isoseq_classify("pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0")
+    b2 = _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
+                               ccs_ds="pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0",
+                               flnc_ds="pbtranscript.tasks.classify:1",
+                               nfl_ds="pbtranscript.tasks.classify:2")
+    return b1 + b2
+
+
+@sa3_register("sa3_ds_isoseq2_with_genome", "Iso-Seq2 with Mapping", "0.1.0",
+              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ),
+              task_options=ISOSEQ_TASK_OPTIONS)
+def ds_isoseq2_with_genome():
+    """
+    Main Iso-Seq2 with genome pipeline, starting from subreads, end at collapsed isoform families.
+    """
+    b1 = ds_isoseq2()
+    b2 = _core_isoseq2_collapse(ws_json="pbtranscript2tools.tasks.create_workspace:0", # ws.json
+                                hq_isoforms_fq="pbtranscript2tools.tasks.collect_polish:5", # all_arrowed_hq.fq
+                                gmap_ref_ds=Constants.ENTRY_DS_GMAPREF, # gmap reference ds
+                                sample_to_uc_pickle_json="pbtranscript2tools.tasks.collect_polish:10") # sample_to_uc_pickle.json
+    return b1 + b2
 
 
 @sa3_register("pb_isoseq_classify", "Internal Iso-Seq Classify Only for tests", "0.2.0",
@@ -643,7 +721,7 @@ def pb_isoseq_classify():
     """
     Partial Iso-Seq pipeline (classify step only), starting from ccs.
     This pipeline was added to test isoseq-classify with customer primers on
-    the only data that we currently have (which could not ccs-ed by ccs2).
+    the only data that we currently have (which could not ccs-ed by ccs).
     """
     return _core_isoseq_classify(ccs_ds=Constants.ENTRY_DS_CCS)
 
@@ -680,7 +758,7 @@ def pb_isoseq_cluster_with_genome():
                                             ccs_ds=Constants.ENTRY_DS_CCS,
                                             flnc_ds=to_entry("e_flnc_fa"),
                                             nfl_ds=to_entry("e_nfl_fa"))
-    b2 = _core_isoseq_collapse(hq_isoforms_hq="pbtranscript.tasks.combine_cluster_bins:4",
+    b2 = _core_isoseq_collapse(hq_isoforms_fq="pbtranscript.tasks.combine_cluster_bins:4",
                                gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                sample_prefix_pickle="pbtranscript.tasks.combine_cluster_bins:7")
     return b1 + b2
@@ -692,9 +770,17 @@ def pb_isoseq_collapse():
     Internal Iso-Seq pipeline, starting from an existing Iso-Seq job, continuing to collapse,
     continue to collapse, count and filter isoforms, requiring a reference genome GMAP dataset.
     """
-    return _core_isoseq_collapse(hq_isoforms_hq=to_entry("hq_isoforms_hq"),
+    return _core_isoseq_collapse(hq_isoforms_fq=to_entry("hq_isoforms_fq"),
                                  gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
                                  sample_prefix_pickle=to_entry("sample_prefix_pickle"))
+
+
+@sa3_register("pb_isoseq2_cluster", "Internal Iso-Seq2 clustering pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.INTERNAL,))
+def pb_isoseq2_cluster():
+    return _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
+                                 ccs_ds=Constants.ENTRY_DS_CCS,
+                                 flnc_ds=to_entry("e_flnc_fa"),
+                                 nfl_ds=to_entry("e_nfl_fa"))
 
 
 @sa3_register("sa3_ds_subreads_to_fastx", "Convert BAM to FASTX", "0.1.0", tags=(Tags.CONVERTER,))
@@ -801,13 +887,13 @@ MV_BC_OPTS.update({
     "pbcoretools.task_options.other_filters": "bq>45"
 })
 MV_BC_OPTS.update(BARCODING_OPTIONS)
-# TODO deprecated, will become internal pipeline
-@sa3_register("sa3_ds_barcode2_minorseq", "Minor Variants Analysis with Barcoding [Beta]", "0.1.0", tags=(Tags.MINORVAR,Tags.BARCODE,Tags.BETA), task_options=MV_BC_OPTS)
-def ds_barcode2_minorseq():
-    return _core_minorseq_multiplexed("pbsmrtpipe.pipelines.sa3_ds_barcode2_ccs:pbccs.tasks.ccs:0", Constants.ENTRY_DS_REF)
+@sa3_register("pb_barcode2_minorseq", "Minor Variants Analysis with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.MINORVAR,Tags.BARCODE,Tags.INTERNAL), task_options=MV_BC_OPTS)
+def pb_barcode2_minorseq():
+    return _core_minorseq_multiplexed("pbsmrtpipe.pipelines.pb_barcode2_ccs:pbccs.tasks.ccs:0", Constants.ENTRY_DS_REF)
 
 
 def _core_sv(ds_subread, ds_ref):
+    sample = [(ds_subread, 'pbsvtools.tasks.make_samples:0')]
     prepare = [(ds_ref, 'pbsvtools.tasks.prepare_reference:0')]
     config = [
         (ds_subread, 'pbsvtools.tasks.config:0')
@@ -815,7 +901,8 @@ def _core_sv(ds_subread, ds_ref):
     align = [
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.align:0'),
         (ds_subread, 'pbsvtools.tasks.align:1'),
-        ('pbsvtools.tasks.prepare_reference:0', 'pbsvtools.tasks.align:2')
+        ('pbsvtools.tasks.prepare_reference:0', 'pbsvtools.tasks.align:2'),
+        ('pbsvtools.tasks.make_samples:0', 'pbsvtools.tasks.align:3')
     ]
     call = [
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.call:0'),
@@ -828,9 +915,24 @@ def _core_sv(ds_subread, ds_ref):
         ('pbsvtools.tasks.make_reports:0', 'pbreports.tasks.structural_variants_report:0'),
         ('pbsvtools.tasks.make_reports:1', 'pbreports.tasks.structural_variants_report:1')
     ]
-    return prepare + config + align + call + report
+    return sample + prepare + config + align + call + report
 
 
-@sa3_register("sa3_ds_sv", "Structural Variant Calling [Beta]", "0.1.0", tags=(Tags.SV,))
+@sa3_register("sa3_ds_sv", "Structural Variant Calling", "0.1.0", tags=(Tags.SV,))
 def ds_sv():
     return _core_sv(Constants.ENTRY_DS_SUBREAD, Constants.ENTRY_DS_REF)
+
+
+@sa3_register("pb_mapping_stats", "Generate Mapping Stat Report", "0.1.0", tags=(Tags.MAP, Tags.RPT, Tags.INTERNAL))
+def mapping_stats():
+    return [(Constants.ENTRY_DS_ALIGN, "pbreports.tasks.mapping_stats:0")]
+
+
+@sa3_register("pb_mapping_reports", "Generate All Mapping Reports", "0.1.0", tags=(Tags.MAP, Tags.RPT, Tags.INTERNAL))
+def mapping_reports():
+    return mapping_stats() + [
+        (Constants.ENTRY_DS_ALIGN, "pbreports.tasks.summarize_coverage:0"),
+        (Constants.ENTRY_DS_REF, "pbreports.tasks.summarize_coverage:1"),
+        (Constants.ENTRY_DS_REF, "pbreports.tasks.coverage_report:0"),
+        ("pbreports.tasks.summarize_coverage:0", "pbreports.tasks.coverage_report:1")
+    ]
