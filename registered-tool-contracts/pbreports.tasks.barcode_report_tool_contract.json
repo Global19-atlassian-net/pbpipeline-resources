@@ -1,5 +1,5 @@
 {
-    "version": "2.0",
+    "version": "2.1",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbreports.report.barcode --resolved-tool-contract",
@@ -27,14 +27,20 @@
                 "file_type_id": "PacBio.FileTypes.csv"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.6",
+        "_comment": "Created by pbcommand 0.6.7",
         "name": "barcode_report",
         "input_types": [
             {
-                "description": "Datastore of SubreadSet files",
+                "description": "Datastore of barcoded SubreadSet files",
                 "title": "JSON Datastore or SubreadSet",
-                "id": "subreads",
+                "id": "subreads_bc",
                 "file_type_id": "PacBio.FileTypes.Datastore"
+            },
+            {
+                "description": "Input SubreadSet (without barcodes)",
+                "title": "Input SubreadSet",
+                "id": "subreads_in",
+                "file_type_id": "PacBio.DataSet.SubreadSet"
             },
             {
                 "description": "Barcode DataSet XML",
