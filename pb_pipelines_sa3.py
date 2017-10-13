@@ -369,7 +369,8 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
         (subreads, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
         (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.update_barcoded_sample_metadata:2"),
         ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbreports.tasks.barcode_report:0"),
-        (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:1")
+        (subreads, "pbreports.tasks.barcode_report:1"),
+        (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:2")
     ]
 
 
