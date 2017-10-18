@@ -1,0 +1,40 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbsvtools.tasks.split_alignments_by_sample --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "Split alignments by sample into separate BAM files",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "Alignment set by sample",
+                "description": "Datastore containing set of alignment files, one for each sample",
+                "default_name": "alignments_by_sample",
+                "id": "aln_by_sample",
+                "file_type_id": "PacBio.FileTypes.Datastore"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.7",
+        "name": "pbsvtools.tasks.split_alignments_by_sample",
+        "input_types": [
+            {
+                "description": "Merged, sorted, indexed by gather_align task",
+                "title": "Input alignment file",
+                "id": "alignments",
+                "file_type_id": "PacBio.FileTypes.bam"
+            }
+        ],
+        "nproc": "$max_nproc",
+        "is_distributed": true,
+        "tool_contract_id": "pbsvtools.tasks.split_alignments_by_sample"
+    },
+    "tool_contract_id": "pbsvtools.tasks.split_alignments_by_sample"
+}

@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.vcf"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.7",
         "name": "pbsvtools.tasks.gather_vcf",
         "input_types": [
             {
