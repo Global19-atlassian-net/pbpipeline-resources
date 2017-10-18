@@ -904,7 +904,7 @@ def _core_sv(ds_subread, ds_ref):
         (ds_subread, 'pbsvtools.tasks.align:1'),
         ('pbsvtools.tasks.prepare_reference:0', 'pbsvtools.tasks.align:2'),
         ('pbsvtools.tasks.make_samples:0', 'pbsvtools.tasks.align:3'),
-        ('pbsvtools.tasks.split_alignments_by_sample:0', 'pbsvtools.tasks.align:0')
+        ('pbsvtools.tasks.align:0', 'pbsvtools.tasks.split_alignments_by_sample:0')
     ]
     call = [
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.call:0'),
