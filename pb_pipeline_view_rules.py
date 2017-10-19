@@ -503,7 +503,8 @@ def structural_variant_view_rules():
     whitelist = _to_whitelist([
         ("pbsvtools.tasks.call-out-0", FileTypes.BED),
         ("pbsvtools.tasks.call-out-1", FileTypes.VCF),
-        ("pbsvtools.tasks.align-out-0", FileTypes.BAM)
+        ("pbsvtools.tasks.align-out-0", FileTypes.BAM),
+        ("pbsvtools.tasks.split_alignments_by_sample", FileTypes.BAM)
     ])
     blacklist = _to_blacklist([
         ("pbsvtools.tasks.prepare_reference-out-0", FileTypes.DS_REF),
