@@ -910,10 +910,13 @@ def _core_sv(ds_subread, ds_ref):
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.call:0'),
         ('pbsvtools.tasks.align:0', 'pbsvtools.tasks.call:1'),
         ('pbsvtools.tasks.prepare_reference:0', 'pbsvtools.tasks.call:2'),
-        ('pbsvtools.tasks.prepare_reference:1', 'pbsvtools.tasks.call:3')
+        ('pbsvtools.tasks.prepare_reference:1', 'pbsvtools.tasks.call:3'),
+        ('pbsvtools.tasks.align:0', 'pbsvtools.tasks.sort_sv:0'),
+        ('pbsvtools.tasks.call:0', 'pbsvtools.tasks.sort_sv:1'),
+        ('pbsvtools.tasks.call:1', 'pbsvtools.tasks.sort_sv:2')
     ]
     report = [
-        ('pbsvtools.tasks.call:0', 'pbsvtools.tasks.make_reports:0'), # bed
+        ('pbsvtools.tasks.sort_sv:0', 'pbsvtools.tasks.make_reports:0'), # bed
         ('pbsvtools.tasks.make_reports:0', 'pbreports.tasks.structural_variants_report:0'),
         ('pbsvtools.tasks.make_reports:1', 'pbreports.tasks.structural_variants_report:1')
     ]
