@@ -501,8 +501,8 @@ def sat_view_rules():
 @register_pipeline_rules("sa3_ds_sv")
 def structural_variant_view_rules():
     whitelist = _to_whitelist([
-        ("pbsvtools.tasks.call-out-0", FileTypes.BED),
-        ("pbsvtools.tasks.call-out-1", FileTypes.VCF),
+        ("pbsvtools.tasks.sort_sv-out-0", FileTypes.BED),
+        ("pbsvtools.tasks.sort_sv-out-1", FileTypes.VCF),
         ("pbsvtools.tasks.align-out-0", FileTypes.BAM),
         ("pbsvtools.tasks.split_alignments_by_sample", FileTypes.BAM)
     ])

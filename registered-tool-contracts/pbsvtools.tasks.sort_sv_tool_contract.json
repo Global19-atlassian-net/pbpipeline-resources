@@ -1,0 +1,59 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbsvtools.tasks.sort_sv --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "Sort structural variants by chromosome order as listed in alignments bam.",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "Structural variants",
+                "description": "sorted structural variants in BED",
+                "default_name": "structural_variants",
+                "id": "structural_variants_bed",
+                "file_type_id": "PacBio.FileTypes.bed"
+            },
+            {
+                "title": "Structural variants",
+                "description": "sorted structural variants in VCF",
+                "default_name": "structural_variants",
+                "id": "structural_variants_vcf",
+                "file_type_id": "PacBio.FileTypes.vcf"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.7",
+        "name": "pbsvtools.tasks.sort_sv",
+        "input_types": [
+            {
+                "description": "alignments",
+                "title": "BAM Alignments In",
+                "id": "align_bam",
+                "file_type_id": "PacBio.FileTypes.bam"
+            },
+            {
+                "description": "structural variants in BED",
+                "title": "Structural Variants",
+                "id": "structural_variants_bed",
+                "file_type_id": "PacBio.FileTypes.bed"
+            },
+            {
+                "description": "structural variants in VCF",
+                "title": "Structural Variants",
+                "id": "structural_variants_vcf",
+                "file_type_id": "PacBio.FileTypes.vcf"
+            }
+        ],
+        "nproc": "$max_nproc",
+        "is_distributed": true,
+        "tool_contract_id": "pbsvtools.tasks.sort_sv"
+    },
+    "tool_contract_id": "pbsvtools.tasks.sort_sv"
+}
