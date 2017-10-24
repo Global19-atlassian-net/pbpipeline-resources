@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by v0.1.0",
+        "_comment": "Created by v0.1.1",
         "description": "Generate circular consensus sequences (ccs) from subreads.",
         "input_types": [
             {
@@ -45,7 +45,7 @@
                 "optionTypeId": "float"
             },
             {
-                "default": 7000,
+                "default": 21000,
                 "description": "Maximum length of subreads to use for generating CCS.",
                 "id": "pbccs.task_options.max_length",
                 "name": "Maximum Subread Length",
@@ -140,5 +140,5 @@
         "tool_contract_id": "pbccs.tasks.ccs"
     },
     "tool_contract_id": "pbccs.tasks.ccs",
-    "version": "3.0.0 (commit 17b7ae9)"
+    "version": "3.0.0 (commit 3ff4c2d)"
 }
