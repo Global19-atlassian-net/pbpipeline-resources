@@ -29,14 +29,14 @@
             {
                 "default_name": "consensus_fastq",
                 "description": "Consensus amplicons in FASTQ format, split by barcode",
-                "file_type_id": "PacBio.FileTypes.gzip",
+                "file_type_id": "PacBio.FileTypes.tgz",
                 "id": "fastq_split_gz",
                 "title": "Consensus Amplicons"
             },
             {
                 "default_name": "chimera_fastq",
                 "description": "Chimeric and noise sequences in FASTQ format, split by barcode",
-                "file_type_id": "PacBio.FileTypes.gzip",
+                "file_type_id": "PacBio.FileTypes.tgz",
                 "id": "fastq_split_gz",
                 "title": "Chimeric/Noise Sequences by barcode"
             }

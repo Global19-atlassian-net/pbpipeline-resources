@@ -369,7 +369,8 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
         (subreads, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
         (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.update_barcoded_sample_metadata:2"),
         ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbreports.tasks.barcode_report:0"),
-        (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:1")
+        (subreads, "pbreports.tasks.barcode_report:1"),
+        (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:2")
     ]
 
 
@@ -902,16 +903,20 @@ def _core_sv(ds_subread, ds_ref):
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.align:0'),
         (ds_subread, 'pbsvtools.tasks.align:1'),
         ('pbsvtools.tasks.prepare_reference:0', 'pbsvtools.tasks.align:2'),
-        ('pbsvtools.tasks.make_samples:0', 'pbsvtools.tasks.align:3')
+        ('pbsvtools.tasks.make_samples:0', 'pbsvtools.tasks.align:3'),
+        ('pbsvtools.tasks.align:0', 'pbsvtools.tasks.split_alignments_by_sample:0')
     ]
     call = [
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.call:0'),
         ('pbsvtools.tasks.align:0', 'pbsvtools.tasks.call:1'),
         ('pbsvtools.tasks.prepare_reference:0', 'pbsvtools.tasks.call:2'),
-        ('pbsvtools.tasks.prepare_reference:1', 'pbsvtools.tasks.call:3')
+        ('pbsvtools.tasks.prepare_reference:1', 'pbsvtools.tasks.call:3'),
+        ('pbsvtools.tasks.align:0', 'pbsvtools.tasks.sort_sv:0'),
+        ('pbsvtools.tasks.call:0', 'pbsvtools.tasks.sort_sv:1'),
+        ('pbsvtools.tasks.call:1', 'pbsvtools.tasks.sort_sv:2')
     ]
     report = [
-        ('pbsvtools.tasks.call:0', 'pbsvtools.tasks.make_reports:0'), # bed
+        ('pbsvtools.tasks.sort_sv:0', 'pbsvtools.tasks.make_reports:0'), # bed
         ('pbsvtools.tasks.make_reports:0', 'pbreports.tasks.structural_variants_report:0'),
         ('pbsvtools.tasks.make_reports:1', 'pbreports.tasks.structural_variants_report:1')
     ]

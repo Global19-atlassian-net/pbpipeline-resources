@@ -56,8 +56,10 @@ Pipelines
 pbsmrtpipe pipelines are defined programatically in several Python files
 (currently ``pb_pipelines_falcon.py`` and ``pb_pipelines_sa3.py``), and are
 dynamically converted to JSON for consumption by the tests and smrttools build.
-Please consult the pbsmrtpipe documentation for a detailed explanation of
-how the pipelines are written.
+Please consult the [pbsmrtpipe documentation] [1] for a detailed explanation 
+of how the pipelines are written.
+
+[1]: http://pbsmrtpipe.readthedocs.io/en/master/pipeline_design.html
 
 Note that if these are out of sync with the tool contracts, or the correct
 environment variable has not been set, the sanity test may fail.  The most

@@ -186,7 +186,7 @@ def _isoseq_view_rules():
 
 def _isoseq2_view_rules():
     def f(i):
-        return f('pbtranscript2tools.tasks.collect_polish-out-{i}'.format(i=i))
+        return 'pbtranscript2tools.tasks.collect_polish-out-{i}'.format(i=i)
     whitelist = _to_whitelist([
         (f(0), FileTypes.CSV), # report.csv
         (f(2), FileTypes.FASTA), # consensus_isoforms.fasta
@@ -460,6 +460,16 @@ def isoseq_with_genome_view_rules():
     return _isoseq_mapping_view_rules()
 
 
+@register_pipeline_rules("sa3_ds_isoseq2")
+def isoseq2_view_rules():
+    return _isoseq2_view_rules()
+
+
+@register_pipeline_rules("sa3_ds_isoseq2_with_genome")
+def isoseq2_with_genome_view_rules():
+    return _isoseq2_mapping_view_rules()
+
+
 #Long Amplicon Analysis (LAA 2)
 @register_pipeline_rules("sa3_ds_laa")
 def laa_view_rules():
@@ -491,9 +501,10 @@ def sat_view_rules():
 @register_pipeline_rules("sa3_ds_sv")
 def structural_variant_view_rules():
     whitelist = _to_whitelist([
-        ("pbsvtools.tasks.call-out-0", FileTypes.BED),
-        ("pbsvtools.tasks.call-out-1", FileTypes.VCF),
-        ("pbsvtools.tasks.align-out-0", FileTypes.BAM)
+        ("pbsvtools.tasks.sort_sv-out-0", FileTypes.BED),
+        ("pbsvtools.tasks.sort_sv-out-1", FileTypes.VCF),
+        ("pbsvtools.tasks.align-out-0", FileTypes.BAM),
+        ("pbsvtools.tasks.split_alignments_by_sample", FileTypes.BAM)
     ])
     blacklist = _to_blacklist([
         ("pbsvtools.tasks.prepare_reference-out-0", FileTypes.DS_REF),
