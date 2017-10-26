@@ -375,7 +375,8 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
 
 
 BARCODING_OPTIONS = {
-    "lima.task_options.library_same_tc": True
+    "lima.task_options.library_same_tc": True,
+    "lima.task_options.peek_guess_tc": True
 }
 @sa3_register("sa3_ds_barcode2", "Demultiplex Barcodes (Auto)", "0.1.0",
               tags=(Tags.BARCODE,Tags.INTERNAL), task_options=BARCODING_OPTIONS)
