@@ -374,6 +374,21 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
     ]
 
 
+def _core_barcode_old(subreads=Constants.ENTRY_DS_SUBREAD):
+    return [
+        (subreads, "pbcoretools.tasks.bam2bam_barcode:0")
+    ]
+
+
+@sa3_register("sa3_ds_barcode", "Barcoding", "0.2.0",
+              tags=(Tags.BARCODE,Tags.INTERNAL))
+def ds_barcode():
+    """
+    SubreadSet barcoding pipeline
+    """
+    return _core_barcode_old()
+
+
 BARCODING_OPTIONS = {
     "lima.task_options.library_same_tc": True,
     "lima.task_options.peek_guess_tc": True
