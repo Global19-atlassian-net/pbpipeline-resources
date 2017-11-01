@@ -376,7 +376,8 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
 
 def _core_barcode_old(subreads=Constants.ENTRY_DS_SUBREAD):
     return [
-        (subreads, "pbcoretools.tasks.bam2bam_barcode:0")
+        (subreads, "pbcoretools.tasks.bam2bam_barcode:0"),
+        (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.bam2bam_barcode:1")
     ]
 
 
