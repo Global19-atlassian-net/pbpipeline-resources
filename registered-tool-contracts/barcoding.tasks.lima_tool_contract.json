@@ -52,7 +52,7 @@
             },
             {
                 "default": false,
-                "description": "Try to infer the used barcodes subset, by peeking at the first 10,000 ZMWs, whitelisting barcodes with more than 10 counts and mean score ≥ 45.",
+                "description": "Try to infer the used barcodes subset, by peeking at the first 35,000 ZMWs, whitelisting barcodes with more than 10 counts and mean score ≥ 45.",
                 "id": "lima.task_options.peek_guess_tc",
                 "name": "Infer Barcodes Used",
                 "optionTypeId": "boolean"
@@ -62,5 +62,5 @@
         "tool_contract_id": "barcoding.tasks.lima"
     },
     "tool_contract_id": "barcoding.tasks.lima",
-    "version": "0.45.0 (commit v0.42.0-41-g9c3ea29)"
+    "version": "0.47.1 (commit v0.42.0-56-gd962dab)"
 }
