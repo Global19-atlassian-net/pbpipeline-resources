@@ -415,6 +415,21 @@ def ds_barcode2():
     return b1 + _core_barcode("pbcoretools.tasks.reparent_subreads:0")
 
 
+def _barcode2_filter():
+    b1 = _core_barcode()
+    b2 = [
+        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0"),
+        ("pbcoretools.tasks.datastore_to_subreads:0", "pbcoretools.tasks.filterdataset:0")
+    ]
+    return b1 + b2
+
+
+@sa3_register("pb_barcode2_filter", "Barcoding plus dataset filtering", "0.1.0",
+              tags=(Tags.BARCODE,Tags.DEV), task_options=BARCODING_OPTIONS)
+def pb_barcode2_filter():
+    return _barcode2_filter()
+
+
 @sa3_register("pb_barcode2_laa", "LAA with Barcoding (Internal Testing)", "0.2.0", tags=(Tags.BARCODE, Tags.LAA, Tags.INTERNAL), task_options=BARCODING_OPTIONS)
 def ds_barcode2_laa():
     """
@@ -457,13 +472,7 @@ def pb_barcode2_ccs():
     """
     Combined barcoding and CCS pipeline
     """
-    b1 = _core_barcode()
-    b2 = [
-        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0"),
-        ("pbcoretools.tasks.datastore_to_subreads:0", "pbcoretools.tasks.filterdataset:0")
-    ]
-    b3 = _core_ccs("pbcoretools.tasks.filterdataset:0")
-    return b1 + b2 + b3
+    return _core_ccs("pbsmrtpipe.pipelines.pb_barcode2_filter:pbcoretools.tasks.filterdataset:0")
 
 
 def _core_ccs_align(ccs_ds):
