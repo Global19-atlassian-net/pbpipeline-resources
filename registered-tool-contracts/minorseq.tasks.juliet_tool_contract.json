@@ -62,7 +62,7 @@
                 "default": 0.1,
                 "description": "Report only variants whose percentage of the total population exceeds this value. Increasing it helps to remove PCR noise.",
                 "id": "juliet.task_options.minimal_percentage",
-                "name": "Minimum Variant Frequency to Report (%).",
+                "name": "Minimum Variant Frequency to Report (%)",
                 "optionTypeId": "float"
             },
             {
@@ -116,5 +116,5 @@
         "tool_contract_id": "minorseq.tasks.juliet"
     },
     "tool_contract_id": "minorseq.tasks.juliet",
-    "version": "1.10.0 (commit 21498b9)"
+    "version": "1.10.0 (commit cff73af)"
 }
