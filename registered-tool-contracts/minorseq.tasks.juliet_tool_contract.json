@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by v0.1.0",
+        "_comment": "Created by v0.1.1",
         "description": "Juliet, minimal minor variant calling software.\nAttention: Juliet is for research usage only. Predictions have not been validated.",
         "input_types": [
             {
@@ -52,6 +52,20 @@
                 "optionTypeId": "float"
             },
             {
+                "default": 100,
+                "description": "Report only variants whose percentage of the total population is less than this value. Lowering it helps to phase low frequency variants when the highest-frequency variant is different from the reference.",
+                "id": "juliet.task_options.maximal_percentage",
+                "name": "Maximum Variant Frequency to Report (%)",
+                "optionTypeId": "float"
+            },
+            {
+                "default": 0.1,
+                "description": "Report only variants whose percentage of the total population exceeds this value. Increasing it helps to remove PCR noise.",
+                "id": "juliet.task_options.minimal_percentage",
+                "name": "Minimum Variant Frequency to Report (%)",
+                "optionTypeId": "float"
+            },
+            {
                 "default": false,
                 "description": "Phase variants and cluster haplotypes.",
                 "id": "juliet.task_options.mode_phasing",
@@ -92,7 +106,7 @@
             },
             {
                 "default": "",
-                "description": "Path to the target config JSON file, predefined target config tag, or the JSON string.",
+                "description": "Defines genes of interest within the reference for reporting purposes. Enter either 1) the predefined target config \"HIV_HXB2\" or a custom target config through either 2a) the path to the target config JSON file or 2b) the JSON string.",
                 "id": "juliet.task_options.target_config_universal",
                 "name": "Target Config",
                 "optionTypeId": "string"
@@ -102,5 +116,5 @@
         "tool_contract_id": "minorseq.tasks.juliet"
     },
     "tool_contract_id": "minorseq.tasks.juliet",
-    "version": "1.8.0 (commit f589f93)"
+    "version": "1.10.0 (commit cff73af)"
 }

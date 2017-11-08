@@ -28,11 +28,18 @@
                 "description": "Deletion Rate, specify to override the learned rate."
             },
             {
-                "optionTypeId": "boolean",
-                "default": false,
-                "id": "juliet.task_options.merge_outliers",
-                "name": "Merge Outliers",
-                "description": "Merge outlier haplotypes."
+                "optionTypeId": "float",
+                "default": 100.0,
+                "id": "juliet.task_options.maximal_percentage",
+                "name": "Maximum Variant Frequency to Report (%)",
+                "description": "Report only variants whose percentage of the total population is less than this value. Lowering it helps to phase low frequency variants when the highest-frequency variant is different from the reference."
+            },
+            {
+                "optionTypeId": "float",
+                "default": 0.1,
+                "id": "juliet.task_options.minimal_percentage",
+                "name": "Minimum Variant Frequency to Report (%)",
+                "description": "Report only variants whose percentage of the total population exceeds this value. Increasing it helps to remove PCR noise."
             },
             {
                 "optionTypeId": "boolean",
@@ -78,7 +85,7 @@
                 "default": "",
                 "id": "juliet.task_options.target_config_universal",
                 "name": "Target Config",
-                "description": "Path to the target config JSON file, predefined target config tag, or the JSON string."
+                "description": "Defines genes of interest within the reference for reporting purposes. Enter either 1) the predefined target config \"HIV_HXB2\" or a custom target config through either 2a) the path to the target config JSON file or 2b) the JSON string."
             }
         ],
         "output_types": [
@@ -97,7 +104,7 @@
                 "file_type_id": "PacBio.FileTypes.zip"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.7",
         "name": "Minor Variants analysis",
         "input_types": [
             {

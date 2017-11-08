@@ -280,7 +280,7 @@ def _resequencing_view_rules():
         ("pbreports.tasks.top_variants-out-0", FileTypes.REPORT)
     ])
     customlist = [
-        ("genomic_consensus.tasks.variantcaller-out-1", FileTypes.VCF, False, "Consensus Sequences"),
+        ("genomic_consensus.tasks.variantcaller-out-1", FileTypes.VCF, False, "Variant Calls"),
         ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Consensus Sequences")
     ]
     return whitelist + blacklist + customlist + _log_view_rules()
