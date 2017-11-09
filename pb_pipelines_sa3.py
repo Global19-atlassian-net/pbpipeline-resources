@@ -969,6 +969,8 @@ def mapping_reports():
     ]
 
 
+# XXX the next two pipelines are officially obsolete, but we keep them around
+# (in reduced form) to preserve labeling
 @sa3_register("sa3_ds_barcode_laa", "LAA with Barcoding", "0.3.0",
               tags=(Tags.BARCODE,Tags.LAA,Tags.INTERNAL))
 def ds_barcode_laa_old():
