@@ -967,3 +967,21 @@ def mapping_reports():
         (Constants.ENTRY_DS_REF, "pbreports.tasks.coverage_report:0"),
         ("pbreports.tasks.summarize_coverage:0", "pbreports.tasks.coverage_report:1")
     ]
+
+
+@sa3_register("sa3_ds_barcode_laa", "LAA with Barcoding", "0.3.0",
+              tags=(Tags.BARCODE,Tags.LAA,Tags.INTERNAL))
+def ds_barcode_laa_old():
+    """
+    SubreadSet barcoding pipeline
+    """
+    return _core_barcode_old() + _core_laa("pbcoretools.tasks.bam2bam_barcode:0")
+
+
+@sa3_register("sa3_ds_barcode_ccs", "CCS with Barcoding", "0.3.0",
+              tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL))
+def ds_barcode_ccs_old():
+    """
+    SubreadSet barcoding pipeline
+    """
+    return _core_barcode_old() + _core_ccs("pbcoretools.tasks.bam2bam_barcode:0")
