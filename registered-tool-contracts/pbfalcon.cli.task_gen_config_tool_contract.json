@@ -45,6 +45,13 @@
                 "id": "falcon_ns.task_options.HGAP_AggressiveAsm_bool",
                 "name": "Aggressive option",
                 "description": "Greedy option for LA4Falcon. For more details on the available options, see https://github.com/PacificBiosciences/FALCON/wiki/Manual"
+            },
+            {
+                "optionTypeId": "boolean",
+                "default": false,
+                "id": "falcon_ns.task_options.HGAP_SavePreadLas_bool",
+                "name": "Save Output for Unzip",
+                "description": "Saves certain files that enable running unzip via command line"
             }
         ],
         "output_types": [
@@ -56,7 +63,7 @@
                 "file_type_id": "PacBio.FileTypes.cfg"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.7",
         "name": "Tool FalconConfigGenerator",
         "input_types": [
             {
