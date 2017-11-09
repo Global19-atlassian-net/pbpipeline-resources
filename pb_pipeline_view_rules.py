@@ -129,11 +129,17 @@ def set_default_view_rules():
 
 
 def _log_view_rules():
-    whitelist = _to_whitelist([
+    whitelist = [
         ("pbsmrtpipe::master.log", FileTypes.LOG),
         ("pbsmrtpipe::pbsmrtpipe.log", FileTypes.LOG)
-    ])
-    return whitelist
+    ]
+
+    blacklist = [
+        ("pbsmrtpipe::pbsmrtpipe-info.log", FileTypes.LOG)
+    ]
+
+
+    return _to_whitelist(whitelist) + _to_blacklist(blacklist)
 
 
 def _isoseq_classify_view_rules():
