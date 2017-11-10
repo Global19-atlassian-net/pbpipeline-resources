@@ -49,7 +49,7 @@
             {
                 "optionTypeId": "boolean",
                 "default": false,
-                "id": "falcon_ns.task_options.HGAP_SavePreadLas_bool",
+                "id": "falcon_ns.task_options.HGAP_SaveLasForUnzip_bool",
                 "name": "Save Output for Unzip",
                 "description": "Saves certain files that enable running unzip via command line"
             }
