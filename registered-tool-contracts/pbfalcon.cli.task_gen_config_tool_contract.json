@@ -45,13 +45,6 @@
                 "id": "falcon_ns.task_options.HGAP_AggressiveAsm_bool",
                 "name": "Aggressive option",
                 "description": "Greedy option for LA4Falcon. For more details on the available options, see https://github.com/PacificBiosciences/FALCON/wiki/Manual"
-            },
-            {
-                "optionTypeId": "boolean",
-                "default": false,
-                "id": "falcon_ns.task_options.HGAP_SaveLasForUnzip_bool",
-                "name": "Save Output for Unzip",
-                "description": "Saves certain files that enable running unzip via command line"
             }
         ],
         "output_types": [
