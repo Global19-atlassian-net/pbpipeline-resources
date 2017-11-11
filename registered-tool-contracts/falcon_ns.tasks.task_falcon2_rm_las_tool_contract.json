@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.7",
         "description": "Quick tool task_falcon2_rm_las falcon_ns.tasks.task_falcon2_rm_las",
         "input_types": [
             {
@@ -35,7 +35,15 @@
             }
         ],
         "resource_types": [],
-        "schema_options": [],
+        "schema_options": [
+            {
+                "default": false,
+                "description": "Saves certain files that enable running unzip via command line",
+                "id": "falcon_ns.task_options.save_las_for_unzip",
+                "name": "Save Output for Unzip",
+                "optionTypeId": "boolean"
+            }
+        ],
         "task_type": "pbsmrtpipe.task_types.standard",
         "tool_contract_id": "falcon_ns.tasks.task_falcon2_rm_las"
     },
