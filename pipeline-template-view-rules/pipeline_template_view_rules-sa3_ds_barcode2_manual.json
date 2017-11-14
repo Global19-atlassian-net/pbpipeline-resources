@@ -2,6 +2,8 @@
   "id": "pbsmrtpipe.pipelines.sa3_ds_barcode2_manual",
   "name": "Barcoding",
   "description": "Barcoding",
+  "allowParentDatasets": true,
+  "allowChildDatasets": false,
   "taskOptions": [
     {"id": "pbcoretools.task_options.new_dataset_name", "hidden": false, "advanced": false, "required": true},
     {"id": "lima.task_options.library_same_tc", "hidden": false, "advanced": false},
