@@ -129,11 +129,17 @@ def set_default_view_rules():
 
 
 def _log_view_rules():
-    whitelist = _to_whitelist([
+    whitelist = [
         ("pbsmrtpipe::master.log", FileTypes.LOG),
         ("pbsmrtpipe::pbsmrtpipe.log", FileTypes.LOG)
-    ])
-    return whitelist
+    ]
+
+    blacklist = [
+        ("pbsmrtpipe::pbsmrtpipe-info.log", FileTypes.LOG)
+    ]
+
+
+    return _to_whitelist(whitelist) + _to_blacklist(blacklist)
 
 
 def _isoseq_classify_view_rules():
@@ -416,9 +422,7 @@ def ccs_mapping_view_rules():
     return whitelist + blacklist + _log_view_rules()
 
 
-#Circular Consensus Sequences (CCS 2)
-@register_pipeline_rules("sa3_ds_ccs")
-def ccs_view_rules():
+def _ccs_view_rules():
     whitelist = _to_whitelist([
         ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.TGZ),
         ("pbcoretools.tasks.bam2fasta_ccs-out-0", FileTypes.TGZ),
@@ -428,6 +432,11 @@ def ccs_view_rules():
         ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT)
     ])
     return whitelist + blacklist + _log_view_rules()
+
+
+@register_pipeline_rules("sa3_ds_ccs")
+def ccs_view_rules():
+    return _ccs_view_rules()
 
 
 #Convert BAM to FASTX
@@ -529,6 +538,16 @@ def hgap5_view_rules():
         ("falcon_ns.tasks.task_hgap_run-out-2", FileTypes.REPORT),
         ("falcon_ns.tasks.task_hgap_run-out-3", FileTypes.LOG)
     ])
+
+
+@register_pipeline_rules("sa3_ds_barcode_laa")
+def barcode_laa_view_rules():
+    return _laa_view_rules()
+
+
+@register_pipeline_rules("sa3_ds_barcode_ccs")
+def barcode_ccs_view_rules():
+    return _ccs_view_rules()
 
 
 def main(argv):
