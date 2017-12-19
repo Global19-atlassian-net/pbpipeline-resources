@@ -33,6 +33,13 @@
                 "id": "pbsvtools.task_options.min_readpercentage",
                 "name": "Minimum Percentage of Reads That Support Variant (%)",
                 "description": "At least this percentage of reads that span a structural variant locus must provide evidence for a variant to output it. Separate subreads from a ZMW count only once for support and overall coverage."
+            },
+            {
+                "optionTypeId": "string",
+                "default": "ngmlr",
+                "id": "pbsvtools.task_options.subreads_aligner",
+                "name": "subreads aligner",
+                "description": "Aligner used to align subreads to reference, choices=[ngmlr, minimap2]"
             }
         ],
         "output_types": [

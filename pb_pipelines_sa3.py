@@ -920,9 +920,12 @@ def pb_barcode2_minorseq():
 
 def _core_sv(ds_subread, ds_ref):
     sample = [(ds_subread, 'pbsvtools.tasks.make_samples:0')]
-    prepare = [(ds_ref, 'pbsvtools.tasks.prepare_reference:0')]
     config = [
         (ds_subread, 'pbsvtools.tasks.config:0')
+    ]
+    prepare = [
+        (ds_ref, 'pbsvtools.tasks.prepare_reference:0'),
+        ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.prepare_reference:1'),
     ]
     align = [
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.align:0'),
@@ -945,7 +948,7 @@ def _core_sv(ds_subread, ds_ref):
         ('pbsvtools.tasks.make_reports:0', 'pbreports.tasks.structural_variants_report:0'),
         ('pbsvtools.tasks.make_reports:1', 'pbreports.tasks.structural_variants_report:1')
     ]
-    return sample + prepare + config + align + call + report
+    return sample + config + prepare + align + call + report
 
 
 @sa3_register("sa3_ds_sv", "Structural Variant Calling", "0.1.0", tags=(Tags.SV,))
