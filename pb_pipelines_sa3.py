@@ -712,8 +712,8 @@ def ds_isoseq_with_genome():
     return b1 + b2 + b3
 
 
-@sa3_register("sa3_ds_isoseq2", "Iso-Seq2", "0.1.0",
-              tags=(Tags.CCS, Tags.ISOSEQ),
+@sa3_register("sa3_ds_isoseq2", "Iso-Seq2 [Beta]", "0.1.0",
+              tags=(Tags.CCS, Tags.ISOSEQ, Tags.BETA),
               task_options=ISOSEQ_TASK_OPTIONS)
 def ds_isoseq2():
     """
@@ -727,8 +727,8 @@ def ds_isoseq2():
     return b1 + b2
 
 
-@sa3_register("sa3_ds_isoseq2_with_genome", "Iso-Seq2 with Mapping", "0.1.0",
-              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ),
+@sa3_register("sa3_ds_isoseq2_with_genome", "Iso-Seq2 with Mapping [Beta]", "0.1.0",
+              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ, Tags.BETA),
               task_options=ISOSEQ_TASK_OPTIONS)
 def ds_isoseq2_with_genome():
     """
