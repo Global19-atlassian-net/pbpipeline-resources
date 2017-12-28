@@ -158,7 +158,6 @@ def ds_align_unrolled():
 
 
 RESEQUENCING_TASK_OPTIONS = {
-    "genomic_consensus.task_options.diploid": False,
     "genomic_consensus.task_options.algorithm": "best",
     "pbalign.task_options.algorithm_options": "--minMatch 12 --bestn 10 --minPctSimilarity 70.0 --refineConcordantAlignments",
     "pbalign.task_options.concordant": True,
@@ -712,12 +711,12 @@ def ds_isoseq_with_genome():
     return b1 + b2 + b3
 
 
-@sa3_register("sa3_ds_isoseq2", "Iso-Seq2", "0.1.0",
-              tags=(Tags.CCS, Tags.ISOSEQ),
+@sa3_register("sa3_ds_isoseq2", "Iso-Seq 2 [Beta]", "0.1.0",
+              tags=(Tags.CCS, Tags.ISOSEQ, Tags.BETA),
               task_options=ISOSEQ_TASK_OPTIONS)
 def ds_isoseq2():
     """
-    Main Iso-Seq2 pipeline, starting from subreads.
+    Main Iso-Seq 2 pipeline, starting from subreads.
     """
     b1 = _core_isoseq_classify("pbsmrtpipe.pipelines.sa3_ds_ccs:pbccs.tasks.ccs:0")
     b2 = _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
@@ -727,12 +726,12 @@ def ds_isoseq2():
     return b1 + b2
 
 
-@sa3_register("sa3_ds_isoseq2_with_genome", "Iso-Seq2 with Mapping", "0.1.0",
-              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ),
+@sa3_register("sa3_ds_isoseq2_with_genome", "Iso-Seq 2 with Mapping [Beta]", "0.1.0",
+              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ, Tags.BETA),
               task_options=ISOSEQ_TASK_OPTIONS)
 def ds_isoseq2_with_genome():
     """
-    Main Iso-Seq2 with genome pipeline, starting from subreads, end at collapsed isoform families.
+    Main Iso-Seq 2 with genome pipeline, starting from subreads, end at collapsed isoform families.
     """
     b1 = ds_isoseq2()
     b2 = _core_isoseq2_collapse(ws_json="pbtranscript2tools.tasks.create_workspace:0", # ws.json
