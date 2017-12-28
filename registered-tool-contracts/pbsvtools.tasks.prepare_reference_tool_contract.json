@@ -37,6 +37,12 @@
                 "title": "Reference Set In",
                 "id": "referenceset_in",
                 "file_type_id": "PacBio.DataSet.ReferenceSet"
+            },
+            {
+                "description": "pbsv Config",
+                "title": "pbsv Config In",
+                "id": "pbsv_config_in",
+                "file_type_id": "PacBio.FileTypes.cfg"
             }
         ],
         "nproc": 1,
