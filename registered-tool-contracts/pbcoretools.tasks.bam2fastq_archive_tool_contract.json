@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.8",
         "description": "Quick tool bam2fastq_archive pbcoretools.tasks.bam2fastq_archive",
         "input_types": [
             {
@@ -21,9 +21,9 @@
         "nproc": 1,
         "output_types": [
             {
-                "default_name": "reads.fastq",
+                "default_name": "reads_fastq",
                 "description": "Sequence data converted to FASTQ format",
-                "file_type_id": "PacBio.FileTypes.tgz",
+                "file_type_id": "PacBio.FileTypes.zip",
                 "id": "fastq",
                 "title": "FASTQ file(s)"
             }
@@ -34,5 +34,5 @@
         "tool_contract_id": "pbcoretools.tasks.bam2fastq_archive"
     },
     "tool_contract_id": "pbcoretools.tasks.bam2fastq_archive",
-    "version": "0.1.0"
+    "version": "0.3.0"
 }

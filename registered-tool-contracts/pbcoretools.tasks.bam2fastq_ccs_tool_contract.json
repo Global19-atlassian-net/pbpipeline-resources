@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.8",
         "description": "Quick tool bam2fastq_ccs pbcoretools.tasks.bam2fastq_ccs",
         "input_types": [
             {
@@ -23,8 +23,8 @@
             {
                 "default_name": "ccs.fastq",
                 "description": "Consensus sequences generated from CCS2",
-                "file_type_id": "PacBio.FileTypes.tgz",
-                "id": "fastq_gz",
+                "file_type_id": "PacBio.FileTypes.zip",
+                "id": "fastq_zip",
                 "title": "Consensus Sequences (FASTQ)"
             }
         ],
@@ -34,5 +34,5 @@
         "tool_contract_id": "pbcoretools.tasks.bam2fastq_ccs"
     },
     "tool_contract_id": "pbcoretools.tasks.bam2fastq_ccs",
-    "version": "0.1.0"
+    "version": "0.2.0"
 }
