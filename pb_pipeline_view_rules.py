@@ -275,6 +275,8 @@ def _resequencing_view_rules():
         ("genomic_consensus.tasks.variantcaller-out-3", FileTypes.FASTQ),
         ("genomic_consensus.tasks.variantcaller-out-0", FileTypes.GFF),
         ("pbalign.tasks.consolidate_alignments-out-0", FileTypes.DS_ALIGN),
+        ("pbalign.tasks.consolidate_alignments-out-2", FileTypes.BAM_ALN),
+        ("pbalign.tasks.consolidate_alignments-out-3", FileTypes.BAMBAI),
         ("pbreports.tasks.summarize_coverage-out-0", FileTypes.GFF),
         ("pbcoretools.tasks.filterdataset-out-0", FileTypes.DS_SUBREADS)
     ])
@@ -411,7 +413,9 @@ def ccs_mapping_view_rules():
         ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.TGZ),
         ("pbcoretools.tasks.bam2fasta_ccs-out-0", FileTypes.TGZ),
         ("pbccs.tasks.ccs-out-0", FileTypes.DS_CCS),
-        ("pbcoretools.tasks.filterdataset-out-0", FileTypes.DS_SUBREADS)
+        ("pbcoretools.tasks.filterdataset-out-0", FileTypes.DS_SUBREADS),
+        ("pbalign.tasks.consolidate_alignments_ccs-out-2", FileTypes.BAM_CCS_ALN),
+        ("pbalign.tasks.consolidate_alignments_ccs-out-3", FileTypes.BAMBAI),
     ])
     blacklist = _to_blacklist([
         ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT),
