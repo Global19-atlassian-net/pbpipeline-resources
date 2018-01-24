@@ -1,8 +1,8 @@
 {
-    "version": "0.2.0",
+    "version": "0.1.0",
     "driver": {
         "serialization": "json",
-        "exe": "python -m pbalign.tasks.consolidate_alignments --resolved-tool-contract ",
+        "exe": "python -m pbalign.tasks.consolidate_alignments_ccs --resolved-tool-contract ",
         "env": {}
     },
     "schema_version": "2.0.0",
@@ -11,7 +11,7 @@
         "resource_types": [
             "$tmpdir"
         ],
-        "description": "\nConsolidate AlignmentSet .bam files\n",
+        "description": "\nConsolidate ConsensusAlignmentSet .bam files\n",
         "schema_options": [
             {
                 "optionTypeId": "boolean",
@@ -34,7 +34,7 @@
                 "description": "Alignment results dataset",
                 "default_name": "combined",
                 "id": "ds_out",
-                "file_type_id": "PacBio.DataSet.AlignmentSet"
+                "file_type_id": "PacBio.DataSet.ConsensusAlignmentSet"
             },
             {
                 "title": "JSON Datastore",
@@ -45,18 +45,18 @@
             }
         ],
         "_comment": "Created by pbcommand 0.6.8",
-        "name": "AlignmentSet consolidate",
+        "name": "ConsensusAlignmentSet consolidate",
         "input_types": [
             {
-                "description": "Gathered AlignmentSet to consolidate",
-                "title": "Input AlignmentSet",
+                "description": "Gathered ConsensusAlignmentSet to consolidate",
+                "title": "Input ConsensusAlignmentSet",
                 "id": "align_in",
-                "file_type_id": "PacBio.DataSet.AlignmentSet"
+                "file_type_id": "PacBio.DataSet.ConsensusAlignmentSet"
             }
         ],
         "nproc": 1,
         "is_distributed": true,
-        "tool_contract_id": "pbalign.tasks.consolidate_alignments"
+        "tool_contract_id": "pbalign.tasks.consolidate_alignments_ccs"
     },
-    "tool_contract_id": "pbalign.tasks.consolidate_alignments"
+    "tool_contract_id": "pbalign.tasks.consolidate_alignments_ccs"
 }

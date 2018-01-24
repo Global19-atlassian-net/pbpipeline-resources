@@ -481,7 +481,9 @@ def _core_ccs_align(ccs_ds):
     # mapping_stats_report (CCS version)
     b4 = [("pbalign.tasks.pbalign_ccs:0",
            "pbreports.tasks.mapping_stats_ccs:0")]
-    return b3+b4
+    b5 = [("pbalign.tasks.pbalign_ccs:0",
+           "pbalign.tasks.consolidate_alignments_ccs:0")]
+    return b3+b4+b5
 
 
 @sa3_register("sa3_ds_ccs_align", "CCS Mapping", "0.2.0", tags=(Tags.CCS, Tags.MAP, ), task_options=CCS_TASK_OPTIONS)
