@@ -38,7 +38,7 @@
         "schema_options": [
             {
                 "default": false,
-                "description": "Use \"On\" to retain only reads with the same barcodes on both ends of the insert sequence, i.e. symmetric and tailed designs. Use \"Off\" for different barcodes on each end of the insert, i.e. asymmetric design.",
+                "description": "Use \"On\" to retain only reads with the same barcodes on both ends of the insert sequence, i.e. symmetric and tailed designs. Use \"Off\" to retain only different barcodes on each end of the insert, i.e. asymmetric design.",
                 "id": "lima.task_options.library_same_tc",
                 "name": "Same Barcodes on Both Ends of Sequence",
                 "optionTypeId": "boolean"
@@ -52,7 +52,7 @@
             },
             {
                 "default": false,
-                "description": "Try to infer the used barcodes subset, by peeking at the first 35,000 ZMWs, whitelisting barcodes with more than 10 counts and mean score ≥ 45.",
+                "description": "Try to infer the used barcodes subset, by peeking at the first 35,000 ZMWs, whitelisting barcode pairs with more than 10 counts and mean score ≥ 45.",
                 "id": "lima.task_options.peek_guess_tc",
                 "name": "Infer Barcodes Used",
                 "optionTypeId": "boolean"
@@ -62,5 +62,5 @@
         "tool_contract_id": "barcoding.tasks.lima"
     },
     "tool_contract_id": "barcoding.tasks.lima",
-    "version": "0.47.1 (commit v0.42.0-56-gd962dab)"
+    "version": "1.0.0 (commit v1.0.0-rc.6-10-gc27bb40-dirty)"
 }
