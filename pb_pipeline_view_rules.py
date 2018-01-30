@@ -287,7 +287,7 @@ def _resequencing_view_rules():
     ])
     customlist = [
         ("genomic_consensus.tasks.variantcaller-out-1", FileTypes.VCF, False, "Variant Calls"),
-        ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Consensus Sequences")
+        ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Consensus Sequences"),
         ("pbalign.tasks.consolidate_alignments-out-2", FileTypes.BAM_ALN, False, "Aligned BAM"),
         ("pbalign.tasks.consolidate_alignments-out-3", FileTypes.I_BAI, False, "BAM Index"),
     ]
