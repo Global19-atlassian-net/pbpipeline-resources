@@ -425,7 +425,7 @@ def ccs_mapping_view_rules():
         ("pbalign.tasks.consolidate_alignments_ccs-out-2", FileTypes.BAM_CCS_ALN, False, "Aligned BAM"),
         ("pbalign.tasks.consolidate_alignments_ccs-out-3", FileTypes.I_BAI, False, "BAM Index")
     ]
-    return whitelist + blacklist + _log_view_rules()
+    return whitelist + blacklist + customlist + _log_view_rules()
 
 
 def _ccs_view_rules():
