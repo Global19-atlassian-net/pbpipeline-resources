@@ -287,7 +287,9 @@ def _resequencing_view_rules():
     ])
     customlist = [
         ("genomic_consensus.tasks.variantcaller-out-1", FileTypes.VCF, False, "Variant Calls"),
-        ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Consensus Sequences")
+        ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Consensus Sequences"),
+        ("pbalign.tasks.consolidate_alignments-out-2", FileTypes.BAM_ALN, False, "Aligned BAM"),
+        ("pbalign.tasks.consolidate_alignments-out-3", FileTypes.I_BAI, False, "BAM Index"),
     ]
     return whitelist + blacklist + customlist + _log_view_rules()
 
@@ -411,7 +413,7 @@ def ccs_mapping_view_rules():
         ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.TGZ),
         ("pbcoretools.tasks.bam2fasta_ccs-out-0", FileTypes.TGZ),
         ("pbccs.tasks.ccs-out-0", FileTypes.DS_CCS),
-        ("pbcoretools.tasks.filterdataset-out-0", FileTypes.DS_SUBREADS)
+        ("pbcoretools.tasks.filterdataset-out-0", FileTypes.DS_SUBREADS),
     ])
     blacklist = _to_blacklist([
         ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT),
@@ -419,7 +421,11 @@ def ccs_mapping_view_rules():
         ("pbreports.tasks.coverage_report-out-0", FileTypes.REPORT),
         ("pbreports.tasks.mapping_stats_ccs-out-0", FileTypes.REPORT)
     ])
-    return whitelist + blacklist + _log_view_rules()
+    customlist = [
+        ("pbalign.tasks.consolidate_alignments_ccs-out-2", FileTypes.BAM_CCS_ALN, False, "Aligned BAM"),
+        ("pbalign.tasks.consolidate_alignments_ccs-out-3", FileTypes.I_BAI, False, "BAM Index")
+    ]
+    return whitelist + blacklist + customlist + _log_view_rules()
 
 
 def _ccs_view_rules():
