@@ -1,38 +1,40 @@
 {
+    "version": "0.3.0",
     "driver": {
-        "env": {},
-        "exe": "python -m pbcoretools.tasks.converters  run-rtc  ",
-        "serialization": "json"
+        "serialization": "json",
+        "exe": "python -m pbcoretools.tasks.bam2fastq_ccs --resolved-tool-contract",
+        "env": {}
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.8",
-        "description": "Quick tool bam2fastq_ccs pbcoretools.tasks.bam2fastq_ccs",
-        "input_types": [
-            {
-                "description": "description for PacBio.DataSet.ConsensusReadSet_0",
-                "file_type_id": "PacBio.DataSet.ConsensusReadSet",
-                "id": "Label PacBio.DataSet.ConsensusReadSet_0",
-                "title": "<DataSetFileType id=PacBio.DataSet.ConsensusReadSet name=file >"
-            }
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
         ],
-        "is_distributed": true,
-        "name": "Tool bam2fastq_ccs",
-        "nproc": 1,
+        "description": "\nbam2fastq CCS zip file export with tmp dir support\n",
+        "schema_options": [],
         "output_types": [
             {
-                "default_name": "ccs.fastq",
-                "description": "Consensus sequences generated from CCS2",
-                "file_type_id": "PacBio.FileTypes.zip",
-                "id": "fastq_zip",
-                "title": "Consensus Sequences (FASTQ)"
+                "title": "FASTQ file(s)",
+                "description": "Exported FASTQ as ZIP archive",
+                "default_name": "ccs_fastq",
+                "id": "fastq_out",
+                "file_type_id": "PacBio.FileTypes.zip"
             }
         ],
-        "resource_types": [],
-        "schema_options": [],
-        "task_type": "pbsmrtpipe.task_types.standard",
+        "_comment": "Created by pbcommand 0.6.9",
+        "name": "bam2fastq export to ZIP",
+        "input_types": [
+            {
+                "description": "Input ConsensusReadSet XML",
+                "title": "Input CCS reads",
+                "id": "ccsreads",
+                "file_type_id": "PacBio.DataSet.ConsensusReadSet"
+            }
+        ],
+        "nproc": 1,
+        "is_distributed": true,
         "tool_contract_id": "pbcoretools.tasks.bam2fastq_ccs"
     },
-    "tool_contract_id": "pbcoretools.tasks.bam2fastq_ccs",
-    "version": "0.2.0"
+    "tool_contract_id": "pbcoretools.tasks.bam2fastq_ccs"
 }
