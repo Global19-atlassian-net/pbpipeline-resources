@@ -30,7 +30,7 @@ test-sanity:
     PB_PIPELINE_TEMPLATE_DIR=$(PB_PIPELINE_TEMPLATE_DIR) \
     PB_CHUNK_OPERATOR_DIR=$(PB_CHUNK_OPERATOR_DIR) \
 		SMRT_IGNORE_PIPELINE_BUNDLE=true \
-		python -c "import os ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR', None); import nose.core ; nose.core.main(argv=['nosetests', '--verbose', 'pbsmrtpipe.tests.test_pb_pipelines_sanity'])"
+		python -c "import os ; import sys; reload(sys) ; sys.setdefaultencoding('utf-8') ; os.environ.pop('SMRT_PIPELINE_BUNDLE_DIR', None); import nose.core ; nose.core.main(argv=['nosetests', '--verbose', 'pbsmrtpipe.tests.test_pb_pipelines_sanity'])"
 
 jsontest:
 	$(eval JSON := `find . -type f -name '*.json' -not -path '*/\.*' | grep -v './repos/' | grep -v './jobs-root/' | grep -v './tmp/' | grep -v 'target/scala'`)

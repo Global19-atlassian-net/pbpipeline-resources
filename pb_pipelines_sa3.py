@@ -373,20 +373,14 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
     ]
 
 
-def _core_barcode_old(subreads=Constants.ENTRY_DS_SUBREAD):
-    return [
-        (subreads, "pbcoretools.tasks.bam2bam_barcode:0"),
-        (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.bam2bam_barcode:1")
-    ]
-
-
+# Preserved for UI labeling purposes
 @sa3_register("sa3_ds_barcode", "Barcoding", "0.2.0",
               tags=(Tags.BARCODE,Tags.INTERNAL))
 def ds_barcode():
     """
-    SubreadSet barcoding pipeline
+    Old bam2bam SubreadSet barcoding pipeline
     """
-    return _core_barcode_old()
+    return _core_barcode()
 
 
 BARCODING_OPTIONS = {
@@ -981,7 +975,7 @@ def ds_barcode_laa_old():
     """
     SubreadSet barcoding pipeline
     """
-    return _core_barcode_old() + _core_laa("pbcoretools.tasks.bam2bam_barcode:0")
+    return _core_laa(Constants.ENTRY_DS_SUBREAD)
 
 
 @sa3_register("sa3_ds_barcode_ccs", "CCS with Barcoding", "0.3.0",
@@ -990,4 +984,4 @@ def ds_barcode_ccs_old():
     """
     SubreadSet barcoding pipeline
     """
-    return _core_barcode_old() + _core_ccs("pbcoretools.tasks.bam2bam_barcode:0")
+    return _core_ccs(Constants.ENTRY_DS_SUBREAD)
