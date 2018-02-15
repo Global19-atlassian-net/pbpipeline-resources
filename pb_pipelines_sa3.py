@@ -373,13 +373,14 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
     ]
 
 
+# Preserved for UI labeling purposes
 @sa3_register("sa3_ds_barcode", "Barcoding", "0.2.0",
               tags=(Tags.BARCODE,Tags.INTERNAL))
 def ds_barcode():
     """
-    SubreadSet barcoding pipeline
+    Old bam2bam SubreadSet barcoding pipeline
     """
-    return _core_barcode_old()
+    return _core_barcode()
 
 
 BARCODING_OPTIONS = {
