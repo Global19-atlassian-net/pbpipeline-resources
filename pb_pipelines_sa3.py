@@ -995,6 +995,7 @@ def ds_barcode_ccs_old():
 BARCODING_CCS_OPTIONS = dict(BARCODING_OPTIONS)
 BARCODING_CCS_OPTIONS.update(ISOSEQ_TASK_OPTIONS)
 BARCODING_CCS_OPTIONS.update({
+    "lima.task_options.peek_guess_tc": False,
     "lima.task_options.isoseq_mode": True
 })
 @sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
