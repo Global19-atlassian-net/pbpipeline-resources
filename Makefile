@@ -9,7 +9,7 @@ clean:
 	find resolved-pipeline-templates -name "*.json" | grep -v "dev_diagnostic" | xargs rm -f
 	git checkout resolved-pipeline-templates/pbsmrtpipe.pipelines.dev_diagnostic*
 	find pipeline-datastore-view-rules -name "*.json" | grep -v "dev_01" | grep -v "\-4.0.json" | grep -v "\-5.0.json" | xargs rm -f
-	find report-view-rules -name "*.json" | grep -v "ccs_processing" | grep -v "simple_dataset" | xargs rm -f
+	find report-view-rules -name "*.json" | grep -v "ccs_processing" | grep -v "simple_dataset" | grep -v "pbsmrtpipe" | xargs rm -f
 	rm -rf pbpipeline-resources-*
 
 test-sanity:

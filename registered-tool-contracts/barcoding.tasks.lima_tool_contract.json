@@ -6,14 +6,14 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by v0.1.1",
+        "_comment": "Created by v0.2.0",
         "description": "Lima, Demultiplex Barcoded PacBio Data and Clip Barcodes ",
         "input_types": [
             {
-                "description": "Subread DataSet or .bam file",
-                "file_type_id": "PacBio.DataSet.SubreadSet",
-                "id": "subread_set",
-                "title": "SubreadSet"
+                "description": "Datastore containing ONE dataset",
+                "file_type_id": "PacBio.FileTypes.json",
+                "id": "datastore_output",
+                "title": "Datastore"
             },
             {
                 "description": "Barcode DataSet or .fasta file",
@@ -36,6 +36,13 @@
         ],
         "resource_types": [],
         "schema_options": [
+            {
+                "default": false,
+                "description": "Activate specialized IsoSeq mode.",
+                "id": "lima.task_options.isoseq_mode",
+                "name": "IsoSeq Mode",
+                "optionTypeId": "boolean"
+            },
             {
                 "default": false,
                 "description": "Use \"On\" to retain only reads with the same barcodes on both ends of the insert sequence, i.e. symmetric and tailed designs. Use \"Off\" to retain only different barcodes on each end of the insert, i.e. asymmetric design.",
@@ -62,5 +69,5 @@
         "tool_contract_id": "barcoding.tasks.lima"
     },
     "tool_contract_id": "barcoding.tasks.lima",
-    "version": "1.0.0 (commit v1.0.0-rc.6-10-gc27bb40-dirty)"
+    "version": "1.1.0 (commit v1.1.0)"
 }

@@ -362,7 +362,8 @@ def ds_laa():
 
 def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
     return [
-        (subreads, "barcoding.tasks.lima:0"),
+        (subreads, "pbcoretools.tasks.subreads_to_datastore:0"),
+        ("pbcoretools.tasks.subreads_to_datastore:0", "barcoding.tasks.lima:0"),
         (Constants.ENTRY_DS_BARCODE, "barcoding.tasks.lima:1"),
         ("barcoding.tasks.lima:0", "pbcoretools.tasks.update_barcoded_sample_metadata:0"),
         (subreads, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
