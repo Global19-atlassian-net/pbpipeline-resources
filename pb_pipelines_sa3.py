@@ -360,10 +360,9 @@ def ds_laa():
     return _core_laa_plus(Constants.ENTRY_DS_SUBREAD)
 
 
-def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
+def _core_barcode(subreads, datastore):
     return [
-        (subreads, "pbcoretools.tasks.subreads_to_datastore:0"),
-        ("pbcoretools.tasks.subreads_to_datastore:0", "barcoding.tasks.lima:0"),
+        (datastore, "barcoding.tasks.lima:0"),
         (Constants.ENTRY_DS_BARCODE, "barcoding.tasks.lima:1"),
         ("barcoding.tasks.lima:0", "pbcoretools.tasks.update_barcoded_sample_metadata:0"),
         (subreads, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
@@ -374,14 +373,19 @@ def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
     ]
 
 
+def _core_barcode_subreads(subreads=Constants.ENTRY_DS_SUBREAD):
+    b1 = [(subreads, "pbcoretools.tasks.subreads_to_datastore:0")]
+    return b1 + _core_barcode(subreads, "pbcoretools.tasks.subreads_to_datastore:0")
+
+
 # Preserved for UI labeling purposes
 @sa3_register("sa3_ds_barcode", "Barcoding", "0.2.0",
               tags=(Tags.BARCODE,Tags.INTERNAL))
 def ds_barcode():
     """
-    Old bam2bam SubreadSet barcoding pipeline
+    Old SubreadSet barcoding pipeline, preserved for display purposes
     """
-    return _core_barcode()
+    return _core_barcode_subreads()
 
 
 BARCODING_OPTIONS = {
@@ -394,23 +398,23 @@ def ds_barcode2():
     """
     SubreadSet barcoding pipeline
     """
-    return _core_barcode()
+    return _core_barcode_subreads()
 
 
 @sa3_register("sa3_ds_barcode2_manual", "Demultiplex Barcodes", "0.1.0",
               tags=(Tags.BARCODE,), task_options=BARCODING_OPTIONS)
-def ds_barcode2():
+def ds_barcode2_manual():
     """
-    SubreadSet barcoding pipeline
+    SubreadSet barcoding pipeline (creates new parent dataset)
     """
     b1 = [
         (Constants.ENTRY_DS_SUBREAD, "pbcoretools.tasks.reparent_subreads:0")
     ]
-    return b1 + _core_barcode("pbcoretools.tasks.reparent_subreads:0")
+    return b1 + _core_barcode_subreads("pbcoretools.tasks.reparent_subreads:0")
 
 
 def _barcode2_filter():
-    b1 = _core_barcode()
+    b1 = _core_barcode_subreads()
     b2 = [
         ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0"),
         ("pbcoretools.tasks.datastore_to_subreads:0", "pbcoretools.tasks.filterdataset:0")
@@ -429,7 +433,7 @@ def ds_barcode2_laa():
     """
     Combined barcoding and long amplicon analysis pipeline
     """
-    b1  = _core_barcode()
+    b1  = _core_barcode_subreads()
     b2 = [("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0")]
     subreadset = "pbcoretools.tasks.datastore_to_subreads:0"
     b3 = _core_laa_plus(subreadset)
@@ -843,7 +847,7 @@ def pb_slimbam_reseq():
 @sa3_register("pb_slimbam_barcode", "Resequencing starting from internal BAM", "0.1.0", tags=(Tags.CONVERTER,Tags.INTERNAL,Tags.DEV))
 def pb_slimbam_barcode():
     b1 = [(Constants.ENTRY_DS_SUBREAD, "pbcoretools.tasks.slimbam:0")]
-    return b1 + _core_barcode("pbcoretools.tasks.slimbam:0")
+    return b1 + _core_barcode_subreads("pbcoretools.tasks.slimbam:0")
 
 
 # XXX obsolete due to multiplexing requirement
@@ -986,3 +990,24 @@ def ds_barcode_ccs_old():
     SubreadSet barcoding pipeline
     """
     return _core_ccs(Constants.ENTRY_DS_SUBREAD)
+
+
+BARCODING_CCS_OPTIONS = dict(BARCODING_OPTIONS)
+BARCODING_CCS_OPTIONS.update(ISOSEQ_TASK_OPTIONS)
+BARCODING_CCS_OPTIONS.update({
+    "lima.task_options.isoseq_mode": True
+})
+@sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
+              tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
+              task_options=BARCODING_CCS_OPTIONS)
+def ds_barcode2():
+    """
+    ConsensusReadSet barcoding pipeline
+    """
+    b1 = _core_ccs(Constants.ENTRY_DS_SUBREAD)
+    b2 = [
+        ("pbccs.tasks.ccs:0", "pbcoretools.tasks.ccs_to_datastore:0")
+    ]
+    return b1 + b2 + _core_barcode(
+        subreads=Constants.ENTRY_DS_SUBREAD,
+        datastore="pbcoretools.tasks.ccs_to_datastore:0")
