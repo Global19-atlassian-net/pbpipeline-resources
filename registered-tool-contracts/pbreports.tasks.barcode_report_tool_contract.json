@@ -1,5 +1,5 @@
 {
-    "version": "2.1",
+    "version": "3.1",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbreports.report.barcode --resolved-tool-contract",
@@ -10,7 +10,15 @@
         "task_type": "pbsmrtpipe.task_types.standard",
         "resource_types": [],
         "description": "\nGenerate a report on SubreadSet barcoding.\n",
-        "schema_options": [],
+        "schema_options": [
+            {
+                "optionTypeId": "boolean",
+                "default": false,
+                "id": "pbreports.task_options.isoseq_mode",
+                "name": "Iso-Seq mode",
+                "description": "Iso-Seq mode"
+            }
+        ],
         "output_types": [
             {
                 "title": "Barcode Report",
@@ -27,13 +35,13 @@
                 "file_type_id": "PacBio.FileTypes.csv"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.7",
+        "_comment": "Created by pbcommand 0.6.9",
         "name": "barcode_report",
         "input_types": [
             {
-                "description": "Datastore of barcoded SubreadSet files",
-                "title": "JSON Datastore or SubreadSet",
-                "id": "subreads_bc",
+                "description": "Datastore of barcoded SubreadSet/ConsensusReadSet files",
+                "title": "JSON Datastore or SubreadSet or ConsensusReadSet",
+                "id": "ds_bc",
                 "file_type_id": "PacBio.FileTypes.Datastore"
             },
             {

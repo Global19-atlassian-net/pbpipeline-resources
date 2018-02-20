@@ -360,14 +360,15 @@ def ds_laa():
     return _core_laa_plus(Constants.ENTRY_DS_SUBREAD)
 
 
-def _core_barcode(subreads, datastore):
+def _core_barcode(subreads, datastore,
+                  update_task_id="pbcoretools.tasks.update_barcoded_sample_metadata"):
     return [
         (datastore, "barcoding.tasks.lima:0"),
         (Constants.ENTRY_DS_BARCODE, "barcoding.tasks.lima:1"),
-        ("barcoding.tasks.lima:0", "pbcoretools.tasks.update_barcoded_sample_metadata:0"),
-        (subreads, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
-        (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.update_barcoded_sample_metadata:2"),
-        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbreports.tasks.barcode_report:0"),
+        ("barcoding.tasks.lima:0", update_task_id + ":0"),
+        (subreads, update_task_id + ":1"),
+        (Constants.ENTRY_DS_BARCODE, update_task_id + ":2"),
+        (update_task_id + ":0", "pbreports.tasks.barcode_report:0"),
         (subreads, "pbreports.tasks.barcode_report:1"),
         (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:2")
     ]
@@ -995,8 +996,10 @@ def ds_barcode_ccs_old():
 BARCODING_CCS_OPTIONS = dict(BARCODING_OPTIONS)
 BARCODING_CCS_OPTIONS.update(ISOSEQ_TASK_OPTIONS)
 BARCODING_CCS_OPTIONS.update({
+    "lima.task_options.library_same_tc": False,
     "lima.task_options.peek_guess_tc": False,
-    "lima.task_options.isoseq_mode": True
+    "lima.task_options.isoseq_mode": True,
+    "pbreports.task_options.isoseq_mode": True
 })
 @sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
               tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
@@ -1011,4 +1014,5 @@ def ds_barcode2():
     ]
     return b1 + b2 + _core_barcode(
         subreads=Constants.ENTRY_DS_SUBREAD,
-        datastore="pbcoretools.tasks.ccs_to_datastore:0")
+        datastore="pbcoretools.tasks.ccs_to_datastore:0",
+        update_task_id="pbcoretools.tasks.update_barcoded_sample_metadata_ccs")
