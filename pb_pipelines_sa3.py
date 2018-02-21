@@ -797,6 +797,18 @@ def pb_isoseq_collapse():
                                  sample_prefix_pickle=to_entry("sample_prefix_pickle"))
 
 
+@sa3_register("pb_isoseq2_collapse", "Internal Iso-Seq2 Collapsing pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.INTERNAL,))
+def pb_isoseq2_collapse():
+    """
+    Internal Iso-Seq2 pipeline, starting from an existing Iso-Seq2 job, continuing to collapse,
+    continue to collapse, count and filter isoforms, requiring a reference genome GMAP dataset.
+    """
+    return _core_isoseq2_collapse(ws_json=to_entry('e_ws_json'),
+                                  hq_isoforms_fq=to_entry('e_hq_isoforms_fq'),
+                                  gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
+                                  sample_to_uc_pickle_json=to_entry('e_sample_uc_json'))
+
+
 @sa3_register("pb_isoseq2_cluster", "Internal Iso-Seq2 clustering pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.INTERNAL,))
 def pb_isoseq2_cluster():
     return _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
