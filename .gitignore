@@ -73,3 +73,5 @@ resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_fetch_pipeline_template.jso
 resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_hdfsubread_to_subread_pipeline_template.json
 resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_resequencing_pipeline_template.json
 resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_sat_pipeline_template.json
+resolved-pipeline-templates/pbsmrtpipe.pipelines.dev_verify_dataset_filters_pipeline_template.json
+resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_ds_ccs_barcode_pipeline_template.json
