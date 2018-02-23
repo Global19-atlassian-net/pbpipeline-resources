@@ -556,6 +556,14 @@ def barcode_ccs_view_rules():
     return _ccs_view_rules()
 
 
+@register_pipeline_rules("sa3_ds_ccs_barcode")
+def ccs_barcode_view_rules():
+    whitelist = _to_whitelist([
+        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
+    ])
+    return whitelist + _ccs_view_rules()
+
+
 def main(argv):
     logging.basicConfig(level=logging.INFO)
     p = argparse.ArgumentParser(description=__doc__)
