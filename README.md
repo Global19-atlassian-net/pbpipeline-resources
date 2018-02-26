@@ -1,11 +1,11 @@
-README for pbpipeline-resources
-===============================
+# README for pbpipeline-resources
 
 This repository contains all pipeline definitions and associated view rules
 required by SMRT Link and pbsmrtpipe (with the exception of report view rules,
 see below).  To work with these resources you will need a Python interpreter
-that has pbsmrtpipe and pbreports installed.  To make the resources available
-to pbsmrtpipe or the services runner, simply run "make" and then set the
+that has pbsmrtpipe and pbreports installed.  
+
+To make the resources available to pbsmrtpipe or the services runner, simply run "make" and then set the
 environment variable ``SMRT_PIPELINE_BUNDLE_DIR`` to point to this directory.
 You may still use the existing environment variables PB_TOOL_CONTRACT_DIR,
 PB_PIPELINE_TEMPLATE_DIR, and PB_CHUNK_OPERATOR_DIR to point to external
@@ -31,8 +31,7 @@ Please run ``make test`` whenever you make changes to the source files
 in this repository; this is required for a successful build (and pull request).
 
 
-Tool Contracts
---------------
+## Tool Contracts
 
 To add or replace a tool contract, simply run the appropriate tool command:
 
@@ -44,18 +43,17 @@ This still needs to be done manually (otherwise it is impossible to validate
 pipeline changes).  However existing tool contracts can now be updated in bulk
 by running the following:
 
-```
+```bash
   $ module load smrttools
   $ make tool-contracts
 ```
 
 Please note that this means that any tool contract may be re-generated at
-any time without notice, and manual edits are discouraged and liable to be
-overwritten later.
+any time without notice, and **manual edits are discouraged and liable to be
+overwritten later**.
 
 
-Pipelines
----------
+## Pipelines
 
 pbsmrtpipe pipelines are defined programatically in several Python files
 (currently ``pb_pipelines_falcon.py`` and ``pb_pipelines_sa3.py``), and are
@@ -72,8 +70,8 @@ in the tool contract, or a file binding changing type (i.e. passing a CSV
 output from one task as the JSON input of a subsequent task).
 
 
-Chunk Operators
----------------
+## Chunk Operators
+
 
 These are defined by static XML instead of JSON, but are also relatively simple
 data structures, also documented as part of pbsmrtpipe.  Since they refer to
@@ -83,13 +81,17 @@ also fail if they refer to a scatter or gather task without a registered tool
 contract, or if the wrong file type is passed.
 
 
-Pipeline Template View Rules
-----------------------------
+## Pipeline Template View Rules
 
-These JSON files control the visibility of pipeline options in the SMRT LINK
-UI.  The structure is very simple:
 
-```
+These JSON files control the visibility of a *Pipeline Template* in the SMRT LINK UI. The primary usecase is to hide
+task options or put task options into the "advanced" section of the SMRT Link UI. By default, every non-internal *Pipeline Template*
+will be displayed in the SMRT Link UI and it's not necessary to have a custom View Rule for a specific *Pipeline Template*. (See comments below concerning internal and "dev" pipelines).   
+
+ 
+The structure is very simple:
+
+```javascript
   {
     "id": "pbsmrtpipe.pipelines.sa3_ds_laa",
     "name": "Override Pipeline Display Name",
@@ -101,17 +103,25 @@ UI.  The structure is very simple:
   }
 ```
 
-The default visibility is ``hidden=false advanced=true``, which means an
-option appears in the advanced settings window.  Set ``hidden=true`` to remove
+Note that the *name* and *description* fields are currently ignored, although they
+are still required.
+
+The default visibility of a *Task Option* is ``hidden=false advanced=true``, which means an
+task option appears in the advanced settings window.  Set ``hidden=true`` to remove
 it from the UI entirely, or set ``advanced=false`` to make it appear in the
 main window.
 
-Note that the name and description fields are currently ignored, although they
-are still required.
+### Internal And Dev Pipelines
 
 
-Pipeline Datastore View Rules
------------------------------
+*Pipelines Templates* with *Tags* "dev" or "internal" are hidden from the UI. To enable these Pipeline Templates to be
+displayed in the UI, use the following URL ``http://<SMRTLINK_HOST>:<SMRTLINK_PORT>/#dev``
+
+Example: [http://smrtlink-bihourly:8080/#dev](http://smrtlink-bihourly:8080/#dev])  
+
+
+## Pipeline Datastore View Rules
+
 
 These rules are also defined programmatically in ``pb_pipeline_view_rules.py``,
 which is later used to generate JSON files for consumption by SMRT Link.
@@ -121,18 +131,19 @@ be visible to users.  By default, all outputs (except pbsmrtpipe log files) are
 invisible if not otherwise specified.  An example of how visibility is control
 looks like:
 
-```
-  @register_pipeline_rules("sa3_ds_ccs")
-  def ccs_view_rules():
-      whitelist = _to_whitelist([
-          ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.TGZ),
-          ("pbcoretools.tasks.bam2fasta_ccs-out-0", FileTypes.TGZ),
-          ("pbccs.tasks.ccs-out-0", FileTypes.DS_CCS)
-      ])
-      blacklist = _to_blacklist([
-          ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT)
-      ])
-      return whitelist + blacklist + _log_view_rules()
+```python
+@register_pipeline_rules("sa3_ds_ccs")
+def ccs_view_rules():
+    whitelist = _to_whitelist([
+        ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.TGZ),
+        ("pbcoretools.tasks.bam2fasta_ccs-out-0", FileTypes.TGZ),
+        ("pbccs.tasks.ccs-out-0", FileTypes.DS_CCS)
+    ])
+  
+    blacklist = _to_blacklist([
+        ("pbreports.tasks.ccs_report-out-0", FileTypes.REPORT)
+    ])
+    return whitelist + blacklist + _log_view_rules()
 ```
 
 The rules are keyed by output file ``sourceId``, which for any pbsmrtpipe task
@@ -146,24 +157,25 @@ mostly a holdover from previous behavior.)
 It is also possible to override the file label, for example when the same task
 is used in different pipelines:
 
+```python
+hgap_overrides = [
+    ("pbcoretools.tasks.contigset2fasta-out-0", FileTypes.FASTA, False, "Polished Assembly"),
+    ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Polished Assembly"),
+    ("genomic_consensus.tasks.variantcaller-out-3", FileTypes.FASTQ, False, "Polished Assembly"),
+    ("pbcoretools.tasks.fasta2referenceset-out-0", FileTypes.DS_REF, False, "Draft Assembly")
+]
 ```
-  hgap_overrides = [
-        ("pbcoretools.tasks.contigset2fasta-out-0", FileTypes.FASTA, False, "Polished Assembly"),
-        ("genomic_consensus.tasks.variantcaller-out-2", FileTypes.DS_CONTIG, False, "Polished Assembly"),
-        ("genomic_consensus.tasks.variantcaller-out-3", FileTypes.FASTQ, False, "Polished Assembly"),
-        ("pbcoretools.tasks.fasta2referenceset-out-0", FileTypes.DS_REF, False, "Draft Assembly")
-  ]
-```
 
 
-Report View Rules
------------------
+## Report View Rules
 
-These continue to live under pbreports (in `pbreports/report/specs`) for now;
+These Rules enable custom disable, such as renaming, or hidding of report attributes/metrics, plot groups, or report tables. 
+
+These continue to live under pbreports (in [pbreports/report/specs](http://bitbucket.nanofluidics.com:7990/projects/SL/repos/pbreports/browse/pbreports/report/specs)) for now;
 as part of the smrttools build they are copied over to the pbpipeline-resources
 bundle, so the two locations are guaranteed to be in sync.
 
 
-Disclaimer
-----------
+# Disclaimer
+
 THIS WEBSITE AND CONTENT AND ALL SITE-RELATED SERVICES, INCLUDING ANY DATA, ARE PROVIDED "AS IS," WITH ALL FAULTS, WITH NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY, SATISFACTORY QUALITY, NON-INFRINGEMENT OR FITNESS FOR A PARTICULAR PURPOSE. YOU ASSUME TOTAL RESPONSIBILITY AND RISK FOR YOUR USE OF THIS SITE, ALL SITE-RELATED SERVICES, AND ANY THIRD PARTY WEBSITES OR APPLICATIONS. NO ORAL OR WRITTEN INFORMATION OR ADVICE SHALL CREATE A WARRANTY OF ANY KIND. ANY REFERENCES TO SPECIFIC PRODUCTS OR SERVICES ON THE WEBSITES DO NOT CONSTITUTE OR IMPLY A RECOMMENDATION OR ENDORSEMENT BY PACIFIC BIOSCIENCES.
