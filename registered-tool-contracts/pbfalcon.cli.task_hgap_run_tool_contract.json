@@ -92,7 +92,7 @@
                 "file_type_id": "PacBio.FileTypes.log"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.11",
         "name": "Tool task_hgap_run",
         "input_types": [
             {
