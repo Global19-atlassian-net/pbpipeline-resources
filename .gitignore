@@ -75,3 +75,4 @@ resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_resequencing_pipeline_templ
 resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_sat_pipeline_template.json
 resolved-pipeline-templates/pbsmrtpipe.pipelines.dev_verify_dataset_filters_pipeline_template.json
 resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_ds_ccs_barcode_pipeline_template.json
+resolved-pipeline-templates/pbsmrtpipe.pipelines.pb_isoseq2_collapse_pipeline_template.json
