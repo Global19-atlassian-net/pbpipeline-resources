@@ -24,10 +24,10 @@
         "name": "Realignment to Draft Assembly",
         "input_types": [
             {
-                "description": "BAM, SAM or ConsensusAlignment DataSet",
-                "title": "ConsensusAlignment XML DataSet",
+                "description": "BAM, SAM or lignment DataSet",
+                "title": "Alignment XML DataSet",
                 "id": "alignment_file",
-                "file_type_id": "PacBio.DataSet.ConsensusAlignmentSet"
+                "file_type_id": "PacBio.DataSet.AlignmentSet"
             },
             {
                 "description": "Unmapped BAM or Subreads DataSet",
