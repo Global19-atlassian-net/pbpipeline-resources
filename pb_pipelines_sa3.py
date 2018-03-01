@@ -521,48 +521,9 @@ def _core_isoseq_classify(ccs_ds):
     return b3 + b4
 
 
-def _core_isoseq_cluster(ccs_ds, flnc_ds, nfl_ds):
-    """Deprecated, replaced by _core_isoseq_cluster_chunk_by_bins."""
-    b5 = [ # cluster reads and get consensus isoforms
-        # full-length, non-chimeric transcripts
-        (flnc_ds, "pbtranscript.tasks.cluster:0"),
-        # non-full-length transcripts
-        (nfl_ds, "pbtranscript.tasks.cluster:1"),
-        (ccs_ds, "pbtranscript.tasks.cluster:2"),
-        (Constants.ENTRY_DS_SUBREAD, "pbtranscript.tasks.cluster:3")
-    ]
-    b6 = [ # ice_partial to map non-full-lenth reads to consensus isoforms
-        # non-full-length transcripts
-        (nfl_ds, "pbtranscript.tasks.ice_partial:0"),
-        # draft consensus isoforms
-        ("pbtranscript.tasks.cluster:0", "pbtranscript.tasks.ice_partial:1"),
-        (ccs_ds, "pbtranscript.tasks.ice_partial:2"),
-    ]
-    b7 = [
-        (Constants.ENTRY_DS_SUBREAD, "pbtranscript.tasks.ice_quiver:0"),
-        ("pbtranscript.tasks.cluster:0", "pbtranscript.tasks.ice_quiver:1"),
-        ("pbtranscript.tasks.cluster:3", "pbtranscript.tasks.ice_quiver:2"),
-        ("pbtranscript.tasks.ice_partial:0", "pbtranscript.tasks.ice_quiver:3")
-    ]
-    b8 = [
-        (Constants.ENTRY_DS_SUBREAD, "pbtranscript.tasks.ice_quiver_postprocess:0"),
-        ("pbtranscript.tasks.cluster:0", "pbtranscript.tasks.ice_quiver_postprocess:1"),
-        ("pbtranscript.tasks.cluster:3", "pbtranscript.tasks.ice_quiver_postprocess:2"),
-        ("pbtranscript.tasks.ice_partial:0", "pbtranscript.tasks.ice_quiver_postprocess:3"),
-        ("pbtranscript.tasks.ice_quiver:0", "pbtranscript.tasks.ice_quiver_postprocess:4")
-    ]
-    b9 = [ # pbreports isoseq_cluster
-        # draft consensus isoforms
-        ("pbtranscript.tasks.cluster:0", "pbreports.tasks.isoseq_cluster:0"),
-        # json report
-        ("pbtranscript.tasks.ice_quiver_postprocess:0", "pbreports.tasks.isoseq_cluster:1"),
-    ]
-
-    return b5 + b6 + b7 + b8 + b9
-
 def _core_isoseq_cluster_chunk_by_bins(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
     """Core isoseq cluster pipeline, further chunk ICE, ice_partial, ice_polish
-       by (read sizes or primer) bins, deprecated _core_isoseq_cluster."""
+       by (read sizes or primer) bins."""
     # separate_flnc
     b1 = [(flnc_ds, "pbtranscript.tasks.separate_flnc:0")]
 
@@ -598,9 +559,9 @@ def _core_isoseq_cluster_chunk_by_bins(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
 
     # pbreports isoseq_cluster
     b9 = [("pbtranscript.tasks.combine_cluster_bins:0", "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms
-          ("pbtranscript.tasks.combine_cluster_bins:1", "pbreports.tasks.isoseq_cluster:1"), # json report
-          ("pbtranscript.tasks.combine_cluster_bins:4", "pbreports.tasks.isoseq_cluster:2"), # HQ isoforms fastq
-          ("pbtranscript.tasks.combine_cluster_bins:6", "pbreports.tasks.isoseq_cluster:3")] # LQ isoforms fastq
+          ("pbtranscript.tasks.combine_cluster_bins:3", "pbreports.tasks.isoseq_cluster:1"), # HQ isoforms fastq
+          ("pbtranscript.tasks.combine_cluster_bins:5", "pbreports.tasks.isoseq_cluster:2"), # LQ isoforms fastq
+          ("pbtranscript.tasks.combine_cluster_bins:1", "pbreports.tasks.isoseq_cluster:3")] # json report]
 
     # Clean up ICE intermediate files in all cluster bins
     b10 = [("pbtranscript.tasks.create_chunks:0", "pbtranscript.tasks.ice_cleanup:0"),
@@ -648,10 +609,10 @@ def _core_isoseq2_cluster(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
     b6 = [(f('create_workspace:0'), f('collect_polish:0')), # ws.json
           (f('polish:0'), f('collect_polish:1'))] # polish_done.txt
     # b7: pbreports isoseq_cluster
-    b7 = [(f('collect_polish:2'), "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms fasta
-          (f('collect_polish:1'), "pbreports.tasks.isoseq_cluster:1"), # json report
-          (f('collect_polish:5'), "pbreports.tasks.isoseq_cluster:2"), # HQ isoforms fastq
-          (f('collect_polish:8'), "pbreports.tasks.isoseq_cluster:3")] # LQ isoforms fastq
+    b7 = [(f('collect_polish:3'), "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms ContigSet
+          (f('collect_polish:6'), "pbreports.tasks.isoseq_cluster:1"), # HQ isoforms ContigSet
+          (f('collect_polish:9'), "pbreports.tasks.isoseq_cluster:2"), # LQ isoforms ContigSet
+          (f('collect_polish:1'), "pbreports.tasks.isoseq_cluster:3")] # json report
     # b8: clean up temporary files and dirs.
     b8 = [(f('create_workspace:0'), f('clean_up:0')), # ws.json
           (f('collect_polish:0'), f('clean_up:1'))] # report.csv, used to trigger clean up after collect_polish

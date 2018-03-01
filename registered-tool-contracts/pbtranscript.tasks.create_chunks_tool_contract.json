@@ -47,7 +47,7 @@
                 "description": "Nfl Contigset",
                 "title": "ContigSet In",
                 "id": "nfl_contigset",
-                "file_type_id": "PacBio.FileTypes.pickle"
+                "file_type_id": "PacBio.DataSet.ContigSet"
             }
         ],
         "nproc": "$max_nproc",
