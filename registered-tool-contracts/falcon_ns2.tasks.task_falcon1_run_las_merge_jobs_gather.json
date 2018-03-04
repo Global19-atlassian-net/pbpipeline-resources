@@ -1,0 +1,38 @@
+{
+    "version": "0.1.3",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbfalcon.pbtag.mains.runner run-rtc",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.gathered",
+        "resource_types": [],
+        "description": "Gather falcon1_run_las_merge_jobs",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "Gathered JSON list",
+                "description": "Gathered output data from falcon1_run_las_merge_jobs (JSON list)",
+                "default_name": "gathered",
+                "id": "output_json_list",
+                "file_type_id": "PacBio.FileTypes.json"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.5",
+        "name": "Gather Daligner",
+        "input_types": [
+            {
+                "description": "Chunk from run_las_merge_jobs",
+                "title": "Chunks of work",
+                "id": "chunk_json_in",
+                "file_type_id": "PacBio.FileTypes.CHUNK"
+            }
+        ],
+        "nproc": 1,
+        "is_distributed": false,
+        "tool_contract_id": "falcon_ns2.tasks.task_falcon1_run_las_merge_jobs_gather"
+    },
+    "tool_contract_id": "falcon_ns2.tasks.task_falcon1_run_las_merge_jobs_gather"
+}
