@@ -1,0 +1,51 @@
+{
+    "driver": {
+        "env": {},
+        "exe": "python -m pbfalcon.tasks.basic2  run-rtc  ",
+        "serialization": "json"
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "_comment": "Created by pbcommand 0.6.11",
+        "description": "Quick tool task_falcon0_run_daligner_split falcon_ns2.tasks.task_falcon0_run_daligner_split",
+        "input_types": [
+            {
+                "description": "description for PacBio.FileTypes.txt_0",
+                "file_type_id": "PacBio.FileTypes.txt",
+                "id": "Label PacBio.FileTypes.txt_0",
+                "title": "<OutputFileType PacBio.FileTypes.txt run_daligner_jobs0_id >"
+            },
+            {
+                "description": "description for PacBio.FileTypes.txt_1",
+                "file_type_id": "PacBio.FileTypes.txt",
+                "id": "Label PacBio.FileTypes.txt_1",
+                "title": "<OutputFileType PacBio.FileTypes.txt dazzler.db_id >"
+            }
+        ],
+        "is_distributed": false,
+        "name": "Tool task_falcon0_run_daligner_split",
+        "nproc": 1,
+        "output_types": [
+            {
+                "default_name": "all-units-of-work",
+                "description": "description for <FileType id=PacBio.FileTypes.json name=file >",
+                "file_type_id": "PacBio.FileTypes.json",
+                "id": "all-units-of-work_id",
+                "title": "daligner run units from HPC.daligner"
+            },
+            {
+                "default_name": "daligner_bash_template.sh",
+                "description": "description for <FileType id=PacBio.FileTypes.txt name=file >",
+                "file_type_id": "PacBio.FileTypes.txt",
+                "id": "daligner_bash_template.sh_id",
+                "title": "bash run script"
+            }
+        ],
+        "resource_types": [],
+        "schema_options": [],
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "tool_contract_id": "falcon_ns2.tasks.task_falcon0_run_daligner_split"
+    },
+    "tool_contract_id": "falcon_ns2.tasks.task_falcon0_run_daligner_split",
+    "version": "0.0.0"
+}
