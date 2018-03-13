@@ -1,0 +1,38 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbcoretools.tasks.gather_transcripts --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.gathered",
+        "resource_types": [],
+        "description": "General Chunk Transcript Gather",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "TranscriptSet",
+                "description": "Gathered TranscriptSet",
+                "default_name": "gathered",
+                "id": "ds_out",
+                "file_type_id": "PacBio.DataSet.TranscriptSet"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.10",
+        "name": "TranscriptSet Gather",
+        "input_types": [
+            {
+                "description": "Gathered CHUNK Json with ConsensusAlignmentSet chunk key",
+                "title": "GCHUNK Json",
+                "id": "cjson_in",
+                "file_type_id": "PacBio.FileTypes.CHUNK"
+            }
+        ],
+        "nproc": 1,
+        "is_distributed": true,
+        "tool_contract_id": "pbcoretools.tasks.gather_transcripts"
+    },
+    "tool_contract_id": "pbcoretools.tasks.gather_transcripts"
+}

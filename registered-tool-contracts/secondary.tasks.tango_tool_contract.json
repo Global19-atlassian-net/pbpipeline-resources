@@ -1,0 +1,44 @@
+{
+    "driver": {
+        "env": {},
+        "exe": "tango --resolved-tool-contract",
+        "serialization": "json"
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "_comment": "Created by v0.2.0",
+        "description": "IsoSeqS Tango Stage, De Novo Transcript Reconstruction",
+        "input_types": [
+            {
+                "description": "Consensus DataSet or .bam file",
+                "file_type_id": "PacBio.DataSet.TranscriptSet",
+                "id": "transcript_set",
+                "title": "TranscriptSet"
+            },
+            {
+                "description": "Subreads DataSet or .bam file",
+                "file_type_id": "PacBio.DataSet.SubreadSet",
+                "id": "subread_set",
+                "title": "SubreadSet"
+            }
+        ],
+        "is_distributed": true,
+        "name": "tango",
+        "nproc": "$max_nproc",
+        "output_types": [
+            {
+                "default_name": "Tango_output",
+                "description": "Consensus DataSet or .bam file",
+                "file_type_id": "PacBio.DataSet.TranscriptSet",
+                "id": "transcript_set",
+                "title": "TranscriptSet"
+            }
+        ],
+        "resource_types": [],
+        "schema_options": [],
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "tool_contract_id": "secondary.tasks.tango"
+    },
+    "tool_contract_id": "secondary.tasks.tango",
+    "version": "0.4.0 (commit v0.4.0-56-g8da6dbc)"
+}

@@ -1,0 +1,49 @@
+{
+    "version": "0.1.3",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbcoretools.tasks.scatter_transcripts --resolved-tool-contract ",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.scattered",
+        "resource_types": [],
+        "description": "Scatter Transcript DataSet by ZMWs",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "Chunk TranscriptSet",
+                "description": "PacBio Chunked JSON TranscriptSet",
+                "default_name": "transcriptset_chunked",
+                "id": "chunk_report_json",
+                "file_type_id": "PacBio.FileTypes.CHUNK"
+            }
+        ],
+        "_comment": "Created by pbcommand 0.6.10",
+        "nchunks": "$max_nchunks",
+        "name": "TranscriptSet ZMW scatter",
+        "input_types": [
+            {
+                "description": "Pac Bio Transcript DataSet XML format",
+                "title": "TranscriptSet",
+                "id": "transcripts",
+                "file_type_id": "PacBio.DataSet.TranscriptSet"
+            },
+            {
+                "description": "Pac Bio Subread DataSet XML format",
+                "title": "SubreadSet",
+                "id": "subreads",
+                "file_type_id": "PacBio.DataSet.SubreadSet"
+            }
+        ],
+        "chunk_keys": [
+            "$chunk.transcriptset_id",
+            "$chunk.subreadset_id"
+        ],
+        "nproc": 1,
+        "is_distributed": true,
+        "tool_contract_id": "pbcoretools.tasks.scatter_transcripts"
+    },
+    "tool_contract_id": "pbcoretools.tasks.scatter_transcripts"
+}
