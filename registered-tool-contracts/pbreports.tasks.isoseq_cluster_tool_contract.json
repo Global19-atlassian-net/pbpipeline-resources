@@ -33,13 +33,13 @@
                 "description": "HQ isoforms in FASTQ format produced by Iso-Seq Cluster.",
                 "title": "HQ isoforms in Fastq",
                 "id": "hq_isoforms_fq",
-                "file_type_id": "PacBio.DataSet.ContigSet"
+                "file_type_id": "PacBio.FileTypes.Fastq"
             },
             {
                 "description": "LQ isoforms in FASTQ format produced by Iso-Seq Cluster.",
                 "title": "LQ isoforms in Fastq",
                 "id": "lq_isoforms_fq",
-                "file_type_id": "PacBio.DataSet.ContigSet"
+                "file_type_id": "PacBio.FileTypes.Fastq"
             },
             {
                 "description": "A summary produced by Iso-Seq Cluster, e.g. cluster_summary.txt",

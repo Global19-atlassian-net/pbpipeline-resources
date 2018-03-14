@@ -1,0 +1,38 @@
+{
+    "driver": {
+        "env": {},
+        "exe": "python -m pbcoretools.tasks.converters  run-rtc  ",
+        "serialization": "json"
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "_comment": "Created by pbcommand 0.6.9",
+        "description": "Quick tool subreads_to_datastore pbcoretools.tasks.subreads_to_datastore",
+        "input_types": [
+            {
+                "description": "description for PacBio.DataSet.SubreadSet_0",
+                "file_type_id": "PacBio.DataSet.SubreadSet",
+                "id": "Label PacBio.DataSet.SubreadSet_0",
+                "title": "<DataSetFileType id=PacBio.DataSet.SubreadSet name=file >"
+            }
+        ],
+        "is_distributed": false,
+        "name": "Tool subreads_to_datastore",
+        "nproc": 1,
+        "output_types": [
+            {
+                "default_name": "file",
+                "description": "description for <FileType id=PacBio.FileTypes.json name=file >",
+                "file_type_id": "PacBio.FileTypes.json",
+                "id": "Label PacBio.FileTypes.json_0",
+                "title": "<FileType id=PacBio.FileTypes.json name=file >"
+            }
+        ],
+        "resource_types": [],
+        "schema_options": [],
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "tool_contract_id": "pbcoretools.tasks.subreads_to_datastore"
+    },
+    "tool_contract_id": "pbcoretools.tasks.subreads_to_datastore",
+    "version": "0.1.0"
+}

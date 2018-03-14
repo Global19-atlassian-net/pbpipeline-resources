@@ -8,6 +8,8 @@
     {"id": "pbcoretools.task_options.new_dataset_name", "hidden": false, "advanced": false, "required": true},
     {"id": "lima.task_options.library_same_tc", "hidden": false, "advanced": false},
     {"id": "lima.task_options.minscore", "hidden": false, "advanced": false},
-    {"id": "lima.task_options.peek_guess_tc", "hidden": false, "advanced": false}
+    {"id": "lima.task_options.peek_guess_tc", "hidden": false, "advanced": false},
+    {"id": "lima.task_options.isoseq_mode", "hidden": true, "advanced": false},
+    {"id": "pbreports.task_options.isoseq_mode", "hidden": true, "advanced": false}
   ]
 }

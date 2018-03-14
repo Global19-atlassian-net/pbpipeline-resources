@@ -6,14 +6,14 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.11",
         "description": "Quick tool task_falcon_make_fofn_abs falcon_ns.tasks.task_falcon_make_fofn_abs",
         "input_types": [
             {
-                "description": "description for PacBio.FileTypes.generic_fofn_0",
-                "file_type_id": "PacBio.FileTypes.generic_fofn",
-                "id": "Label PacBio.FileTypes.generic_fofn_0",
-                "title": "<FileType id=PacBio.FileTypes.generic_fofn name=generic >"
+                "description": "description for PacBio.FileTypes.json_0",
+                "file_type_id": "PacBio.FileTypes.json",
+                "id": "Label PacBio.FileTypes.json_0",
+                "title": "<FileType id=PacBio.FileTypes.json name=file >"
             }
         ],
         "is_distributed": false,

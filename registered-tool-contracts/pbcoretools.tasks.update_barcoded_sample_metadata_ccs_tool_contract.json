@@ -1,0 +1,50 @@
+{
+    "driver": {
+        "env": {},
+        "exe": "python -m pbcoretools.tasks.converters  run-rtc  ",
+        "serialization": "json"
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "_comment": "Created by pbcommand 0.6.9",
+        "description": "Quick tool update_barcoded_sample_metadata_ccs pbcoretools.tasks.update_barcoded_sample_metadata_ccs",
+        "input_types": [
+            {
+                "description": "description for PacBio.FileTypes.json_0",
+                "file_type_id": "PacBio.FileTypes.json",
+                "id": "Label PacBio.FileTypes.json_0",
+                "title": "<FileType id=PacBio.FileTypes.json name=file >"
+            },
+            {
+                "description": "description for PacBio.DataSet.ConsensusReadSet_1",
+                "file_type_id": "PacBio.DataSet.ConsensusReadSet",
+                "id": "Label PacBio.DataSet.ConsensusReadSet_1",
+                "title": "<DataSetFileType id=PacBio.DataSet.ConsensusReadSet name=file >"
+            },
+            {
+                "description": "description for PacBio.DataSet.BarcodeSet_2",
+                "file_type_id": "PacBio.DataSet.BarcodeSet",
+                "id": "Label PacBio.DataSet.BarcodeSet_2",
+                "title": "<DataSetFileType id=PacBio.DataSet.BarcodeSet name=file >"
+            }
+        ],
+        "is_distributed": false,
+        "name": "Tool update_barcoded_sample_metadata_ccs",
+        "nproc": 1,
+        "output_types": [
+            {
+                "default_name": "file",
+                "description": "description for <FileType id=PacBio.FileTypes.Datastore name=file >",
+                "file_type_id": "PacBio.FileTypes.Datastore",
+                "id": "Label PacBio.FileTypes.Datastore_0",
+                "title": "<FileType id=PacBio.FileTypes.Datastore name=file >"
+            }
+        ],
+        "resource_types": [],
+        "schema_options": [],
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "tool_contract_id": "pbcoretools.tasks.update_barcoded_sample_metadata_ccs"
+    },
+    "tool_contract_id": "pbcoretools.tasks.update_barcoded_sample_metadata_ccs",
+    "version": "0.1.0"
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<chunk-operator id="pbsmrtpipe.operators.chunk_isoseqs">
+
+    <task-id>secondary.tasks.tango</task-id>
+
+    <scatter>
+        <scatter-task-id>pbcoretools.tasks.scatter_transcripts</scatter-task-id>
+        <chunks>
+            <chunk out="$chunk.transcriptset_id" in="secondary.tasks.tango:0"/>
+            <chunk out="$chunk.subreadset_id" in="secondary.tasks.tango:1" />
+        </chunks>
+    </scatter>
+    <!-- Define the Gather Mechanism -->
+    <gather>
+        <chunks>
+            <chunk>
+                <gather-task-id>pbcoretools.tasks.gather_transcripts</gather-task-id>
+                <chunk-key>$chunk.transcriptset_id</chunk-key>
+                <task-output>secondary.tasks.tango:0</task-output>
+            </chunk>
+        </chunks>
+    </gather>
+</chunk-operator>

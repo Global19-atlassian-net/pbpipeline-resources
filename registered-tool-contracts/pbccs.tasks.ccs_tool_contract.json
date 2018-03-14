@@ -95,7 +95,7 @@
             },
             {
                 "default": -3.4,
-                "description": "Minimum z-score to use a subread. NaN disables this filter.",
+                "description": "Minimum z-score to use a subread.",
                 "id": "pbccs.task_options.min_zscore",
                 "name": "Minimum Z Score",
                 "optionTypeId": "float"

@@ -1,0 +1,14 @@
+{
+  "id": "pbsmrtpipe.pipelines.sa3_ds_ccs_barcode",
+  "name": "Barcoding",
+  "description": "Barcoding",
+  "allowParentDatasets": true,
+  "allowChildDatasets": false,
+  "taskOptions": [
+    {"id": "lima.task_options.library_same_tc", "hidden": true, "advanced": false},
+    {"id": "lima.task_options.minscore", "hidden": false, "advanced": false},
+    {"id": "lima.task_options.peek_guess_tc", "hidden": true, "advanced": false},
+    {"id": "lima.task_options.isoseq_mode", "hidden": true, "advanced": false},
+    {"id": "pbreports.task_options.isoseq_mode", "hidden": true, "advanced": false}
+  ]
+}

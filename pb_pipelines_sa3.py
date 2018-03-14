@@ -360,33 +360,33 @@ def ds_laa():
     return _core_laa_plus(Constants.ENTRY_DS_SUBREAD)
 
 
-def _core_barcode(subreads=Constants.ENTRY_DS_SUBREAD):
+def _core_barcode(subreads, datastore,
+                  update_task_id="pbcoretools.tasks.update_barcoded_sample_metadata"):
     return [
-        (subreads, "barcoding.tasks.lima:0"),
+        (datastore, "barcoding.tasks.lima:0"),
         (Constants.ENTRY_DS_BARCODE, "barcoding.tasks.lima:1"),
-        ("barcoding.tasks.lima:0", "pbcoretools.tasks.update_barcoded_sample_metadata:0"),
-        (subreads, "pbcoretools.tasks.update_barcoded_sample_metadata:1"),
-        (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.update_barcoded_sample_metadata:2"),
-        ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbreports.tasks.barcode_report:0"),
+        ("barcoding.tasks.lima:0", update_task_id + ":0"),
+        (subreads, update_task_id + ":1"),
+        (Constants.ENTRY_DS_BARCODE, update_task_id + ":2"),
+        (update_task_id + ":0", "pbreports.tasks.barcode_report:0"),
         (subreads, "pbreports.tasks.barcode_report:1"),
         (Constants.ENTRY_DS_BARCODE, "pbreports.tasks.barcode_report:2")
     ]
 
 
-def _core_barcode_old(subreads=Constants.ENTRY_DS_SUBREAD):
-    return [
-        (subreads, "pbcoretools.tasks.bam2bam_barcode:0"),
-        (Constants.ENTRY_DS_BARCODE, "pbcoretools.tasks.bam2bam_barcode:1")
-    ]
+def _core_barcode_subreads(subreads=Constants.ENTRY_DS_SUBREAD):
+    b1 = [(subreads, "pbcoretools.tasks.subreads_to_datastore:0")]
+    return b1 + _core_barcode(subreads, "pbcoretools.tasks.subreads_to_datastore:0")
 
 
+# Preserved for UI labeling purposes
 @sa3_register("sa3_ds_barcode", "Barcoding", "0.2.0",
               tags=(Tags.BARCODE,Tags.INTERNAL))
 def ds_barcode():
     """
-    SubreadSet barcoding pipeline
+    Old SubreadSet barcoding pipeline, preserved for display purposes
     """
-    return _core_barcode_old()
+    return _core_barcode_subreads()
 
 
 BARCODING_OPTIONS = {
@@ -399,23 +399,23 @@ def ds_barcode2():
     """
     SubreadSet barcoding pipeline
     """
-    return _core_barcode()
+    return _core_barcode_subreads()
 
 
 @sa3_register("sa3_ds_barcode2_manual", "Demultiplex Barcodes", "0.1.0",
               tags=(Tags.BARCODE,), task_options=BARCODING_OPTIONS)
-def ds_barcode2():
+def ds_barcode2_manual():
     """
-    SubreadSet barcoding pipeline
+    SubreadSet barcoding pipeline (creates new parent dataset)
     """
     b1 = [
         (Constants.ENTRY_DS_SUBREAD, "pbcoretools.tasks.reparent_subreads:0")
     ]
-    return b1 + _core_barcode("pbcoretools.tasks.reparent_subreads:0")
+    return b1 + _core_barcode_subreads("pbcoretools.tasks.reparent_subreads:0")
 
 
 def _barcode2_filter():
-    b1 = _core_barcode()
+    b1 = _core_barcode_subreads()
     b2 = [
         ("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0"),
         ("pbcoretools.tasks.datastore_to_subreads:0", "pbcoretools.tasks.filterdataset:0")
@@ -434,7 +434,7 @@ def ds_barcode2_laa():
     """
     Combined barcoding and long amplicon analysis pipeline
     """
-    b1  = _core_barcode()
+    b1  = _core_barcode_subreads()
     b2 = [("pbcoretools.tasks.update_barcoded_sample_metadata:0", "pbcoretools.tasks.datastore_to_subreads:0")]
     subreadset = "pbcoretools.tasks.datastore_to_subreads:0"
     b3 = _core_laa_plus(subreadset)
@@ -521,48 +521,9 @@ def _core_isoseq_classify(ccs_ds):
     return b3 + b4
 
 
-def _core_isoseq_cluster(ccs_ds, flnc_ds, nfl_ds):
-    """Deprecated, replaced by _core_isoseq_cluster_chunk_by_bins."""
-    b5 = [ # cluster reads and get consensus isoforms
-        # full-length, non-chimeric transcripts
-        (flnc_ds, "pbtranscript.tasks.cluster:0"),
-        # non-full-length transcripts
-        (nfl_ds, "pbtranscript.tasks.cluster:1"),
-        (ccs_ds, "pbtranscript.tasks.cluster:2"),
-        (Constants.ENTRY_DS_SUBREAD, "pbtranscript.tasks.cluster:3")
-    ]
-    b6 = [ # ice_partial to map non-full-lenth reads to consensus isoforms
-        # non-full-length transcripts
-        (nfl_ds, "pbtranscript.tasks.ice_partial:0"),
-        # draft consensus isoforms
-        ("pbtranscript.tasks.cluster:0", "pbtranscript.tasks.ice_partial:1"),
-        (ccs_ds, "pbtranscript.tasks.ice_partial:2"),
-    ]
-    b7 = [
-        (Constants.ENTRY_DS_SUBREAD, "pbtranscript.tasks.ice_quiver:0"),
-        ("pbtranscript.tasks.cluster:0", "pbtranscript.tasks.ice_quiver:1"),
-        ("pbtranscript.tasks.cluster:3", "pbtranscript.tasks.ice_quiver:2"),
-        ("pbtranscript.tasks.ice_partial:0", "pbtranscript.tasks.ice_quiver:3")
-    ]
-    b8 = [
-        (Constants.ENTRY_DS_SUBREAD, "pbtranscript.tasks.ice_quiver_postprocess:0"),
-        ("pbtranscript.tasks.cluster:0", "pbtranscript.tasks.ice_quiver_postprocess:1"),
-        ("pbtranscript.tasks.cluster:3", "pbtranscript.tasks.ice_quiver_postprocess:2"),
-        ("pbtranscript.tasks.ice_partial:0", "pbtranscript.tasks.ice_quiver_postprocess:3"),
-        ("pbtranscript.tasks.ice_quiver:0", "pbtranscript.tasks.ice_quiver_postprocess:4")
-    ]
-    b9 = [ # pbreports isoseq_cluster
-        # draft consensus isoforms
-        ("pbtranscript.tasks.cluster:0", "pbreports.tasks.isoseq_cluster:0"),
-        # json report
-        ("pbtranscript.tasks.ice_quiver_postprocess:0", "pbreports.tasks.isoseq_cluster:1"),
-    ]
-
-    return b5 + b6 + b7 + b8 + b9
-
 def _core_isoseq_cluster_chunk_by_bins(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
     """Core isoseq cluster pipeline, further chunk ICE, ice_partial, ice_polish
-       by (read sizes or primer) bins, deprecated _core_isoseq_cluster."""
+       by (read sizes or primer) bins."""
     # separate_flnc
     b1 = [(flnc_ds, "pbtranscript.tasks.separate_flnc:0")]
 
@@ -598,9 +559,9 @@ def _core_isoseq_cluster_chunk_by_bins(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
 
     # pbreports isoseq_cluster
     b9 = [("pbtranscript.tasks.combine_cluster_bins:0", "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms
-          ("pbtranscript.tasks.combine_cluster_bins:1", "pbreports.tasks.isoseq_cluster:1"), # json report
-          ("pbtranscript.tasks.combine_cluster_bins:4", "pbreports.tasks.isoseq_cluster:2"), # HQ isoforms fastq
-          ("pbtranscript.tasks.combine_cluster_bins:6", "pbreports.tasks.isoseq_cluster:3")] # LQ isoforms fastq
+          ("pbtranscript.tasks.combine_cluster_bins:4", "pbreports.tasks.isoseq_cluster:1"), # HQ isoforms fastq
+          ("pbtranscript.tasks.combine_cluster_bins:6", "pbreports.tasks.isoseq_cluster:2"), # LQ isoforms fastq
+          ("pbtranscript.tasks.combine_cluster_bins:1", "pbreports.tasks.isoseq_cluster:3")] # json report]
 
     # Clean up ICE intermediate files in all cluster bins
     b10 = [("pbtranscript.tasks.create_chunks:0", "pbtranscript.tasks.ice_cleanup:0"),
@@ -648,10 +609,10 @@ def _core_isoseq2_cluster(subreads_ds, ccs_ds, flnc_ds, nfl_ds):
     b6 = [(f('create_workspace:0'), f('collect_polish:0')), # ws.json
           (f('polish:0'), f('collect_polish:1'))] # polish_done.txt
     # b7: pbreports isoseq_cluster
-    b7 = [(f('collect_polish:2'), "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms fasta
-          (f('collect_polish:1'), "pbreports.tasks.isoseq_cluster:1"), # json report
-          (f('collect_polish:5'), "pbreports.tasks.isoseq_cluster:2"), # HQ isoforms fastq
-          (f('collect_polish:8'), "pbreports.tasks.isoseq_cluster:3")] # LQ isoforms fastq
+    b7 = [(f('collect_polish:3'), "pbreports.tasks.isoseq_cluster:0"), # draft consensus isoforms ContigSet
+          (f('collect_polish:5'), "pbreports.tasks.isoseq_cluster:1"), # HQ isoforms ContigSet
+          (f('collect_polish:8'), "pbreports.tasks.isoseq_cluster:2"), # LQ isoforms ContigSet
+          (f('collect_polish:1'), "pbreports.tasks.isoseq_cluster:3")] # json report
     # b8: clean up temporary files and dirs.
     b8 = [(f('create_workspace:0'), f('clean_up:0')), # ws.json
           (f('collect_polish:0'), f('clean_up:1'))] # report.csv, used to trigger clean up after collect_polish
@@ -803,6 +764,18 @@ def pb_isoseq_collapse():
                                  sample_prefix_pickle=to_entry("sample_prefix_pickle"))
 
 
+@sa3_register("pb_isoseq2_collapse", "Internal Iso-Seq2 Collapsing pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.INTERNAL,))
+def pb_isoseq2_collapse():
+    """
+    Internal Iso-Seq2 pipeline, starting from an existing Iso-Seq2 job, continuing to collapse,
+    continue to collapse, count and filter isoforms, requiring a reference genome GMAP dataset.
+    """
+    return _core_isoseq2_collapse(ws_json=to_entry('e_ws_json'),
+                                  hq_isoforms_fq=to_entry('e_hq_isoforms_fq'),
+                                  gmap_ref_ds=Constants.ENTRY_DS_GMAPREF,
+                                  sample_to_uc_pickle_json=to_entry('e_sample_uc_json'))
+
+
 @sa3_register("pb_isoseq2_cluster", "Internal Iso-Seq2 clustering pipeline", "0.1.0", tags=(Tags.ISOSEQ, Tags.INTERNAL,))
 def pb_isoseq2_cluster():
     return _core_isoseq2_cluster(subreads_ds=Constants.ENTRY_DS_SUBREAD,
@@ -848,7 +821,7 @@ def pb_slimbam_reseq():
 @sa3_register("pb_slimbam_barcode", "Resequencing starting from internal BAM", "0.1.0", tags=(Tags.CONVERTER,Tags.INTERNAL,Tags.DEV))
 def pb_slimbam_barcode():
     b1 = [(Constants.ENTRY_DS_SUBREAD, "pbcoretools.tasks.slimbam:0")]
-    return b1 + _core_barcode("pbcoretools.tasks.slimbam:0")
+    return b1 + _core_barcode_subreads("pbcoretools.tasks.slimbam:0")
 
 
 # XXX obsolete due to multiplexing requirement
@@ -922,9 +895,12 @@ def pb_barcode2_minorseq():
 
 def _core_sv(ds_subread, ds_ref):
     sample = [(ds_subread, 'pbsvtools.tasks.make_samples:0')]
-    prepare = [(ds_ref, 'pbsvtools.tasks.prepare_reference:0')]
     config = [
         (ds_subread, 'pbsvtools.tasks.config:0')
+    ]
+    prepare = [
+        (ds_ref, 'pbsvtools.tasks.prepare_reference:0'),
+        ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.prepare_reference:1'),
     ]
     align = [
         ('pbsvtools.tasks.config:0', 'pbsvtools.tasks.align:0'),
@@ -947,7 +923,7 @@ def _core_sv(ds_subread, ds_ref):
         ('pbsvtools.tasks.make_reports:0', 'pbreports.tasks.structural_variants_report:0'),
         ('pbsvtools.tasks.make_reports:1', 'pbreports.tasks.structural_variants_report:1')
     ]
-    return sample + prepare + config + align + call + report
+    return sample + config + prepare + align + call + report
 
 
 @sa3_register("sa3_ds_sv", "Structural Variant Calling", "0.1.0", tags=(Tags.SV,))
@@ -978,7 +954,7 @@ def ds_barcode_laa_old():
     """
     SubreadSet barcoding pipeline
     """
-    return _core_barcode_old() + _core_laa("pbcoretools.tasks.bam2bam_barcode:0")
+    return _core_laa(Constants.ENTRY_DS_SUBREAD)
 
 
 @sa3_register("sa3_ds_barcode_ccs", "CCS with Barcoding", "0.3.0",
@@ -987,4 +963,29 @@ def ds_barcode_ccs_old():
     """
     SubreadSet barcoding pipeline
     """
-    return _core_barcode_old() + _core_ccs("pbcoretools.tasks.bam2bam_barcode:0")
+    return _core_ccs(Constants.ENTRY_DS_SUBREAD)
+
+
+BARCODING_CCS_OPTIONS = dict(BARCODING_OPTIONS)
+BARCODING_CCS_OPTIONS.update(ISOSEQ_TASK_OPTIONS)
+BARCODING_CCS_OPTIONS.update({
+    "lima.task_options.library_same_tc": False,
+    "lima.task_options.peek_guess_tc": False,
+    "lima.task_options.isoseq_mode": True,
+    "pbreports.task_options.isoseq_mode": True
+})
+@sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
+              tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
+              task_options=BARCODING_CCS_OPTIONS)
+def ds_barcode2():
+    """
+    ConsensusReadSet barcoding pipeline
+    """
+    b1 = _core_ccs(Constants.ENTRY_DS_SUBREAD)
+    b2 = [
+        ("pbccs.tasks.ccs:0", "pbcoretools.tasks.ccs_to_datastore:0")
+    ]
+    return b1 + b2 + _core_barcode(
+        subreads=Constants.ENTRY_DS_SUBREAD,
+        datastore="pbcoretools.tasks.ccs_to_datastore:0",
+        update_task_id="pbcoretools.tasks.update_barcoded_sample_metadata_ccs")

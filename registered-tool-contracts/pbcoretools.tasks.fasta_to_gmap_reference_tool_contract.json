@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.7",
+        "_comment": "Created by pbcommand 0.6.8",
         "description": "Quick tool fasta_to_gmap_reference pbcoretools.tasks.fasta_to_gmap_reference",
         "input_types": [
             {
