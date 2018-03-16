@@ -163,10 +163,12 @@ def _get_falcon_pipeline(i_cfg, i_fasta_fofn):
                     'falcon_ns2.tasks.task_falcon1_rm_las:1'),
     ]
     # clean up all *.las regardless
+    # Note: We use the old falcon_ns namespace for this task
+    # so we do not need to change option names in views and existing preset files.
     rm2 = [('falcon_ns2.tasks.task_falcon2_run_falcon_asm:0',
-                    'falcon_ns2.tasks.task_falcon2_rm_las:0'),
+                    'falcon_ns.tasks.task_falcon2_rm_las:0'), # not ns2
            ('falcon_ns2.tasks.task_falcon1_rm_las:0',
-                    'falcon_ns2.tasks.task_falcon2_rm_las:1'),
+                    'falcon_ns.tasks.task_falcon2_rm_las:1'), # not ns2
     ]
     falcon = (b0 + br0 + brs + br1 + br2 + br3 + br4 + br5 + br6 + br7 + br8 + report_pay
             + bp0 + bps + bp1 + bp2 + bp3 + bp4 + bp5 + bpf + basm + rm0 + rm1 + rm2)
