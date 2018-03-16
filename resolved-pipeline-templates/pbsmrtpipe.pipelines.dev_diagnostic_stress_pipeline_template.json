@@ -255,6 +255,18 @@
         {
             "in": {
                 "index": 0,
+                "instanceId": 0,
+                "taskTypeId": "pbsmrtpipe.tasks.dev_hello_worlder"
+            },
+            "out": {
+                "index": 0,
+                "instanceId": 0,
+                "taskTypeId": "pbsmrtpipe.tasks.rset_to_txt"
+            }
+        },
+        {
+            "in": {
+                "index": 0,
                 "instanceId": 47,
                 "taskTypeId": "pbsmrtpipe.tasks.dev_hello_worlder"
             },
@@ -435,18 +447,6 @@
         {
             "in": {
                 "index": 0,
-                "instanceId": 0,
-                "taskTypeId": "pbsmrtpipe.tasks.dev_hello_worlder"
-            },
-            "out": {
-                "index": 0,
-                "instanceId": 0,
-                "taskTypeId": "pbsmrtpipe.tasks.rset_to_txt"
-            }
-        },
-        {
-            "in": {
-                "index": 0,
                 "instanceId": 36,
                 "taskTypeId": "pbsmrtpipe.tasks.dev_hello_worlder"
             },
@@ -612,12 +612,12 @@
                 {
                     "index": 0,
                     "instanceId": 0,
-                    "taskTypeId": "pbsmrtpipe.tasks.rset_to_txt"
+                    "taskTypeId": "pbsmrtpipe.tasks.dev_reference_ds_report"
                 },
                 {
                     "index": 0,
                     "instanceId": 0,
-                    "taskTypeId": "pbsmrtpipe.tasks.dev_reference_ds_report"
+                    "taskTypeId": "pbsmrtpipe.tasks.rset_to_txt"
                 }
             ]
         }
@@ -627,10 +627,10 @@
     "options": [],
     "schemaVersion": "2.0.0",
     "tags": [
-        "reports",
-        "stress",
+        "dev",
         "reference",
-        "dev"
+        "reports",
+        "stress"
     ],
     "taskOptions": [
         {

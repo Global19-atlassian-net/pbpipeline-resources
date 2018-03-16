@@ -11,17 +11,17 @@
                 {
                     "index": 0,
                     "instanceId": 0,
-                    "taskTypeId": "pbsmrtpipe.tasks.dev_subread_report"
-                },
-                {
-                    "index": 0,
-                    "instanceId": 0,
                     "taskTypeId": "pbcoretools.tasks.pbvalidate"
                 },
                 {
                     "index": 0,
                     "instanceId": 0,
                     "taskTypeId": "pbsmrtpipe.tasks.dev_optional_failure_subreads"
+                },
+                {
+                    "index": 0,
+                    "instanceId": 0,
+                    "taskTypeId": "pbsmrtpipe.tasks.dev_subread_report"
                 }
             ]
         }
@@ -31,10 +31,10 @@
     "options": [],
     "schemaVersion": "2.0.0",
     "tags": [
-        "subreads",
+        "dev",
         "pbvalidate",
         "reports",
-        "dev"
+        "subreads"
     ],
     "taskOptions": [
         {
