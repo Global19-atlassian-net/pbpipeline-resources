@@ -20,4 +20,6 @@ def main(argv):
     return 0
 
 if __name__ == "__main__":
+    import logging
+    logging.basicConfig()
     sys.exit(main(sys.argv[1:]))
