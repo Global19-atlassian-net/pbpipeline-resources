@@ -3,7 +3,8 @@
   "name": "Structural Variant Calling",
   "description": "Structural Variant Calling",
   "inputFilters": [
-    {"field": "bioSampleName", "operator": "!=", "value": "[multiple]"}
+    {"field": "bioSampleName", "operator": "!=", "value": "[multiple]"},
+    {"field": "bioSampleName", "operator": "!=", "value": "unknown"}
   ],
   "taskOptions": [
     {"id": "pbsvtools.task_options.svlength", "hidden": false, "advanced": false},
