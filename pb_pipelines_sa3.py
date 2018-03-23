@@ -111,7 +111,7 @@ def sa3_align():
     return b1 + b2 + bxs
 
 
-@sa3_register("sa3_resequencing", "RS movie Resequencing", "0.1.0", tags=(Tags.RESEQ, Tags.INTERNAL))
+@sa3_register("sa3_resequencing", "RS movie Resequencing", "0.1.0", tags=Tags.RESEQ_INTERNAL)
 def sa3_resequencing():
     """
     Resequencing Pipeline - Blasr mapping and Genomic Consensus, starting from
@@ -283,7 +283,7 @@ def pb_modification_analysis_1():
 
 
 @sa3_register("pb_modification_motif_analysis", 'PacBio Internal Modification and Motif Analysis', "0.1.0",
-              tags=(Tags.RESEQ_MOTIF, Tags.INTERNAL),
+              tags=Tags.RESEQ_MOTIF + (Tags.INTERNAL,),
               task_options={"kinetics_tools.task_options.pvalue": 0.001})
 def pb_modification_and_motif_analysis_1():
     """
