@@ -81,7 +81,7 @@ def _core_gc_plus(alignment_ds, reference_ds):
     return b1 + b2 + b3 + b4 + b5 + b6
 
 
-@sa3_register("sa3_fetch", "RS Movie to Subread DataSet", "0.1.0", tags=(Tags.CONVERTER, ))
+@sa3_register("sa3_fetch", "RS Movie to Subread DataSet", "0.1.0", tags=(Tags.CONVERTER, Tags.INTERNAL))
 def sa3_fetch():
     """
     Convert RS movie metadata XML to Subread DataSet XML
