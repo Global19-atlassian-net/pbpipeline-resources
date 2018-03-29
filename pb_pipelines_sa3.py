@@ -81,7 +81,7 @@ def _core_gc_plus(alignment_ds, reference_ds):
     return b1 + b2 + b3 + b4 + b5 + b6
 
 
-@sa3_register("sa3_fetch", "RS Movie to Subread DataSet", "0.1.0", tags=(Tags.CONVERTER, ))
+@sa3_register("sa3_fetch", "RS Movie to Subread DataSet", "0.1.0", tags=(Tags.CONVERTER, Tags.INTERNAL))
 def sa3_fetch():
     """
     Convert RS movie metadata XML to Subread DataSet XML
@@ -95,7 +95,7 @@ def sa3_fetch():
     return b1 + b2
 
 
-@sa3_register("sa3_align", "RS movie Align", "0.1.0", tags=(Tags.MAP, ))
+@sa3_register("sa3_align", "RS movie Align", "0.1.0", tags=(Tags.MAP, Tags.INTERNAL))
 def sa3_align():
     """
     Perform mapping to reference sequence, starting from RS movie XML
@@ -111,7 +111,7 @@ def sa3_align():
     return b1 + b2 + bxs
 
 
-@sa3_register("sa3_resequencing", "RS movie Resequencing", "0.1.0", tags=Tags.RESEQ)
+@sa3_register("sa3_resequencing", "RS movie Resequencing", "0.1.0", tags=Tags.RESEQ_INTERNAL)
 def sa3_resequencing():
     """
     Resequencing Pipeline - Blasr mapping and Genomic Consensus, starting from
@@ -283,7 +283,8 @@ def pb_modification_analysis_1():
 
 
 @sa3_register("pb_modification_motif_analysis", 'PacBio Internal Modification and Motif Analysis', "0.1.0",
-              tags=Tags.RESEQ_MOTIF, task_options={"kinetics_tools.task_options.pvalue": 0.001})
+              tags=Tags.RESEQ_MOTIF + (Tags.INTERNAL,),
+              task_options={"kinetics_tools.task_options.pvalue": 0.001})
 def pb_modification_and_motif_analysis_1():
     """
     Internal base modification and motif analysis pipeline, starting from an
@@ -704,8 +705,9 @@ def ds_isoseq2_with_genome():
     return b1 + b2
 
 
-@sa3_register("pb_isoseq_classify", "Internal Iso-Seq Classify Only for tests", "0.2.0",
-              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ))
+@sa3_register("pb_isoseq_classify",
+              "Internal Iso-Seq Classify Only for tests", "0.2.0",
+              tags=(Tags.MAP, Tags.CCS, Tags.ISOSEQ, Tags.INTERNAL))
 def pb_isoseq_classify():
     """
     Partial Iso-Seq pipeline (classify step only), starting from ccs.
