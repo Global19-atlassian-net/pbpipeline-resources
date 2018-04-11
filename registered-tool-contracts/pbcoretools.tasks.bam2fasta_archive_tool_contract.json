@@ -1,5 +1,5 @@
 {
-    "version": "0.4.0",
+    "version": "0.4.1",
     "driver": {
         "serialization": "json",
         "exe": "python -m pbcoretools.tasks.bam2fasta_archive --resolved-tool-contract",
@@ -11,24 +11,24 @@
         "resource_types": [
             "$tmpdir"
         ],
-        "description": "\nbam2fasta zip file export with tmp dir support\n",
+        "description": "\nbam2fasta zip file export with tmp dir support.  This module also contains\nfunctionality shared with related tasks.\n",
         "schema_options": [],
         "output_types": [
             {
                 "title": "FASTA file(s)",
                 "description": "Exported FASTA as ZIP archive",
-                "default_name": "subreads_fasta",
+                "default_name": "subreads.fasta",
                 "id": "fasta_out",
                 "file_type_id": "PacBio.FileTypes.zip"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.9",
+        "_comment": "Created by pbcommand 0.6.10",
         "name": "bam2fasta export to ZIP",
         "input_types": [
             {
-                "description": "Input SubreadSet XML",
-                "title": "Input Subreads",
-                "id": "subreads",
+                "description": "Input PacBio.DataSet.SubreadSet XML",
+                "title": "Input subreads",
+                "id": "bam",
                 "file_type_id": "PacBio.DataSet.SubreadSet"
             }
         ],
