@@ -349,7 +349,12 @@ def _core_laa_plus(subread_ds):
     inputs_report = [
         ("pblaa.tasks.laa:3", "pbreports.tasks.amplicon_analysis_input:0")
     ]
-    return laa + split_fastq + consensus_report + inputs_report
+    combined_zip = [
+        ("pblaa.tasks.laa:0", "pbcoretools.tasks.make_combined_laa_zip:0"),
+        ("pblaa.tasks.laa:2", "pbcoretools.tasks.make_combined_laa_zip:1"),
+        (subread_ds, "pbcoretools.tasks.make_combined_laa_zip:2")
+    ]
+    return laa + split_fastq + consensus_report + inputs_report + combined_zip
 
 
 @sa3_register("sa3_ds_laa", "Long Amplicon Analysis (LAA)", "0.1.0", tags=(Tags.LAA, ))

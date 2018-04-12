@@ -1,0 +1,50 @@
+{
+    "driver": {
+        "env": {},
+        "exe": "python -m pbcoretools.tasks.converters  run-rtc  ",
+        "serialization": "json"
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "_comment": "Created by pbcommand 0.6.10",
+        "description": "Quick tool make_combined_laa_zip pbcoretools.tasks.make_combined_laa_zip",
+        "input_types": [
+            {
+                "description": "description for PacBio.FileTypes.Fastq_0",
+                "file_type_id": "PacBio.FileTypes.Fastq",
+                "id": "Label PacBio.FileTypes.Fastq_0",
+                "title": "<FileType id=PacBio.FileTypes.Fastq name=file >"
+            },
+            {
+                "description": "description for PacBio.FileTypes.csv_1",
+                "file_type_id": "PacBio.FileTypes.csv",
+                "id": "Label PacBio.FileTypes.csv_1",
+                "title": "<FileType id=PacBio.FileTypes.csv name=file >"
+            },
+            {
+                "description": "description for PacBio.DataSet.SubreadSet_2",
+                "file_type_id": "PacBio.DataSet.SubreadSet",
+                "id": "Label PacBio.DataSet.SubreadSet_2",
+                "title": "<DataSetFileType id=PacBio.DataSet.SubreadSet name=file >"
+            }
+        ],
+        "is_distributed": true,
+        "name": "Tool make_combined_laa_zip",
+        "nproc": 1,
+        "output_types": [
+            {
+                "default_name": "file",
+                "description": "description for <FileType id=PacBio.FileTypes.zip name=file >",
+                "file_type_id": "PacBio.FileTypes.zip",
+                "id": "Label PacBio.FileTypes.zip_0",
+                "title": "<FileType id=PacBio.FileTypes.zip name=file >"
+            }
+        ],
+        "resource_types": [],
+        "schema_options": [],
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "tool_contract_id": "pbcoretools.tasks.make_combined_laa_zip"
+    },
+    "tool_contract_id": "pbcoretools.tasks.make_combined_laa_zip",
+    "version": "0.1.0"
+}
