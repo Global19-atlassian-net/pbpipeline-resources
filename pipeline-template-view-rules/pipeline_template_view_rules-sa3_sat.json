@@ -5,5 +5,8 @@
   "taskOptions": [
     {"id": "pbreports.task_options.max_contigs", "hidden": true, "advanced": true},
     {"id": "pbcommand.task_options.dev_hello", "hidden": true, "advanced": true}
+  ],
+  "entryPoints": [
+    {"entryId": "eid_ref_dataset", "uuid": "1a369917-507e-4f70-9f38-69614ff828b6"}
   ]
 }
