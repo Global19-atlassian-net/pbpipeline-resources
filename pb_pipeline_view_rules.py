@@ -246,7 +246,7 @@ def _laa_view_rules():
     customlist = [
         ("pbcoretools.tasks.split_laa_fastq-out-0", FileTypes.GZIP, False, "Consensus Sequences (FASTQ)"),
         ("pbcoretools.tasks.split_laa_fastq-out-1", FileTypes.GZIP, False, "Chimeric/Noise Consensus Sequences (FASTQ)"),
-        ("pbcoretools.tasks.make_combined_laa_zip:0", FileTypes.ZIP, False, "Consensus Sequences Summary")
+        ("pbcoretools.tasks.make_combined_laa_zip-out-0", FileTypes.ZIP, False, "Consensus Sequences Summary")
     ]
     return whitelist + blacklist + customlist + _log_view_rules()
 
