@@ -984,7 +984,7 @@ BARCODING_CCS_OPTIONS.update({
 @sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
               tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
               task_options=BARCODING_CCS_OPTIONS)
-def ds_barcode2():
+def ds_ccs_barcode2():
     """
     ConsensusReadSet barcoding pipeline
     """
