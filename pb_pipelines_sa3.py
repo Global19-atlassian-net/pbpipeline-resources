@@ -996,3 +996,14 @@ def ds_barcode2():
         subreads=Constants.ENTRY_DS_SUBREAD,
         datastore="pbcoretools.tasks.ccs_to_datastore:0",
         update_task_id="pbcoretools.tasks.update_barcoded_sample_metadata_ccs")
+
+
+@sa3_register("dev_transcript_report", "Generate Transcript Report", "0.1.0",
+              tags=(Tags.ISOSEQ, Tags.DEV))
+def pb_transcript_report():
+    """
+    Generate Transcript Report from an existing TranscriptSet
+    """
+    return [
+        (Constants.ENTRY_DS_TRANSCRIPT, "pbreports.tasks.isoseq3:0")
+    ]
