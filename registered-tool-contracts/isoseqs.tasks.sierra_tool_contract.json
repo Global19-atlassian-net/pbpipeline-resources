@@ -7,7 +7,7 @@
     "schema_version": "2.0.0",
     "tool_contract": {
         "_comment": "Created by v0.2.0",
-        "description": "IsoSeqS Sierra Stage, De Novo Transcript Reconstruction",
+        "description": "IsoSeqS Cluster Stage, De Novo Transcript Reconstruction",
         "input_types": [
             {
                 "description": "Consensus DataSet or .bam file",
@@ -21,7 +21,7 @@
         "nproc": "$max_nproc",
         "output_types": [
             {
-                "default_name": "Sierra_output",
+                "default_name": "unpolished",
                 "description": "Consensus DataSet or .bam file",
                 "file_type_id": "PacBio.DataSet.TranscriptSet",
                 "id": "transcript_set",
@@ -31,8 +31,8 @@
         "resource_types": [],
         "schema_options": [],
         "task_type": "pbsmrtpipe.task_types.standard",
-        "tool_contract_id": "secondary.tasks.sierra"
+        "tool_contract_id": "isoseqs.tasks.sierra"
     },
-    "tool_contract_id": "secondary.tasks.sierra",
-    "version": "0.4.0 (commit v0.4.0-56-g8da6dbc)"
+    "tool_contract_id": "isoseqs.tasks.sierra",
+    "version": "0.6.0 (commit v0.4.0-89-g5ca0e77*)"
 }
