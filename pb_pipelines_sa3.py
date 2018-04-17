@@ -1013,14 +1013,14 @@ def pb_transcript_report():
     ]
 
 
-ISOSEQS_TASK_OPTIONS = dict(ISOSEQ_TASK_OPTIONS)
-ISOSEQS_TASK_OPTIONS.update({
+ISOSEQ3_TASK_OPTIONS = dict(ISOSEQ_TASK_OPTIONS)
+ISOSEQ3_TASK_OPTIONS.update({
     "pbccs.task_options.min_passes":1
 })
-ISOSEQS_TASK_OPTIONS.update(BARCODING_CCS_OPTIONS)
+ISOSEQ3_TASK_OPTIONS.update(BARCODING_CCS_OPTIONS)
 
-def _core_isoseqs(sr_ds, lima_ds):
-    """IsoSeqS from lima demuxed ccs to polished transcriptset
+def _core_isoseq3(sr_ds, lima_ds):
+    """Iso-Seq 3 (isoseqs) from lima demuxed ccs to polished transcriptset
     sr_ds --- subreadset
     lima_ds --- lima demuxed ccs dataset
     """
@@ -1031,23 +1031,23 @@ def _core_isoseqs(sr_ds, lima_ds):
     ]
 
 
-@sa3_register("pb_isoseqs",
-              "Internal Iso-SeqS starting from lima barcoded CCS dataset", "0.1.0",
+@sa3_register("pb_isoseq3",
+              "Internal Iso-Seq 3 starting from lima barcoded CCS dataset", "0.1.0",
               tags=(Tags.CCS, Tags.ISOSEQ, Tags.INTERNAL))
-def pb_isoseqs():
-    """IsoSeqS from lima demuxed ccs to polished transcriptset, no report"""
-    return _core_isoseqs(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds=to_entry('eid_lima')) + \
+def pb_isoseq3():
+    """Iso-Seq 3 from lima demuxed ccs to polished transcriptset, no report"""
+    return _core_isoseq3(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds=Constants.ENTRY_DS_CCS) + \
            [("isoseqs.tasks.tango:0", "pbreports.tasks.isoseq3:0")]
 
 
-@sa3_register("sa3_ds_isoseqs", "Iso-SeqS", "0.1.0",
+@sa3_register("sa3_ds_isoseq3", "Iso-Seq 3", "0.1.0",
               tags=(Tags.CCS, Tags.ISOSEQ),
-              task_options=ISOSEQS_TASK_OPTIONS)
-def ds_isoseqs():
+              task_options=ISOSEQ3_TASK_OPTIONS)
+def ds_isoseq3():
     """
-    Define isoseqs pipeline, starting from subreads, call lima, sierra, tango, then report.
+    Define isoseq3 pipeline, starting from subreads, call lima, sierra, tango, then report.
     """
     return _core_ccs_barcode2() + \
            [("pbcoretools.tasks.update_barcoded_sample_metadata_ccs:0", "pbcoretools.tasks.datastore_to_ccs:0")] + \
-           _core_isoseqs(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds='pbcoretools.tasks.datastore_to_ccs:0') + \
+           _core_isoseq3(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds='pbcoretools.tasks.datastore_to_ccs:0') + \
            [("isoseqs.tasks.tango:0", "pbreports.tasks.isoseq3:0")]
