@@ -981,13 +981,8 @@ BARCODING_CCS_OPTIONS.update({
     "lima.task_options.isoseq_mode": True,
     "pbreports.task_options.isoseq_mode": True
 })
-@sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
-              tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
-              task_options=BARCODING_CCS_OPTIONS)
-def ds_ccs_barcode2():
-    """
-    ConsensusReadSet barcoding pipeline
-    """
+
+def _core_ccs_barcode2():
     b1 = _core_ccs(Constants.ENTRY_DS_SUBREAD)
     b2 = [
         ("pbccs.tasks.ccs:0", "pbcoretools.tasks.ccs_to_datastore:0")
@@ -996,6 +991,15 @@ def ds_ccs_barcode2():
         subreads=Constants.ENTRY_DS_SUBREAD,
         datastore="pbcoretools.tasks.ccs_to_datastore:0",
         update_task_id="pbcoretools.tasks.update_barcoded_sample_metadata_ccs")
+
+@sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
+              tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
+              task_options=BARCODING_CCS_OPTIONS)
+def ds_ccs_barcode2():
+    """
+    ConsensusReadSet barcoding pipeline
+    """
+    return _core_ccs_barcode2()
 
 
 @sa3_register("dev_transcript_report", "Generate Transcript Report", "0.1.0",
@@ -1007,3 +1011,43 @@ def pb_transcript_report():
     return [
         (Constants.ENTRY_DS_TRANSCRIPT, "pbreports.tasks.isoseq3:0")
     ]
+
+
+ISOSEQS_TASK_OPTIONS = dict(ISOSEQ_TASK_OPTIONS)
+ISOSEQS_TASK_OPTIONS.update({
+    "pbccs.task_options.min_passes":1
+})
+ISOSEQS_TASK_OPTIONS.update(BARCODING_CCS_OPTIONS)
+
+def _core_isoseqs(sr_ds, lima_ds):
+    """IsoSeqS from lima demuxed ccs to polished transcriptset
+    sr_ds --- subreadset
+    lima_ds --- lima demuxed ccs dataset
+    """
+    return [
+        (lima_ds, "isoseqs.tasks.sierra:0"), # lima demuxed ccsset as sierra input[0]
+        ("isoseqs.tasks.sierra:0", "isoseqs.tasks.tango:0"), # seirra output[0]=unpolished transcriptset, as tango input[0]
+        (sr_ds, "isoseqs.tasks.tango:1"), # subreadset as tango input[1]]
+    ]
+
+
+@sa3_register("pb_isoseqs",
+              "Internal Iso-SeqS starting from lima barcoded CCS dataset", "0.1.0",
+              tags=(Tags.CCS, Tags.ISOSEQ, Tags.INTERNAL))
+def pb_isoseqs():
+    """IsoSeqS from lima demuxed ccs to polished transcriptset, no report"""
+    return _core_isoseqs(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds=to_entry('eid_lima')) + \
+           [("isoseqs.tasks.tango:0", "pbreports.tasks.isoseq3:0")]
+
+
+@sa3_register("sa3_ds_isoseqs", "Iso-SeqS", "0.1.0",
+              tags=(Tags.CCS, Tags.ISOSEQ),
+              task_options=ISOSEQS_TASK_OPTIONS)
+def ds_isoseqs():
+    """
+    Define isoseqs pipeline, starting from subreads, call lima, sierra, tango, then report.
+    """
+    return _core_ccs_barcode2() + \
+           [("pbcoretools.tasks.update_barcoded_sample_metadata_ccs:0", "pbcoretools.tasks.datastore_to_ccs:0")] + \
+           _core_isoseqs(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds='pbcoretools.tasks.datastore_to_ccs:0') + \
+           [("isoseqs.tasks.tango:0", "pbreports.tasks.isoseq3:0")]
