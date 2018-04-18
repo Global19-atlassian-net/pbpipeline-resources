@@ -22,10 +22,17 @@
         "output_types": [
             {
                 "default_name": "unpolished",
-                "description": "Consensus DataSet or .bam file",
+                "description": "Consensus DataSet and .bam file",
                 "file_type_id": "PacBio.DataSet.TranscriptSet",
                 "id": "transcript_set",
                 "title": "TranscriptSet"
+            },
+            {
+                "default_name": "unpolished.flnc",
+                "description": "Consensus DataSet and .bam file",
+                "file_type_id": "PacBio.DataSet.ConsensusReadSet",
+                "id": "flnc_bam",
+                "title": "FLNC Consensus Sequences"
             }
         ],
         "resource_types": [],
@@ -34,5 +41,5 @@
         "tool_contract_id": "isoseqs.tasks.sierra"
     },
     "tool_contract_id": "isoseqs.tasks.sierra",
-    "version": "0.6.0 (commit v0.4.0-89-g5ca0e77*)"
+    "version": "0.6.1 (commit v0.4.0-95-g21710ec)"
 }
