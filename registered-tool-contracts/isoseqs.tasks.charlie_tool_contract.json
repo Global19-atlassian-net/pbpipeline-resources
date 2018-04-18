@@ -1,44 +1,38 @@
 {
     "driver": {
         "env": {},
-        "exe": "tango --resolved-tool-contract",
+        "exe": "charlie --resolved-tool-contract",
         "serialization": "json"
     },
     "schema_version": "2.0.0",
     "tool_contract": {
         "_comment": "Created by v0.2.0",
-        "description": "IsoSeqS Polish Stage, De Novo Transcript Reconstruction",
+        "description": "IsoSeqS Summary Stage, De Novo Transcript Reconstruction",
         "input_types": [
             {
                 "description": "Consensus DataSet or .bam file",
                 "file_type_id": "PacBio.DataSet.TranscriptSet",
                 "id": "transcript_set",
                 "title": "TranscriptSet"
-            },
-            {
-                "description": "Subreads DataSet or .bam file",
-                "file_type_id": "PacBio.DataSet.SubreadSet",
-                "id": "subread_set",
-                "title": "SubreadSet"
             }
         ],
         "is_distributed": true,
-        "name": "tango",
+        "name": "charlie",
         "nproc": "$max_nproc",
         "output_types": [
             {
-                "default_name": "polished",
-                "description": "Consensus DataSet or .bam file",
-                "file_type_id": "PacBio.DataSet.TranscriptSet",
-                "id": "transcript_set",
-                "title": "TranscriptSet"
+                "default_name": "barcode_overview",
+                "description": "Isoform Barcode CSV overview",
+                "file_type_id": "PacBio.FileTypes.csv",
+                "id": "csv",
+                "title": "Csv"
             }
         ],
         "resource_types": [],
         "schema_options": [],
         "task_type": "pbsmrtpipe.task_types.standard",
-        "tool_contract_id": "isoseqs.tasks.tango"
+        "tool_contract_id": "isoseqs.tasks.charlie"
     },
-    "tool_contract_id": "isoseqs.tasks.tango",
+    "tool_contract_id": "isoseqs.tasks.charlie",
     "version": "0.6.1 (commit v0.4.0-95-g21710ec)"
 }

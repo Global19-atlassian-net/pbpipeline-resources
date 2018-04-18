@@ -1028,6 +1028,7 @@ def _core_isoseq3(sr_ds, lima_ds):
         (lima_ds, "isoseqs.tasks.sierra:0"), # lima demuxed ccsset as sierra input[0]
         ("isoseqs.tasks.sierra:0", "isoseqs.tasks.tango:0"), # seirra output[0]=unpolished transcriptset, as tango input[0]
         (sr_ds, "isoseqs.tasks.tango:1"), # subreadset as tango input[1]]
+        ("isoseqs.tasks.tango:0", "isoseqs.tasks.charlie:0"), # tango output transcriptset as charlie input to make csv report
     ]
 
 
