@@ -1,0 +1,21 @@
+{
+  "id": "pbsmrtpipe.pipelines.sa3_ds_isoseq3",
+  "name": "Iso-Seq 3",
+  "description": "Iso-Seq 3",
+  "allowParentDatasets": true,
+  "allowChildDatasets": false,
+  "taskOptions": [
+    {"id": "pbccs.task_options.model_path", "hidden": true, "advanced": true},
+    {"id": "pbccs.task_options.model_spec", "hidden": true, "advanced": true},
+    {"id": "pbcoretools.task_options.read_length", "hidden": true, "advanced": true},
+    {"id": "pbccs.task_options.min_identity", "hidden": true, "advanced": true},
+    {"id": "lima.task_options.library_same_tc", "hidden": true, "advanced": false},
+    {"id": "lima.task_options.minscore", "hidden": false, "advanced": false},
+    {"id": "lima.task_options.peek_guess_tc", "hidden": true, "advanced": false},
+    {"id": "lima.task_options.isoseq_mode", "hidden": true, "advanced": false},
+    {"id": "pbreports.task_options.isoseq_mode", "hidden": true, "advanced": false}
+  ],
+  "entryPoints": [
+    {"entryId": "eid_barcode", "uuid": "4d1ae852-b6b3-83b3-6006-9e63cc5b7723"}
+  ]
+}
