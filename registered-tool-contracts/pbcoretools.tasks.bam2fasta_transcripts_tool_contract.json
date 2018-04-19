@@ -1,0 +1,53 @@
+{
+    "version": "0.1.0",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbcoretools.tasks.bam2fasta_transcripts --resolved-tool-contract",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [
+            "$tmpdir"
+        ],
+        "description": "\nbam2fasta export with tmp dir support\n",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "High-Quality Transcripts",
+                "description": "Exported FASTA containing high-quality transcripts",
+                "default_name": "hq_transcripts",
+                "id": "hq_fasta",
+                "file_type_id": "PacBio.FileTypes.Fasta"
+            },
+            {
+                "title": "Low-Quality Transcripts",
+                "description": "Exported FASTA containing low-quality transcripts",
+                "default_name": "lq_transcripts",
+                "id": "lq_fasta",
+                "file_type_id": "PacBio.FileTypes.Fasta"
+            }
+        ],
+        "_comment": "Created by pbcommand 1.0.0",
+        "name": "bam2fasta TranscriptSet export",
+        "input_types": [
+            {
+                "description": "High-Quality TranscriptSet XML",
+                "title": "HQ Transcripts",
+                "id": "hq_transcripts",
+                "file_type_id": "PacBio.DataSet.TranscriptSet"
+            },
+            {
+                "description": "Low-Quality TranscriptSet XML",
+                "title": "LQ Transcripts",
+                "id": "lq_transcripts",
+                "file_type_id": "PacBio.DataSet.TranscriptSet"
+            }
+        ],
+        "nproc": 1,
+        "is_distributed": true,
+        "tool_contract_id": "pbcoretools.tasks.bam2fasta_transcripts"
+    },
+    "tool_contract_id": "pbcoretools.tasks.bam2fasta_transcripts"
+}
