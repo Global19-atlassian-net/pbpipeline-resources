@@ -1041,14 +1041,23 @@ def pb_isoseq3():
            [("isoseqs.tasks.tango:0", "pbreports.tasks.isoseq3:0")]
 
 
-@sa3_register("sa3_ds_isoseq3", "Iso-Seq 3", "0.1.0",
+@sa3_register("sa3_ds_isoseq3", "Iso-Seq 3", "0.1.1",
               tags=(Tags.CCS, Tags.ISOSEQ),
               task_options=ISOSEQ3_TASK_OPTIONS)
 def ds_isoseq3():
     """
     Define isoseq3 pipeline, starting from subreads, call lima, sierra, tango, then report.
     """
-    return _core_ccs_barcode2() + \
-           [("pbcoretools.tasks.update_barcoded_sample_metadata_ccs:0", "pbcoretools.tasks.datastore_to_ccs:0")] + \
-           _core_isoseq3(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds='pbcoretools.tasks.datastore_to_ccs:0') + \
-           [("isoseqs.tasks.tango:0", "pbreports.tasks.isoseq3:0")]
+    b1 = _core_ccs_barcode2()
+    b2 = [("pbcoretools.tasks.update_barcoded_sample_metadata_ccs:0", "pbcoretools.tasks.datastore_to_ccs:0")]
+    b3 = _core_isoseq3(sr_ds=Constants.ENTRY_DS_SUBREAD,
+                       lima_ds='pbcoretools.tasks.datastore_to_ccs:0')
+    b4 = [
+        ("isoseqs.tasks.tango:0", "pbreports.tasks.isoseq3:0"),
+        ("isoseqs.tasks.tango:0", "pbcoretools.tasks.split_transcripts:0"),
+        ("pbcoretools.tasks.split_transcripts:0", "pbcoretools.tasks.bam2fasta_transcripts:0"),
+        ("pbcoretools.tasks.split_transcripts:1", "pbcoretools.tasks.bam2fasta_transcripts:1"),
+        ("pbcoretools.tasks.split_transcripts:0", "pbcoretools.tasks.bam2fastq_transcripts:0"),
+        ("pbcoretools.tasks.split_transcripts:1", "pbcoretools.tasks.bam2fastq_transcripts:1")
+    ]
+    return b1 + b2 + b3 + b4
