@@ -40,5 +40,5 @@
         "tool_contract_id": "isoseqs.tasks.tango"
     },
     "tool_contract_id": "isoseqs.tasks.tango",
-    "version": "0.6.1 (commit v0.4.0-95-g21710ec)"
+    "version": "0.6.2 (commit v0.4.0-99-g896569f*)"
 }

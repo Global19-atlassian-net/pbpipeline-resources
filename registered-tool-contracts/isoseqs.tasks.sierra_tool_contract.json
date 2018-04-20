@@ -30,7 +30,7 @@
             {
                 "default_name": "unpolished.flnc",
                 "description": "Consensus DataSet and .bam file",
-                "file_type_id": "PacBio.DataSet.ConsensusReadSet",
+                "file_type_id": "PacBio.FileTypes.bam",
                 "id": "flnc_bam",
                 "title": "FLNC Consensus Sequences"
             }
@@ -41,5 +41,5 @@
         "tool_contract_id": "isoseqs.tasks.sierra"
     },
     "tool_contract_id": "isoseqs.tasks.sierra",
-    "version": "0.6.1 (commit v0.4.0-95-g21710ec)"
+    "version": "0.6.2 (commit v0.4.0-99-g896569f*)"
 }
