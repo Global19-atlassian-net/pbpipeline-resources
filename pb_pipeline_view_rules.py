@@ -238,6 +238,10 @@ def _isoseq3_view_rules():
     whitelist = _to_whitelist([
         ('isoseqs.tasks.sierra-out-1', FileTypes.BAM),
         ('isoseqs.tasks.charlie-out-0', FileTypes.CSV),
+        ("pbcoretools.tasks.bam2fastq_transcripts-out-0", FileTypes.FASTQ),
+        ("pbcoretools.tasks.bam2fastq_transcripts-out-1", FileTypes.FASTQ),
+        ("pbcoretools.tasks.bam2fasta_transcripts-out-0", FileTypes.FASTA),
+        ("pbcoretools.tasks.bam2fasta_transcripts-out-1", FileTypes.FASTA),
     ])
     return whitelist + barcode_whitelist + _ccs_view_rules()
 
