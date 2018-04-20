@@ -34,5 +34,5 @@
         "tool_contract_id": "isoseqs.tasks.charlie"
     },
     "tool_contract_id": "isoseqs.tasks.charlie",
-    "version": "0.6.1 (commit v0.4.0-95-g21710ec)"
+    "version": "0.6.2 (commit v0.4.0-99-g896569f*)"
 }
