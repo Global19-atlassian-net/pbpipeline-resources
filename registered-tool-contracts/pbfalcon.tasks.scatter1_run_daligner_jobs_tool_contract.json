@@ -20,7 +20,7 @@
                 "file_type_id": "PacBio.FileTypes.CHUNK"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.11",
+        "_comment": "Created by pbcommand 1.0.0",
         "nchunks": "$max_nchunks",
         "name": "Scatter Daligner",
         "input_types": [

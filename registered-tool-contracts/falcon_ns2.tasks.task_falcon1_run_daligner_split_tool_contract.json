@@ -6,7 +6,7 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.11",
+        "_comment": "Created by pbcommand 1.0.0",
         "description": "Quick tool task_falcon1_run_daligner_split falcon_ns2.tasks.task_falcon1_run_daligner_split",
         "input_types": [
             {
@@ -24,7 +24,7 @@
         ],
         "is_distributed": false,
         "name": "Tool task_falcon1_run_daligner_split",
-        "nproc": 1,
+        "nproc": 4,
         "output_types": [
             {
                 "default_name": "all-units-of-work",
