@@ -1,6 +1,6 @@
 {
     "bindings": [],
-    "comment": "Created pipeline pbsmrtpipe.pipelines.dev_diagnostic_ccs with pbsmrtpipe v0.62.1",
+    "comment": "Created pipeline pbsmrtpipe.pipelines.dev_diagnostic_ccs with pbsmrtpipe v0.63.0",
     "description": "Pipeline Id:pbsmrtpipe.pipelines.dev_diagnostic_ccs Name:ConsensusReadSet diagnostic pipeline",
     "entryPoints": [
         {
