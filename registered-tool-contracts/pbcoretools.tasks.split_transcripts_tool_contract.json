@@ -21,18 +21,18 @@
         "nproc": 1,
         "output_types": [
             {
-                "default_name": "file",
-                "description": "description for <DataSetFileType id=PacBio.DataSet.TranscriptSet name=file >",
+                "default_name": "hq_transcripts",
+                "description": "Hiqh-Quality TranscriptSet XML",
                 "file_type_id": "PacBio.DataSet.TranscriptSet",
-                "id": "Label PacBio.DataSet.TranscriptSet_0",
-                "title": "<DataSetFileType id=PacBio.DataSet.TranscriptSet name=file >"
+                "id": "hq_transcripts",
+                "title": "HQ TranscriptSet"
             },
             {
-                "default_name": "file",
-                "description": "description for <DataSetFileType id=PacBio.DataSet.TranscriptSet name=file >",
+                "default_name": "lq_transcripts",
+                "description": "Low-Quality TranscriptSet XML",
                 "file_type_id": "PacBio.DataSet.TranscriptSet",
-                "id": "Label PacBio.DataSet.TranscriptSet_1",
-                "title": "<DataSetFileType id=PacBio.DataSet.TranscriptSet name=file >"
+                "id": "lq_transcripts",
+                "title": "LQ TranscriptSet"
             }
         ],
         "resource_types": [],
