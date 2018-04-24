@@ -77,3 +77,6 @@ resolved-pipeline-templates/pbsmrtpipe.pipelines.dev_verify_dataset_filters_pipe
 resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_ds_ccs_barcode_pipeline_template.json
 resolved-pipeline-templates/pbsmrtpipe.pipelines.pb_isoseq2_collapse_pipeline_template.json
 resolved-pipeline-templates/pbsmrtpipe.pipelines.polished_falcon_lean2_pipeline_template.json
+
+resolved-pipeline-templates/pbsmrtpipe.pipelines.pb_isoseq3_pipeline_template.json
+resolved-pipeline-templates/pbsmrtpipe.pipelines.sa3_ds_isoseq3_pipeline_template.json

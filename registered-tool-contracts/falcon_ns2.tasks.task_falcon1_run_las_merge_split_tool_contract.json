@@ -6,14 +6,14 @@
     },
     "schema_version": "2.0.0",
     "tool_contract": {
-        "_comment": "Created by pbcommand 0.6.11",
+        "_comment": "Created by pbcommand 1.0.0",
         "description": "Quick tool task_falcon1_run_las_merge_split falcon_ns2.tasks.task_falcon1_run_las_merge_split",
         "input_types": [
             {
                 "description": "description for PacBio.FileTypes.txt_0",
                 "file_type_id": "PacBio.FileTypes.txt",
                 "id": "Label PacBio.FileTypes.txt_0",
-                "title": "<OutputFileType PacBio.FileTypes.txt run_daligner_jobs0_id >"
+                "title": "<FileType id=PacBio.FileTypes.txt name=file >"
             },
             {
                 "description": "description for PacBio.FileTypes.json_1",

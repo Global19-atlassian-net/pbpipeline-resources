@@ -63,7 +63,7 @@
                 "file_type_id": "PacBio.FileTypes.log"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.11",
+        "_comment": "Created by pbcommand 1.0.0",
         "name": "XXX Experimental HgapConfigGenerator",
         "input_types": [
             {
