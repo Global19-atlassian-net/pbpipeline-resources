@@ -231,12 +231,26 @@ def _isoseq_mapping_view_rules():
     ])
     return whitelist + blacklist + _isoseq_view_rules()
 
+def _isoseq3_view_rules():
+    barcode_whitelist = _to_whitelist([
+        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
+    ])
+    whitelist = _to_whitelist([
+        ('isoseqs.tasks.sierra-out-1', FileTypes.BAM),
+        ('isoseqs.tasks.charlie-out-0', FileTypes.CSV),
+        ("pbcoretools.tasks.bam2fastq_transcripts-out-0", FileTypes.FASTQ),
+        ("pbcoretools.tasks.bam2fastq_transcripts-out-1", FileTypes.FASTQ),
+        ("pbcoretools.tasks.bam2fasta_transcripts-out-0", FileTypes.FASTA),
+        ("pbcoretools.tasks.bam2fasta_transcripts-out-1", FileTypes.FASTA),
+    ])
+    return whitelist + barcode_whitelist + _ccs_view_rules()
+
 
 def _laa_view_rules():
     whitelist = _to_whitelist([
         ("pblaa.tasks.laa-out-2", FileTypes.CSV),
         ("pblaa.tasks.laa-out-1", FileTypes.FASTQ),
-        ("pblaa.tasks.laa-out-0", FileTypes.FASTQ)
+        ("pblaa.tasks.laa-out-0", FileTypes.FASTQ),
     ])
     blacklist = _to_blacklist([
         ("pblaa.tasks.laa-out-3", FileTypes.CSV),
@@ -245,7 +259,8 @@ def _laa_view_rules():
     ])
     customlist = [
         ("pbcoretools.tasks.split_laa_fastq-out-0", FileTypes.GZIP, False, "Consensus Sequences (FASTQ)"),
-        ("pbcoretools.tasks.split_laa_fastq-out-1", FileTypes.GZIP, False, "Chimeric/Noise Consensus Sequences (FASTQ)")
+        ("pbcoretools.tasks.split_laa_fastq-out-1", FileTypes.GZIP, False, "Chimeric/Noise Consensus Sequences (FASTQ)"),
+        ("pbcoretools.tasks.make_combined_laa_zip-out-0", FileTypes.ZIP, False, "Consensus Sequences Summary")
     ]
     return whitelist + blacklist + customlist + _log_view_rules()
 
@@ -483,6 +498,11 @@ def isoseq2_view_rules():
 @register_pipeline_rules("sa3_ds_isoseq2_with_genome")
 def isoseq2_with_genome_view_rules():
     return _isoseq2_mapping_view_rules()
+
+
+@register_pipeline_rules("sa3_ds_isoseq3")
+def isoseq3_view_rules():
+    return _isoseq3_view_rules()
 
 
 #Long Amplicon Analysis (LAA 2)

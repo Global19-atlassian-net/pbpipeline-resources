@@ -1,0 +1,44 @@
+{
+    "version": "0.1.1",
+    "driver": {
+        "serialization": "json",
+        "exe": "python -m pbreports.report.isoseq3 --resolved-tool-contract",
+        "env": {}
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "resource_types": [],
+        "description": "\nGenerate a report for the results of the new Iso-Seq 3 pipeline, taking a\nsingle TranscriptSet dataset as input.\n",
+        "schema_options": [],
+        "output_types": [
+            {
+                "title": "Transcript Clustering Report",
+                "description": "Summary of results from pbtranscript",
+                "default_name": "isoseq3_report",
+                "id": "outJson",
+                "file_type_id": "PacBio.FileTypes.JsonReport"
+            }
+        ],
+        "_comment": "Created by pbcommand 1.0.0",
+        "name": "Iso-Seq Report",
+        "input_types": [
+            {
+                "description": "Clustered transcripts from 'sierra' in BAM dataset format",
+                "title": "Clustered high-quality transcripts",
+                "id": "hq_transcripts",
+                "file_type_id": "PacBio.DataSet.TranscriptSet"
+            },
+            {
+                "description": "Clustered transcripts from 'sierra' in BAM dataset format",
+                "title": "Clustered low-quality transcripts",
+                "id": "lq_transcripts",
+                "file_type_id": "PacBio.DataSet.TranscriptSet"
+            }
+        ],
+        "nproc": 1,
+        "is_distributed": true,
+        "tool_contract_id": "pbreports.tasks.isoseq3"
+    },
+    "tool_contract_id": "pbreports.tasks.isoseq3"
+}

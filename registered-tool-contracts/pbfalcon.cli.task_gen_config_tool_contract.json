@@ -56,7 +56,7 @@
                 "file_type_id": "PacBio.FileTypes.cfg"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.11",
+        "_comment": "Created by pbcommand 1.0.0",
         "name": "Tool FalconConfigGenerator",
         "input_types": [
             {

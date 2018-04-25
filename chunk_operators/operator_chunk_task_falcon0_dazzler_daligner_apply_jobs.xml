@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<chunk-operator id="pbsmrtpipe.operators.chunk_task_falcon0_dazzler_daligner_apply_jobs">
+
+    <task-id>falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs</task-id>
+
+    <scatter>
+        <scatter-task-id>falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs_scatter</scatter-task-id>
+        <chunks>
+            <chunk out="$chunk.scatterkeyjsonlist" in="falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs:0"/>
+            <chunk out="$chunk.scatterkeynoop" in="falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs:1"/>
+        </chunks>
+    </scatter>
+    <!-- Define the Gather Mechanism -->
+    <gather>
+        <chunks>
+            <chunk>
+                <!-- This is actually a JSON -->
+                <gather-task-id>falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs_gather</gather-task-id>
+                <chunk-key>$chunk.gatherkeyjsonlist</chunk-key>
+                <task-output>falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs:0</task-output>
+            </chunk>
+        </chunks>
+    </gather>
+</chunk-operator>

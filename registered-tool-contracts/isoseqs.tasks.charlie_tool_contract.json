@@ -1,0 +1,38 @@
+{
+    "driver": {
+        "env": {},
+        "exe": "charlie --resolved-tool-contract",
+        "serialization": "json"
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "_comment": "Created by v0.2.0",
+        "description": "IsoSeqS Summary Stage, De Novo Transcript Reconstruction",
+        "input_types": [
+            {
+                "description": "Consensus DataSet or .bam file",
+                "file_type_id": "PacBio.DataSet.TranscriptSet",
+                "id": "transcript_set",
+                "title": "TranscriptSet"
+            }
+        ],
+        "is_distributed": true,
+        "name": "charlie",
+        "nproc": "$max_nproc",
+        "output_types": [
+            {
+                "default_name": "barcode_overview",
+                "description": "Isoform Barcode CSV overview",
+                "file_type_id": "PacBio.FileTypes.csv",
+                "id": "csv",
+                "title": "Csv"
+            }
+        ],
+        "resource_types": [],
+        "schema_options": [],
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "tool_contract_id": "isoseqs.tasks.charlie"
+    },
+    "tool_contract_id": "isoseqs.tasks.charlie",
+    "version": "0.6.2 (commit v0.4.0-99-g896569f*)"
+}

@@ -1,6 +1,6 @@
 {
     "bindings": [],
-    "comment": "Created pipeline pbsmrtpipe.pipelines.dev_diagnostic with pbsmrtpipe v0.62.1",
+    "comment": "Created pipeline pbsmrtpipe.pipelines.dev_diagnostic with pbsmrtpipe v0.63.0",
     "description": "Generate a simple report and plot from Reference DataSet",
     "entryPoints": [
         {
@@ -11,12 +11,12 @@
                 {
                     "index": 0,
                     "instanceId": 0,
-                    "taskTypeId": "pbsmrtpipe.tasks.dev_reference_ds_report"
+                    "taskTypeId": "pbsmrtpipe.tasks.dev_optional_failure"
                 },
                 {
                     "index": 0,
                     "instanceId": 0,
-                    "taskTypeId": "pbsmrtpipe.tasks.dev_optional_failure"
+                    "taskTypeId": "pbsmrtpipe.tasks.dev_reference_ds_report"
                 }
             ]
         }
@@ -26,9 +26,9 @@
     "options": [],
     "schemaVersion": "2.0.0",
     "tags": [
-        "reports",
+        "dev",
         "reference",
-        "dev"
+        "reports"
     ],
     "taskOptions": [
         {

@@ -27,7 +27,7 @@
             },
             {
                 "optionTypeId": "string",
-                "default": "",
+                "default": "m6A,m4C",
                 "id": "kinetics_tools.task_options.identify",
                 "name": "Identify basemods",
                 "description": "Specific modifications to identify (comma-separated list).  Currrent options are m6A and/or m4C."
@@ -63,7 +63,7 @@
                 "file_type_id": "PacBio.FileTypes.h5"
             }
         ],
-        "_comment": "Created by pbcommand 0.6.5",
+        "_comment": "Created by pbcommand 0.6.12",
         "name": "ipdSummary",
         "input_types": [
             {

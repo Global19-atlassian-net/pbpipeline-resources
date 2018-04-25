@@ -25,54 +25,152 @@ def _get_falcon_pipeline(i_cfg, i_fasta_fofn):
           ('falcon_ns2.tasks.task_falcon_config:0',
                         'falcon_ns2.tasks.task_falcon_make_fofn_abs:0'),
     ]
-    br0 = [
-          ('falcon_ns2.tasks.task_falcon_config:0',
-                        'falcon_ns2.tasks.task_falcon0_build_rdb:0'),
-          ('falcon_ns2.tasks.task_falcon_make_fofn_abs:0',
-                        'falcon_ns2.tasks.task_falcon0_build_rdb:1'),
-         ]
-    brs = [
-            ('falcon_ns2.tasks.task_falcon0_build_rdb:0',
-                        'falcon_ns2.tasks.task_falcon0_run_daligner_split:0'),
-            ('falcon_ns2.tasks.task_falcon0_build_rdb:1',
-                        'falcon_ns2.tasks.task_falcon0_run_daligner_split:1'),
-    ]
-    br1 = [
-            ('falcon_ns2.tasks.task_falcon0_run_daligner_split:0',
-                        'falcon_ns2.tasks.task_falcon0_run_daligner_jobs:0'),
-            ('falcon_ns2.tasks.task_falcon0_run_daligner_split:1',
-                        'falcon_ns2.tasks.task_falcon0_run_daligner_jobs:1'),
-    ]
-    br2 = [
-            ('falcon_ns2.tasks.task_falcon0_run_daligner_jobs:0',
-                        'falcon_ns2.tasks.task_falcon0_run_daligner_find_las:0'),
-    ]
-    br3 = [
-            ('falcon_ns2.tasks.task_falcon0_build_rdb:0',
-                        'falcon_ns2.tasks.task_falcon0_run_las_merge_split:0'),
-            ('falcon_ns2.tasks.task_falcon0_run_daligner_find_las:0',
-                        'falcon_ns2.tasks.task_falcon0_run_las_merge_split:1'),
-    ]
-    # execute LAmerge scripts (e.g., m_00001/merge_00001.sh) to create raw_reads.*.las
-    br4 = [
-            ('falcon_ns2.tasks.task_falcon0_run_las_merge_split:0',
-                        'falcon_ns2.tasks.task_falcon0_run_las_merge_jobs:0'),
-            ('falcon_ns2.tasks.task_falcon0_run_las_merge_split:1',
-                        'falcon_ns2.tasks.task_falcon0_run_las_merge_jobs:1'),
-    ]
-    br5 = [
-            ('falcon_ns2.tasks.task_falcon0_run_las_merge_jobs:0',
-                        'falcon_ns2.tasks.task_falcon0_run_las_merge_post_gather:0'),
-    ]
-    br6 = [
-            ('falcon_ns2.tasks.task_falcon0_run_las_merge_post_gather:1',
-                        'falcon_ns2.tasks.task_falcon0_run_cns_split:0'),
-            ('falcon_ns2.tasks.task_falcon0_build_rdb:1',
-                        'falcon_ns2.tasks.task_falcon0_run_cns_split:1'),
+    # dazzler build raw_reads.db
+    dzbr = [
             ('falcon_ns2.tasks.task_falcon_config:0',
-                        'falcon_ns2.tasks.task_falcon0_run_cns_split:2'),
-            ('falcon_ns2.tasks.task_falcon0_build_rdb:3',
-                        'falcon_ns2.tasks.task_falcon0_run_cns_split:3'),
+                        'falcon_ns2.tasks.task_falcon0_dazzler_build_raw:0'),
+            ('falcon_ns2.tasks.task_falcon_make_fofn_abs:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_build_raw:1'),
+    ]
+    # dazzler TANmask split/run/combine
+    dzts = [
+            ('falcon_ns2.tasks.task_falcon_config:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_tan_split:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_build_raw:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_tan_split:1'),
+    ]
+    dztr = [
+            ('falcon_ns2.tasks.task_falcon0_dazzler_tan_split:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_tan_apply_jobs:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_tan_split:1',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_tan_apply_jobs:1'),
+    ]
+    dztc = [
+            ('falcon_ns2.tasks.task_falcon_config:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_tan_combine:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_build_raw:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_tan_combine:1'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_tan_apply_jobs:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_tan_combine:2'),
+    ]
+    # dazzler daligner split/run/combine
+    dzds = [
+            ('falcon_ns2.tasks.task_falcon_config:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_split:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_tan_combine:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_split:1'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_build_raw:1',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_split:2'), # length_cutoff_fn
+    ]
+    dzdr = [
+            ('falcon_ns2.tasks.task_falcon0_dazzler_daligner_split:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_daligner_split:1',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs:1'),
+    ]
+    dzdc = [
+            ('falcon_ns2.tasks.task_falcon_config:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_combine:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_build_raw:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_combine:1'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_daligner_combine:2'),
+    ]
+    # dazzler LAmerge split/run/combine
+    dzls = [
+            ('falcon_ns2.tasks.task_falcon_config:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_lamerge_split:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_daligner_combine:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_lamerge_split:1'),
+    ]
+    dzlr = [
+            ('falcon_ns2.tasks.task_falcon0_dazzler_lamerge_split:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_lamerge_apply_jobs:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_lamerge_split:1',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_lamerge_apply_jobs:1'),
+    ]
+    dzlc = [
+            ('falcon_ns2.tasks.task_falcon_config:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_lamerge_combine:0'),
+            ('falcon_ns2.tasks.task_falcon0_dazzler_lamerge_apply_jobs:0',
+                        'falcon_ns2.tasks.task_falcon0_dazzler_lamerge_combine:1'),
+    ]
+    """
+def run_dazzler_build(input_files, output_files, actual_db_fn):
+    i_general_config_fn, i_fofn_fn = input_files
+    db_fn, length_cutoff_fn = output_files
+def run_dazzler_tan_split(input_files, output_files):
+    i_general_config_fn, db_fn, = input_files
+    o_split_fn, o_bash_fn, = output_files
+def run_dazzler_tan_combine(input_files, output_files, actual_db_fn):
+    i_general_config_fn, i_db_fn, i_gathered_fn, = input_files
+    o_db_fn, = output_files
+def run_dazzler_daligner_split(input_files, output_files):
+    i_general_config_fn, i_db_fn, i_length_cutoff_fn, = input_files
+    o_split_fn, o_bash_fn, = output_files
+def run_dazzler_daligner_combine(input_files, output_files, actual_db_fn):
+    i_general_config_fn, i_db_fn, i_gathered_fn, = input_files
+    o_las_paths_fn, = output_files
+def run_dazzler_lamerge_split(input_files, output_files, db_prefix):
+    i_general_config_fn, i_las_paths_fn, = input_files
+    o_split_fn, o_bash_fn, = output_files
+def run_dazzler_lamerge_combine(input_files, output_files):
+    i_general_config_fn, i_gathered_fn, = input_files
+    o_las_paths_fn, o_block2las_fn, = output_files
+def run_cns_split(input_files, output_files):
+    p_id2las_fn, raw_reads_db_fn, general_config_fn, length_cutoff_fn, = input_files
+    all_units_of_work_fn, bash_template_fn, = output_files
+def run_report_preassembly_yield(input_files, output_files):
+    i_general_config_fn, i_preads_fofn_fn, i_raw_reads_db_fn, i_length_cutoff_fn = input_files
+    """
+    #br0 = [
+    #      ('falcon_ns2.tasks.task_falcon_config:0',
+    #                    'falcon_ns2.tasks.task_falcon0_build_rdb:0'),
+    #      ('falcon_ns2.tasks.task_falcon_make_fofn_abs:0',
+    #                    'falcon_ns2.tasks.task_falcon0_build_rdb:1'),
+    #     ]
+    #brs = [
+    #        ('falcon_ns2.tasks.task_falcon0_build_rdb:0',
+    #                    'falcon_ns2.tasks.task_falcon0_run_daligner_split:0'),
+    #        ('falcon_ns2.tasks.task_falcon0_build_rdb:1',
+    #                    'falcon_ns2.tasks.task_falcon0_run_daligner_split:1'),
+    #]
+    #br1 = [
+    #        ('falcon_ns2.tasks.task_falcon0_run_daligner_split:0',
+    #                    'falcon_ns2.tasks.task_falcon0_run_daligner_jobs:0'),
+    #        ('falcon_ns2.tasks.task_falcon0_run_daligner_split:1',
+    #                    'falcon_ns2.tasks.task_falcon0_run_daligner_jobs:1'),
+    #]
+    #br2 = [
+    #        ('falcon_ns2.tasks.task_falcon0_run_daligner_jobs:0',
+    #                    'falcon_ns2.tasks.task_falcon0_run_daligner_find_las:0'),
+    #]
+    #br3 = [
+    #        ('falcon_ns2.tasks.task_falcon0_build_rdb:0',
+    #                    'falcon_ns2.tasks.task_falcon0_run_las_merge_split:0'),
+    #        ('falcon_ns2.tasks.task_falcon0_run_daligner_find_las:0',
+    #                    'falcon_ns2.tasks.task_falcon0_run_las_merge_split:1'),
+    #]
+    ## execute LAmerge scripts (e.g., m_00001/merge_00001.sh) to create raw_reads.*.las
+    #br4 = [
+    #        ('falcon_ns2.tasks.task_falcon0_run_las_merge_split:0',
+    #                    'falcon_ns2.tasks.task_falcon0_run_las_merge_jobs:0'),
+    #        ('falcon_ns2.tasks.task_falcon0_run_las_merge_split:1',
+    #                    'falcon_ns2.tasks.task_falcon0_run_las_merge_jobs:1'),
+    #]
+    #br5 = [
+    #        ('falcon_ns2.tasks.task_falcon0_run_las_merge_jobs:0',
+    #                    'falcon_ns2.tasks.task_falcon0_run_las_merge_post_gather:0'),
+    #]
+    br6 = [
+            ('falcon_ns2.tasks.task_falcon0_dazzler_lamerge_combine:1',
+                        'falcon_ns2.tasks.task_falcon0_run_cns_split:0'), #block2las
+            ('falcon_ns2.tasks.task_falcon0_dazzler_build_raw:0',
+                        'falcon_ns2.tasks.task_falcon0_run_cns_split:1'), #db
+            ('falcon_ns2.tasks.task_falcon_config:0',
+                        'falcon_ns2.tasks.task_falcon0_run_cns_split:2'), #config
+            ('falcon_ns2.tasks.task_falcon0_dazzler_build_raw:1',
+                        'falcon_ns2.tasks.task_falcon0_run_cns_split:3'), #length_cutoff
     ]
     # execute LA4Falcon scripts (e.g., preads/c_00001.sh) to create out.0000*.fasta
     br7 = [
@@ -87,12 +185,12 @@ def _get_falcon_pipeline(i_cfg, i_fasta_fofn):
     ]
     report_pay = [
           ('falcon_ns2.tasks.task_falcon_config:0',
-                        'falcon_ns2.tasks.task_report_preassembly_yield:0'),
+                        'falcon_ns2.tasks.task_report_preassembly_yield:0'), # config
           ('falcon_ns2.tasks.task_falcon0_run_cns_post_gather:0',
-                        'falcon_ns2.tasks.task_report_preassembly_yield:1'),
-          ('falcon_ns2.tasks.task_falcon0_build_rdb:1',
-                        'falcon_ns2.tasks.task_report_preassembly_yield:2'),
-          ('falcon_ns2.tasks.task_falcon0_build_rdb:3',
+                        'falcon_ns2.tasks.task_report_preassembly_yield:1'), # preads.fofn
+          ('falcon_ns2.tasks.task_falcon0_dazzler_tan_combine:0',
+                        'falcon_ns2.tasks.task_report_preassembly_yield:2'), # db (tan, for now)
+          ('falcon_ns2.tasks.task_falcon0_dazzler_build_raw:1',
                         'falcon_ns2.tasks.task_report_preassembly_yield:3')  # length_cutoff_fn
     ]
     bp0 = [
@@ -152,25 +250,29 @@ def _get_falcon_pipeline(i_cfg, i_fasta_fofn):
             ('falcon_ns2.tasks.task_falcon1_run_db2falcon:1',
                     'falcon_ns2.tasks.task_falcon2_run_falcon_asm:4'),  # db2falcon sentinel (truly needed?)
     ]
-    # rm L*.*.raw_reads.las
-    rm0 = [('falcon_ns2.tasks.task_falcon0_run_daligner_jobs:0',
-                    'falcon_ns2.tasks.task_falcon0_rm_las:0'),
-    ]
-    # rm raw_reads.*.raw_reads.las
-    rm1 = [('falcon_ns2.tasks.task_falcon0_run_cns_jobs:0',
-                    'falcon_ns2.tasks.task_falcon1_rm_las:0'),
-           ('falcon_ns2.tasks.task_falcon0_rm_las:0',
-                    'falcon_ns2.tasks.task_falcon1_rm_las:1'),
-    ]
+    #### rm L*.*.raw_reads.las
+    ###rm0 = [('falcon_ns2.tasks.task_falcon0_dazzler_daligner_apply_jobs:0',
+    ###                'falcon_ns2.tasks.task_falcon0_rm_las:0'), # sentinels from daligner jobs
+    ###]
+    rm0 = []
+    #### rm raw_reads.*.raw_reads.las
+    ###rm1 = [('falcon_ns2.tasks.task_falcon0_run_cns_jobs:0',
+    ###                'falcon_ns2.tasks.task_falcon1_rm_las:0'),
+    ###       ('falcon_ns2.tasks.task_falcon0_rm_las:0',
+    ###                'falcon_ns2.tasks.task_falcon1_rm_las:1'),
+    ###]
+    rm1 = []
     # clean up all *.las regardless
     # Note: We use the old falcon_ns namespace for this task
     # so we do not need to change option names in views and existing preset files.
-    rm2 = [('falcon_ns2.tasks.task_falcon2_run_falcon_asm:0',
-                    'falcon_ns.tasks.task_falcon2_rm_las:0'), # not ns2
-           ('falcon_ns2.tasks.task_falcon1_rm_las:0',
-                    'falcon_ns.tasks.task_falcon2_rm_las:1'), # not ns2
-    ]
-    falcon = (b0 + br0 + brs + br1 + br2 + br3 + br4 + br5 + br6 + br7 + br8 + report_pay
+    ###rm2 = [('falcon_ns2.tasks.task_falcon2_run_falcon_asm:0',
+    ###                'falcon_ns.tasks.task_falcon2_rm_las:0'), # not ns2
+    ###       ('falcon_ns2.tasks.task_falcon1_rm_las:0',
+    ###                'falcon_ns.tasks.task_falcon2_rm_las:1'), # not ns2
+    ###]
+    rm2 = []
+    #falcon = (b0 + br0 + brs + br1 + br2 + br3 + br4 + br5 + br6 + br7 + br8 + report_pay
+    falcon = (b0 + dzbr + dzts + dztr + dztc + dzds + dzdr + dzdc + dzls + dzlr + dzlc + br6 + br7 + br8 + report_pay
             + bp0 + bps + bp1 + bp2 + bp3 + bp4 + bp5 + bpf + basm + rm0 + rm1 + rm2)
     falcon_results = dict()
     falcon_results['asm'] = 'falcon_ns2.tasks.task_falcon2_run_falcon_asm:0'
@@ -310,7 +412,7 @@ def get_falcon_pipeline_lean():
     return falcon
 
 @dev_register("polished_falcon_fat", "Assembly (HGAP 4)",
-        task_options=RESEQUENCING_TASK_OPTIONS, version="0.2.0")
+        task_options=RESEQUENCING_TASK_OPTIONS, version="0.2.1")
 def get_falcon_pipeline_fat():
     """Same as polished_falcon_lean, but with reports.
     """

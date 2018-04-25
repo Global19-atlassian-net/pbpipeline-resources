@@ -1,0 +1,53 @@
+{
+    "driver": {
+        "env": {},
+        "exe": "python -m pbcoretools.tasks.filters  run-rtc  ",
+        "serialization": "json"
+    },
+    "schema_version": "2.0.0",
+    "tool_contract": {
+        "_comment": "Created by pbcommand 1.0.0",
+        "description": "Quick tool split_transcripts pbcoretools.tasks.split_transcripts",
+        "input_types": [
+            {
+                "description": "description for PacBio.DataSet.TranscriptSet_0",
+                "file_type_id": "PacBio.DataSet.TranscriptSet",
+                "id": "Label PacBio.DataSet.TranscriptSet_0",
+                "title": "<DataSetFileType id=PacBio.DataSet.TranscriptSet name=file >"
+            }
+        ],
+        "is_distributed": false,
+        "name": "Tool split_transcripts",
+        "nproc": 1,
+        "output_types": [
+            {
+                "default_name": "hq_transcripts",
+                "description": "Hiqh-Quality TranscriptSet XML",
+                "file_type_id": "PacBio.DataSet.TranscriptSet",
+                "id": "hq_transcripts",
+                "title": "HQ TranscriptSet"
+            },
+            {
+                "default_name": "lq_transcripts",
+                "description": "Low-Quality TranscriptSet XML",
+                "file_type_id": "PacBio.DataSet.TranscriptSet",
+                "id": "lq_transcripts",
+                "title": "LQ TranscriptSet"
+            }
+        ],
+        "resource_types": [],
+        "schema_options": [
+            {
+                "default": 0.99,
+                "description": "Minimum read quality required for a transcript to be considered 'high-quality'",
+                "id": "pbcoretools.task_options.hq_qv_cutoff",
+                "name": "QV cutoff for HQ transcripts",
+                "optionTypeId": "float"
+            }
+        ],
+        "task_type": "pbsmrtpipe.task_types.standard",
+        "tool_contract_id": "pbcoretools.tasks.split_transcripts"
+    },
+    "tool_contract_id": "pbcoretools.tasks.split_transcripts",
+    "version": "0.1.0"
+}

@@ -349,7 +349,12 @@ def _core_laa_plus(subread_ds):
     inputs_report = [
         ("pblaa.tasks.laa:3", "pbreports.tasks.amplicon_analysis_input:0")
     ]
-    return laa + split_fastq + consensus_report + inputs_report
+    combined_zip = [
+        ("pblaa.tasks.laa:0", "pbcoretools.tasks.make_combined_laa_zip:0"),
+        ("pblaa.tasks.laa:2", "pbcoretools.tasks.make_combined_laa_zip:1"),
+        (subread_ds, "pbcoretools.tasks.make_combined_laa_zip:2")
+    ]
+    return laa + split_fastq + consensus_report + inputs_report + combined_zip
 
 
 @sa3_register("sa3_ds_laa", "Long Amplicon Analysis (LAA)", "0.1.0", tags=(Tags.LAA, ))
@@ -976,13 +981,8 @@ BARCODING_CCS_OPTIONS.update({
     "lima.task_options.isoseq_mode": True,
     "pbreports.task_options.isoseq_mode": True
 })
-@sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
-              tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
-              task_options=BARCODING_CCS_OPTIONS)
-def ds_barcode2():
-    """
-    ConsensusReadSet barcoding pipeline
-    """
+
+def _core_ccs_barcode2():
     b1 = _core_ccs(Constants.ENTRY_DS_SUBREAD)
     b2 = [
         ("pbccs.tasks.ccs:0", "pbcoretools.tasks.ccs_to_datastore:0")
@@ -991,3 +991,66 @@ def ds_barcode2():
         subreads=Constants.ENTRY_DS_SUBREAD,
         datastore="pbcoretools.tasks.ccs_to_datastore:0",
         update_task_id="pbcoretools.tasks.update_barcoded_sample_metadata_ccs")
+
+@sa3_register("sa3_ds_ccs_barcode", "CCS Demultiplexing for Iso-Seq [Beta]", "0.1.0",
+              tags=(Tags.BARCODE,Tags.CCS,Tags.INTERNAL),
+              task_options=BARCODING_CCS_OPTIONS)
+def ds_ccs_barcode2():
+    """
+    ConsensusReadSet barcoding pipeline
+    """
+    return _core_ccs_barcode2()
+
+
+ISOSEQ3_TASK_OPTIONS = dict(ISOSEQ_TASK_OPTIONS)
+ISOSEQ3_TASK_OPTIONS.update({
+    "pbccs.task_options.min_passes":1
+})
+ISOSEQ3_TASK_OPTIONS.update(BARCODING_CCS_OPTIONS)
+
+def _core_isoseq3(sr_ds, lima_ds):
+    """Iso-Seq 3 (isoseqs) from lima demuxed ccs to polished transcriptset
+    sr_ds --- subreadset
+    lima_ds --- lima demuxed ccs dataset
+    """
+    return [
+        (lima_ds, "isoseqs.tasks.sierra:0"), # lima demuxed ccsset as sierra input[0]
+        ("isoseqs.tasks.sierra:0", "isoseqs.tasks.tango:0"), # seirra output[0]=unpolished transcriptset, as tango input[0]
+        (sr_ds, "isoseqs.tasks.tango:1"), # subreadset as tango input[1]]
+        ("isoseqs.tasks.tango:0", "isoseqs.tasks.charlie:0"), # tango output transcriptset as charlie input to make csv report
+    ]
+
+
+def _isoseq_output():
+    return [
+        ("isoseqs.tasks.tango:0", "pbcoretools.tasks.split_transcripts:0"),
+        ("pbcoretools.tasks.split_transcripts:0", "pbreports.tasks.isoseq3:0"),
+        ("pbcoretools.tasks.split_transcripts:1", "pbreports.tasks.isoseq3:1"),
+        ("pbcoretools.tasks.split_transcripts:0", "pbcoretools.tasks.bam2fasta_transcripts:0"),
+        ("pbcoretools.tasks.split_transcripts:1", "pbcoretools.tasks.bam2fasta_transcripts:1"),
+        ("pbcoretools.tasks.split_transcripts:0", "pbcoretools.tasks.bam2fastq_transcripts:0"),
+        ("pbcoretools.tasks.split_transcripts:1", "pbcoretools.tasks.bam2fastq_transcripts:1")
+    ]
+
+
+@sa3_register("pb_isoseq3",
+              "Internal Iso-Seq 3 starting from lima barcoded CCS dataset", "0.1.0",
+              tags=(Tags.CCS, Tags.ISOSEQ, Tags.INTERNAL))
+def pb_isoseq3():
+    """Iso-Seq 3 from lima demuxed ccs to polished transcriptset, no report"""
+    return _core_isoseq3(sr_ds=Constants.ENTRY_DS_SUBREAD, lima_ds=Constants.ENTRY_DS_CCS) + _isoseq_output()
+
+
+@sa3_register("sa3_ds_isoseq3", "Iso-Seq 3", "0.1.1",
+              tags=(Tags.CCS, Tags.ISOSEQ),
+              task_options=ISOSEQ3_TASK_OPTIONS)
+def ds_isoseq3():
+    """
+    Define isoseq3 pipeline, starting from subreads, call lima, sierra, tango, then report.
+    """
+    b1 = _core_ccs_barcode2()
+    b2 = [("pbcoretools.tasks.update_barcoded_sample_metadata_ccs:0", "pbcoretools.tasks.datastore_to_ccs:0")]
+    b3 = _core_isoseq3(sr_ds=Constants.ENTRY_DS_SUBREAD,
+                       lima_ds='pbcoretools.tasks.datastore_to_ccs:0')
+    b4 = _isoseq_output()
+    return b1 + b2 + b3 + b4
