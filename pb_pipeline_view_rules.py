@@ -55,12 +55,12 @@ def load_pipeline_view_rules(registered_views_d, pipeline_id, smrtlink_version,
     Generate a complete set of view rules for output files in the specified
     pipeline.  This will use the built-in pipeline templates and registered
     tool contracts to automatically populate the rules with default
-    blacklisting for any file that isn't explicitly whitelisted in the input
+    blacklisting for any file that isn"t explicitly whitelisted in the input
     view_rules list.
 
     :param registered_views_d: dictionary of pipeline datastore view rules,
                                keyed by pipeline id
-    :param pipeline_id: string id, e.g. 'pbsmrtpipe.pipelines.sa3_sat'
+    :param pipeline_id: string id, e.g. "pbsmrtpipe.pipelines.sa3_sat"
     :param smrtlink_version: release version associated with the rule
     :param view_rules: list of explicit rules as tuples of at least 3 elements
     """
@@ -115,8 +115,8 @@ def register_pipeline_rules(pipeline_id):
 
 def set_default_view_rules():
     """
-    Any pipeline that is visible to customers but doesn't have view rules set
-    here gets the default blacklist.  (In practice, we probably shouldn't let
+    Any pipeline that is visible to customers but doesn"t have view rules set
+    here gets the default blacklist.  (In practice, we probably shouldn"t let
     this happen.)
     """
     for pipeline_id, pipeline in PIPELINES.iteritems():
@@ -192,7 +192,7 @@ def _isoseq_view_rules():
 
 def _isoseq2_view_rules():
     def f(i):
-        return 'pbtranscript2tools.tasks.collect_polish-out-{i}'.format(i=i)
+        return "pbtranscript2tools.tasks.collect_polish-out-{i}".format(i=i)
     whitelist = _to_whitelist([
         (f(0), FileTypes.CSV), # report.csv
         (f(2), FileTypes.FASTA), # consensus_isoforms.fasta
@@ -205,7 +205,7 @@ def _isoseq2_view_rules():
 
 def _isoseq2_mapping_view_rules():
     def f(i):
-        return 'pbtranscript2tools.tasks.post_mapping_to_genome-out-{i}'.format(i=i)
+        return "pbtranscript2tools.tasks.post_mapping_to_genome-out-{i}".format(i=i)
     whitelist = _to_whitelist([
         ("pbtranscript.tasks.map_isoforms_to_genome-out-0", FileTypes.SAM), # GMAP mapping HQ isoforms to ref in SAM
         (f(0), FileTypes.FASTQ), # collapsed filtered isoforms in fastq
@@ -231,19 +231,23 @@ def _isoseq_mapping_view_rules():
     ])
     return whitelist + blacklist + _isoseq_view_rules()
 
+
 def _isoseq3_view_rules():
     barcode_whitelist = _to_whitelist([
         ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
     ])
     whitelist = _to_whitelist([
-        ('isoseqs.tasks.sierra-out-1', FileTypes.BAM),
-        ('isoseqs.tasks.charlie-out-0', FileTypes.CSV),
         ("pbcoretools.tasks.bam2fastq_transcripts-out-0", FileTypes.FASTQ),
         ("pbcoretools.tasks.bam2fastq_transcripts-out-1", FileTypes.FASTQ),
         ("pbcoretools.tasks.bam2fasta_transcripts-out-0", FileTypes.FASTA),
         ("pbcoretools.tasks.bam2fasta_transcripts-out-1", FileTypes.FASTA),
     ])
-    return whitelist + barcode_whitelist + _ccs_view_rules()
+    custom = [
+        ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.ZIP, False, "CCS FASTQ"),
+        ("isoseqs.tasks.sierra-out-1", FileTypes.BAM, False, "Full-length CCS"),
+        ("isoseqs.tasks.charlie-out-0", FileTypes.CSV, False, "Polished Report"),
+    ]
+    return whitelist + barcode_whitelist + custom
 
 
 def _laa_view_rules():

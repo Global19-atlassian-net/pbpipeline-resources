@@ -1003,10 +1003,10 @@ def ds_ccs_barcode2():
 
 
 ISOSEQ3_TASK_OPTIONS = dict(ISOSEQ_TASK_OPTIONS)
+ISOSEQ3_TASK_OPTIONS.update(BARCODING_CCS_OPTIONS)
 ISOSEQ3_TASK_OPTIONS.update({
     "pbccs.task_options.min_passes":1
 })
-ISOSEQ3_TASK_OPTIONS.update(BARCODING_CCS_OPTIONS)
 
 def _core_isoseq3(sr_ds, lima_ds):
     """Iso-Seq 3 (isoseqs) from lima demuxed ccs to polished transcriptset
