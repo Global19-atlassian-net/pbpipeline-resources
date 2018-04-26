@@ -104,7 +104,7 @@
                 "default": false,
                 "description": "Filter input reads by presence of both flanking barcodes.",
                 "id": "pblaa.task_options.full_length",
-                "name": "Use Only Full-Length Subreads",
+                "name": "Filter Input Reads by Presence of Both Flanking Barcodes",
                 "optionTypeId": "boolean"
             },
             {
@@ -265,7 +265,7 @@
                 "default": 42,
                 "description": "RNG seed, modulates reservoir filtering of reads.",
                 "id": "pblaa.task_options.rng_seed",
-                "name": "RNG Seed",
+                "name": "Random Number Generator Seed",
                 "optionTypeId": "integer"
             },
             {
@@ -294,5 +294,5 @@
         "tool_contract_id": "pblaa.tasks.laa"
     },
     "tool_contract_id": "pblaa.tasks.laa",
-    "version": "pblaa 2.1.6 (commit 6c600ba) | unanimity 3.0.0 (commit 71ba45c)"
+    "version": "pblaa 2.1.6 (commit 5418e6a) | unanimity 3.0.0 (commit 71ba45c)"
 }
