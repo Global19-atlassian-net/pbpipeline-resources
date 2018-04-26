@@ -101,7 +101,7 @@ def register_pipeline_rules(pipeline_id):
     """
     def deco_wrapper(func):
         if pipeline_id in REGISTERED_VIEW_RULES:
-            log.warn(""{i}" already has view rules defined".format(
+            log.warn("'{i}' already has view rules defined".format(
                      i=pipeline_id))
         rules = func()
         load_pipeline_view_rules(REGISTERED_VIEW_RULES, pipeline_id,
