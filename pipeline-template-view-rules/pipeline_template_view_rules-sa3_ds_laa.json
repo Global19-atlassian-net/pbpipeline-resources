@@ -12,7 +12,15 @@
     
     {"id": "pblaa.task_options.model_path",               "hidden": true,  "advanced": true},
     {"id": "pblaa.task_options.model_spec",               "hidden": true,  "advanced": true},
-    
+    {"id": "pblaa.task_options.barcodes",                 "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.chimera_score_threshold",  "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.cluster_inflation",        "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.cluster_loop_weight",      "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.do_bc",                    "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.ignore_bc",                "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.min_read_score",           "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.min_snr",                  "hidden": true, "advanced": true},
+    {"id": "pblaa.task_options.min_split_score",          "hidden": true, "advanced": true},
     {"id": "pblaa.task_options.min_length",               "hidden": false, "advanced": false}
   ]
 }
