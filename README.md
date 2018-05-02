@@ -5,8 +5,14 @@ required by SMRT Link and pbsmrtpipe (with the exception of report view rules,
 see below).  To work with these resources you will need a Python interpreter
 that has pbsmrtpipe and pbreports installed.  
 
-To make the resources available to pbsmrtpipe or the services runner, simply run `make` and then set the
-environment variable ``SMRT_PIPELINE_BUNDLE_DIR`` to point to this directory.
+To make the resources available to pbsmrtpipe or the services runner, simply
+run the following:
+
+```
+  $ make pipeline-template-json
+  $ export SMRT_PIPELINE_BUNDLE_DIR=$PWD
+```
+
 You may still use the existing environment variables PB_TOOL_CONTRACT_DIR,
 PB_PIPELINE_TEMPLATE_DIR, and PB_CHUNK_OPERATOR_DIR to point to external
 resources in addition to the ones defined here, however they are not required
