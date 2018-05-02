@@ -135,7 +135,8 @@ def _log_view_rules():
     ]
 
     blacklist = [
-        ("pbsmrtpipe::pbsmrtpipe-info.log", FileTypes.LOG)
+        ("pbsmrtpipe::pbsmrtpipe-info.log", FileTypes.LOG),
+        ("pbsmrtpipe-report-tasks", FileTypes.REPORT)
     ]
 
 
@@ -233,21 +234,20 @@ def _isoseq_mapping_view_rules():
 
 
 def _isoseq3_view_rules():
-    barcode_whitelist = _to_whitelist([
-        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
-    ])
     whitelist = _to_whitelist([
+        ("pbreports.tasks.barcode_report-out-1", FileTypes.CSV),
         ("pbcoretools.tasks.bam2fastq_transcripts-out-0", FileTypes.FASTQ),
         ("pbcoretools.tasks.bam2fastq_transcripts-out-1", FileTypes.FASTQ),
-        ("pbcoretools.tasks.bam2fasta_transcripts-out-0", FileTypes.FASTA),
-        ("pbcoretools.tasks.bam2fasta_transcripts-out-1", FileTypes.FASTA),
+    ])
+    blacklist = _to_blacklist([
+        ("barcoding.tasks.lima-0", FileTypes.DS_CCS)
     ])
     custom = [
         ("pbcoretools.tasks.bam2fastq_ccs-out-0", FileTypes.ZIP, False, "CCS FASTQ"),
         ("isoseqs.tasks.sierra-out-1", FileTypes.BAM, False, "Full-length CCS"),
         ("isoseqs.tasks.charlie-out-0", FileTypes.CSV, False, "Polished Report"),
     ]
-    return whitelist + barcode_whitelist + custom
+    return whitelist + blacklist + custom
 
 
 def _laa_view_rules():
